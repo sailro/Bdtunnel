@@ -201,6 +201,10 @@
   <data name="SOCKS5_UNKNOWN_COMMAND" xml:space="preserve">
     <value>Unknown command in Socks5 request</value>
   </data>
+  <data name="TCP_SERVER_DISABLED" xml:space="preserve">
+    <value>Port {0} already in use, disabling TCP server</value>
+    <comment>Port</comment>
+  </data>
   <data name="USING_PROXY" xml:space="preserve">
     <value>Using proxy: {0}</value>
     <comment>URL</comment>

@@ -164,7 +164,7 @@
     <value>Requete Socks BIND non supportee</value>
   </data>
   <data name="SOCKS_SERVER_DISABLED" xml:space="preserve">
-    <value>Le port {0} est deja occupe, Serveur Socks desactive</value>
+    <value>Le port {0} est deja occupe, serveur Socks desactive</value>
     <comment>Port</comment>
   </data>
   <data name="SOCKS_SERVER_STARTED" xml:space="preserve">
@@ -200,6 +200,10 @@
   </data>
   <data name="SOCKS5_UNKNOWN_COMMAND" xml:space="preserve">
     <value>Requete Socks5: commande inconnue</value>
+  </data>
+  <data name="TCP_SERVER_DISABLED" xml:space="preserve">
+    <value>Le port {0} est deja occupe, serveur TCP desactive</value>
+    <comment>Port</comment>
   </data>
   <data name="USING_PROXY" xml:space="preserve">
     <value>Connexion avec un proxy: {0}</value>
