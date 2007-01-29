@@ -295,6 +295,15 @@ namespace Bdt.Client.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Port {0} already in use, disabling TCP server.
+        /// </summary>
+        internal static string TCP_SERVER_DISABLED {
+            get {
+                return ResourceManager.GetString("TCP_SERVER_DISABLED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Using proxy: {0}.
         /// </summary>
         internal static string USING_PROXY {
