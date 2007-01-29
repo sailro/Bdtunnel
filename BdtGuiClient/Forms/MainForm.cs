@@ -311,13 +311,6 @@ namespace Bdt.GuiClient.Forms
         /// -----------------------------------------------------------------------------
         private void MainForm_Load (object sender, EventArgs e)
         {
-            /*
-             * Le choix de la culture se produit après la création du form
-             * principal. Il est donc nécessaire de rafraichir les objets présents
-             * en fonction de la culture active.
-             * 
-             */
-            RefreshLocalizedItems();
             StartItem_Click(sender, e);
         }
         #endregion

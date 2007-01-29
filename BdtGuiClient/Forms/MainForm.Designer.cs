@@ -20,15 +20,6 @@
             base.Dispose(disposing);
         }
 
-        private void RefreshLocalizedItems()
-        {
-            this.StartItem.Text = Resources.Strings.MAINFORM_START_CLIENT;
-            this.StopItem.Text = Resources.Strings.MAINFORM_STOP_CLIENT;
-            this.ConfigureItem.Text = Resources.Strings.MAINFORM_CONFIGURE_CLIENT;
-            this.LogsItem.Text = Resources.Strings.MAINFORM_VIEW_LOGS;
-            this.QuitItem.Text = Resources.Strings.MAINFORM_EXIT;
-        }
-
         #region Code généré par le Concepteur Windows Form
 
         /// <summary>

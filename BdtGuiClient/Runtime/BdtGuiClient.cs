@@ -48,6 +48,19 @@ namespace Bdt.GuiClient.Runtime
                 return string.Format("{0}Cfg.xml", typeof(BdtClient).Assembly.GetName().Name);
             }
         }
+
+        /// -----------------------------------------------------------------------------
+        /// <summary>
+        /// La fenetre principale
+        /// </summary>
+        /// -----------------------------------------------------------------------------
+        public MainForm MainForm
+        {
+            get
+            {
+                return m_mainForm;
+            }
+        }
         #endregion
 
         #region " Methodes "
@@ -66,7 +79,10 @@ namespace Bdt.GuiClient.Runtime
             m_config.AddSource(xmlConfig);
 
             MultiLogger log = new MultiLogger();
-            m_consoleLogger = new NotifyIconLogger(CFG_CONSOLE, m_config, m_mainForm.NotifyIcon, this.GetType().Assembly.GetName().Name, 1);
+            // on utilise le référence d'un BdtGuiClient au lieu de passer directement un NotifyIcon car à ce stade
+            // on ne peut pas créer de formulaire, car la Culture serait incorrecte, le fichier de configuration
+            // n'étant pas déjà parsé
+            m_consoleLogger = new NotifyIconLogger(CFG_CONSOLE, m_config, this, this.GetType().Assembly.GetName().Name, 1);
             m_fileLogger = new Bdt.Shared.Logs.FileLogger(CFG_FILE, m_config);
             log.AddLogger(m_consoleLogger);
             log.AddLogger(m_fileLogger);
@@ -116,7 +132,6 @@ namespace Bdt.GuiClient.Runtime
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                guiclient.m_mainForm = new MainForm(guiclient);
                 Application.ThreadException += new ThreadExceptionEventHandler(guiclient.HandleError);
                 AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(guiclient.HandleError);
 
@@ -183,6 +198,7 @@ namespace Bdt.GuiClient.Runtime
         protected override void Run (string[] args)
         {
             LoadConfiguration(args);
+            m_mainForm = new MainForm(this);
             Application.Run(m_mainForm);
             UnLoadConfiguration();
         }
