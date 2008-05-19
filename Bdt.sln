@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual C# Express 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BdtShared", "BdtShared\BdtShared.csproj", "{3CB456B0-7C1C-4FF8-97C4-4F06154327A6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BdtServer", "BdtServer\BdtServer.csproj", "{EB676069-AA5C-4B7A-BBD3-DCE0E7062265}"
