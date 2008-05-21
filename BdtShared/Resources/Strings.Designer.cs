@@ -22,7 +22,7 @@ namespace Bdt.Shared.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Strings {
+    public class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Bdt.Shared.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Bdt.Shared.Resources.Strings", typeof(Strings).Assembly);
@@ -51,7 +51,7 @@ namespace Bdt.Shared.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Bdt.Shared.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Configuring {0} =&gt; {1}.
         /// </summary>
-        internal static string CONFIGURING_CLIENT {
+        public static string CONFIGURING_CLIENT {
             get {
                 return ResourceManager.GetString("CONFIGURING_CLIENT", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Bdt.Shared.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Configuring {0} port {1}.
         /// </summary>
-        internal static string CONFIGURING_SERVER {
+        public static string CONFIGURING_SERVER {
             get {
                 return ResourceManager.GetString("CONFIGURING_SERVER", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Bdt.Shared.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Loading configuration.
         /// </summary>
-        internal static string LOADING_CONFIGURATION {
+        public static string LOADING_CONFIGURATION {
             get {
                 return ResourceManager.GetString("LOADING_CONFIGURATION", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Bdt.Shared.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Powered by {0} v{1}.
         /// </summary>
-        internal static string POWERED_BY {
+        public static string POWERED_BY {
             get {
                 return ResourceManager.GetString("POWERED_BY", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Bdt.Shared.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Unconfiguring {0}.
         /// </summary>
-        internal static string UNCONFIGURING_CLIENT {
+        public static string UNCONFIGURING_CLIENT {
             get {
                 return ResourceManager.GetString("UNCONFIGURING_CLIENT", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Bdt.Shared.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Unloading configuration.
         /// </summary>
-        internal static string UNLOADING_CONFIGURATION {
+        public static string UNLOADING_CONFIGURATION {
             get {
                 return ResourceManager.GetString("UNLOADING_CONFIGURATION", resourceCulture);
             }
