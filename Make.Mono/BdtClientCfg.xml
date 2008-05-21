@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<bdtclient>
+  
+  <!--
+    ***************************************************************************
+    Section "service", identification du serveur sur lequel se connecter
+  
+    name     = le nom du serveur, utilisé pour la reconnaissance, doit être
+               identique côté client et côté serveur
+    protocol = le protocole à utiliser, doit être identique côté client et
+               côté serveur:
+               - Bdt.Shared.Protocol.HttpBinaryRemoting (flux binaire / HTTP)
+               - Bdt.Shared.Protocol.HttpSoapRemoting (flux soap / HTTP)
+               - Bdt.Shared.Protocol.TcpRemoting (flux binaire / TCP)
+               - Bdt.Shared.Protocol.IpcRemoting (pour ce protocole local,
+                 la notion d'adresse/port est inutile)
+    address  = ip ou FQDN du serveur
+    port     = port du serveur
+    username = l'utilisateur déclaré sur le serveur
+    password = le mot de passe associé
+    ***************************************************************************
+  -->
+  <service
+    name     = "BdtServer"
+    protocol = "Bdt.Shared.Protocol.HttpBinaryRemoting"
+    address  = "set.my.address"
+    port     = "80"
+    username = "set.my.username"
+    password = "set.my.password"
+  />
+
+  <!--
+    ***************************************************************************
+    Section "socks", proxy socks côté client
+  
+    enabled = true|false activation/desactivation
+    shared  = true|false rendre le port disponible en dehors de la machine
+              locale
+    port    = port local pour le serveur
+    ***************************************************************************
+  -->
+  <socks
+    enabled  = "true"
+    shared   = "false"
+    port     = "1080"
+  />
+  
+  <!--
+    ***************************************************************************
+    Section "proxy", paramètrage du proxy HTTP pour les protocoles le
+    supportant du type Bdt.Shared.Protocol.Http*Remoting
+  
+    enabled                   = true|false activation/desactivation
+
+    authentification/auto     = true|false si vrai, utilisation des 
+                                informations de l'utilisateur courant
+                                Sinon:
+    authentification/username = login sur le proxy
+    authentification/password = mot de passe sur le proxy
+    authentification/domain   = domaine sur le proxy
+  
+    configuration/auto        = true|false si vrai, recherche du proxy depuis
+                                les paramètres Internet Explorer
+                                Sinon:
+    configuration/address     = adresse du proxy
+    configuration/port        = port du proxy
+    ***************************************************************************
+  -->
+  <proxy
+    enabled  = "true">
+    <authentification
+      auto     = "true"
+      username = "set.my.username.if.auto.is.false"
+      password = "set.my.password.if.auto.is.false"
+      domain   = "set.my.domain.if.auto.is.false"
+    />
+    <configuration
+      auto     = "true"
+      address  = "set.my.address.if.auto.is.false"
+      port     = "set.my.port.if.auto.is.false"
+    />
+  </proxy>
+  
+  <!--
+    ***************************************************************************
+    Section "redirection", redirection des ports locaux au travers du tunnel
+  
+    <portXX> XX étant le port à rediriger
+      enabled = true|false activation/desactivation
+      shared  = true|false rendre le port disponible en dehors de la machine
+                locale
+      address = ip ou FQDN du serveur de destination    
+      port    = port du serveur de destination 
+    </portXX>
+    ***************************************************************************
+  -->
+  <forward>
+    <port21
+      shared  = "false"
+      enabled = "false"
+      address = "set.my.ftp.server.com"
+      port    = "21"
+    />
+    <port22
+      shared  = "false"
+      enabled = "false"
+      address = "set.my.ssh.server.com"
+      port    = "22"
+    />
+    <port80
+      shared  = "false"
+      enabled = "false"
+      address = "set.my.http.server.com"
+      port    = "80"
+    />
+    <port443
+      shared  = "false"
+      enabled = "false"
+      address = "set.my.https.server.com"
+      port    = "443"
+    />
+    <port3389
+      shared  = "false"
+      enabled = "false"
+      address = "set.my.remote.desktop.server.com"
+      port    = "3389"
+    />
+    <port5800
+      shared  = "false"
+      enabled = "false"
+      address = "set.my.vnc.server.com"
+      port    = "5800"
+    />    
+    <port6667
+      shared  = "false"
+      enabled = "false"
+      address = "set.my.irc.server.com"
+      port    = "6667"
+    />
+  </forward>
+     
+  <!-- 
+    ***************************************************************************
+    Section "logs"
+  
+    console et fichier:
+      enabled      = "true|false" - active/desactive le log
+      filter       = "DEBUG|INFO|WARN|ERROR|FATAL" - filtre par niveau de
+                   severite
+      stringformat = "{TIMESTAMP} {SEVERITY} {TYPE} {MESSAGE}" - fixe le format
+                   d'affichage
+      dateformat   = "dd/MM/yyyy HH:mm:ss" cf. format des dates .NET - fixe le
+                   format de {TIMESTAMP} 
+    fichier:
+      filename     = "..." - fichier de sortie
+      append       = "true|false" - si false efface le fichier courant
+    ***************************************************************************
+  -->
+  <logs>
+    <console
+      enabled      = "true"
+      filter       = "INFO"
+      stringformat = "{SEVERITY,-5} {MESSAGE}"
+      dateformat   = "dd/MM/yyyy HH:mm:ss" 
+    />
+    <file  
+      enabled      = "true"
+      filter       = "INFO"
+      stringformat = "{TIMESTAMP} {SEVERITY,-5} {TYPE,-20} {MESSAGE}"
+      dateformat   = "dd/MM/yyyy HH:mm:ss"
+      filename     = "bdtclient.log"
+      append       = "false"
+    />
+  </logs>
+    
+</bdtclient>

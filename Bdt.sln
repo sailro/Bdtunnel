@@ -11,6 +11,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BdtGuiClient", "BdtGuiClien
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BdtWebServer", "BdtWebServer\BdtWebServer.csproj", "{FFF84EAA-2238-45E4-8400-01B0D1E88B6B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8E0BB008-90FA-4CD5-B478-A64349CF4234}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Make.DotNet", "Make.DotNet", "{F97D2122-2F85-4A6F-B93E-2D14FD1B89C2}"
+	ProjectSection(SolutionItems) = preProject
+		Make.DotNet\BdtClientCfg.xml = Make.DotNet\BdtClientCfg.xml
+		Make.DotNet\BdtServerCfg.xml = Make.DotNet\BdtServerCfg.xml
+		Make.DotNet\Makefile = Make.DotNet\Makefile
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Make.Mono", "Make.Mono", "{0639BBA7-D56C-4601-B8B4-7017CF7D6BFB}"
+	ProjectSection(SolutionItems) = preProject
+		Make.Mono\BdtClientCfg.xml = Make.Mono\BdtClientCfg.xml
+		Make.Mono\BdtServerCfg.xml = Make.Mono\BdtServerCfg.xml
+		Make.Mono\Makefile = Make.Mono\Makefile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,5 +56,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F97D2122-2F85-4A6F-B93E-2D14FD1B89C2} = {8E0BB008-90FA-4CD5-B478-A64349CF4234}
+		{0639BBA7-D56C-4601-B8B4-7017CF7D6BFB} = {8E0BB008-90FA-4CD5-B478-A64349CF4234}
 	EndGlobalSection
 EndGlobal

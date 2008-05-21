@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<bdtserver>
+
+  <!--
+    ***************************************************************************
+    Section "service", identification du serveur
+  
+    name     = le nom du serveur, utilisé pour la reconnaissance, doit être
+               identique côté client et côté serveur
+    protocol = le protocole à utiliser, doit être identique côté client et
+               côté serveur:
+               - Bdt.Shared.Protocol.HttpBinaryRemoting (flux binaire / HTTP)
+               - Bdt.Shared.Protocol.HttpSoapRemoting (flux soap / HTTP)
+               - Bdt.Shared.Protocol.TcpRemoting (flux binaire / TCP)
+               - Bdt.Shared.Protocol.IpcRemoting (pour ce protocole local,
+               la notion d'adresse/port est inutile)
+    port     = port du serveur
+    ***************************************************************************
+  -->
+  <service
+    name     = "BdtServer"
+    protocol = "Bdt.Shared.Protocol.HttpBinaryRemoting"
+    port     = "80"
+  />
+
+  <!--
+    ***************************************************************************
+    Section "utilisateurs", pour l'identification
+
+    <username où 'username' est le nom de l'utilisateur
+      enabled  = true|false activation/desactivation
+      password = le mot de passe
+    />
+    ***************************************************************************
+  -->
+  <users>
+    <corbier
+       enabled  = "false"
+       password = "sans.ma.barbe" 
+    />
+    <jacky
+       enabled  = "false"
+       password = "touch" 
+    />
+  </users>
+
+  <!-- 
+    ***************************************************************************
+    Section "logs"
+  
+    console et fichier:
+      enabled      = "true|false" - active/desactive le log
+      filter       = "DEBUG|INFO|WARN|ERROR|FATAL" - filtre par niveau de
+                   severite
+      stringformat = "{TIMESTAMP} {SEVERITY} {TYPE} {MESSAGE}" - fixe le format
+                   d'affichage
+      dateformat   = "dd/MM/yyyy HH:mm:ss" cf. format des dates .NET - fixe le
+                   format de {TIMESTAMP} 
+    fichier:
+      filename     = "..." - fichier de sortie
+      append       = "true|false" - si false efface le fichier courant
+    ***************************************************************************
+  -->
+  <logs>
+    <console
+      enabled      = "true"
+      filter       = "INFO"
+      stringformat = "{SEVERITY,-5} {MESSAGE}"
+      dateformat   = "dd/MM/yyyy HH:mm:ss" 
+    />
+    <file  
+      enabled      = "true"
+      filter       = "INFO"
+      stringformat = "{TIMESTAMP} {SEVERITY,-5} {TYPE,-20} {MESSAGE}"
+      dateformat   = "dd/MM/yyyy HH:mm:ss"
+      filename     = "bdtserver.log"
+      append       = "false"
+    />
+  </logs>  
+  
+</bdtserver>
