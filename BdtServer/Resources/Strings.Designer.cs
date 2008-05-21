@@ -22,7 +22,7 @@ namespace Bdt.Server.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Strings {
+    public class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Bdt.Server.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Bdt.Server.Resources.Strings", typeof(Strings).Assembly);
@@ -51,7 +51,7 @@ namespace Bdt.Server.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Bdt.Server.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Access denied for {0}: inactive or nonexistent account.
         /// </summary>
-        internal static string ACCESS_DENIED {
+        public static string ACCESS_DENIED {
             get {
                 return ResourceManager.GetString("ACCESS_DENIED", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Bdt.Server.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Access denied for {0}: bad password.
         /// </summary>
-        internal static string ACCESS_DENIED_BAD_PASSWORD {
+        public static string ACCESS_DENIED_BAD_PASSWORD {
             get {
                 return ResourceManager.GetString("ACCESS_DENIED_BAD_PASSWORD", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Bdt.Server.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Access granted to {0}.
         /// </summary>
-        internal static string ACCESS_GRANTED {
+        public static string ACCESS_GRANTED {
             get {
                 return ResourceManager.GetString("ACCESS_GRANTED", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Bdt.Server.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Cid not found.
         /// </summary>
-        internal static string CID_NOT_FOUND {
+        public static string CID_NOT_FOUND {
             get {
                 return ResourceManager.GetString("CID_NOT_FOUND", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Bdt.Server.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Connected to {0} ({1}).
         /// </summary>
-        internal static string CONNECTED {
+        public static string CONNECTED {
             get {
                 return ResourceManager.GetString("CONNECTED", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Bdt.Server.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Connection refused to {0}:{1} {2}.
         /// </summary>
-        internal static string CONNECTION_REFUSED {
+        public static string CONNECTION_REFUSED {
             get {
                 return ResourceManager.GetString("CONNECTION_REFUSED", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Bdt.Server.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Connection timeout: {0}.
         /// </summary>
-        internal static string CONNECTION_TIMEOUT {
+        public static string CONNECTION_TIMEOUT {
             get {
                 return ResourceManager.GetString("CONNECTION_TIMEOUT", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Bdt.Server.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Disconnected from {0}.
         /// </summary>
-        internal static string DISCONNECTED {
+        public static string DISCONNECTED {
             get {
                 return ResourceManager.GetString("DISCONNECTED", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Bdt.Server.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Disconnection detected.
         /// </summary>
-        internal static string DISCONNECTION_DETECTED {
+        public static string DISCONNECTION_DETECTED {
             get {
                 return ResourceManager.GetString("DISCONNECTION_DETECTED", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Bdt.Server.Resources {
         /// <summary>
         ///   Looks up a localized string similar to [server] .
         /// </summary>
-        internal static string SERVER_SIDE {
+        public static string SERVER_SIDE {
             get {
                 return ResourceManager.GetString("SERVER_SIDE", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Bdt.Server.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Server started, press enter key to exit....
         /// </summary>
-        internal static string SERVER_STARTED {
+        public static string SERVER_STARTED {
             get {
                 return ResourceManager.GetString("SERVER_STARTED", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Bdt.Server.Resources {
         /// <summary>
         ///   Looks up a localized string similar to -=[ BoutDuTunnel Server v{0} - Sebastien LEBRETON ]=-.
         /// </summary>
-        internal static string SERVER_TITLE {
+        public static string SERVER_TITLE {
             get {
                 return ResourceManager.GetString("SERVER_TITLE", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Bdt.Server.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Uid not found.
         /// </summary>
-        internal static string UID_NOT_FOUND {
+        public static string UID_NOT_FOUND {
             get {
                 return ResourceManager.GetString("UID_NOT_FOUND", resourceCulture);
             }
