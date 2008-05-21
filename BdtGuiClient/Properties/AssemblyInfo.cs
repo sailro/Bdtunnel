@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("BdtGuiClient")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyProduct("BoutDuTunnel")]
+[assembly: AssemblyCopyright("Copyright ©  2008 Sebastien LEBRETON")]
 [assembly: AssemblyTrademark("")]
 [assembly: CLSCompliant(true)]
 
