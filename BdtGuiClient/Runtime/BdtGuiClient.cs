@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
+using System.Net;
 
 using Bdt.Client.Runtime;
 using Bdt.Client.Configuration;
@@ -197,6 +198,10 @@ namespace Bdt.GuiClient.Runtime
         /// -----------------------------------------------------------------------------
         protected override void Run (string[] args)
         {
+#pragma warning disable
+            ServicePointManager.CertificatePolicy = new TrustAllCertificatePolicy();
+#pragma warning restore
+
             LoadConfiguration(args);
             m_mainForm = new MainForm(this);
             Application.Run(m_mainForm);

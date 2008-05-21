@@ -9,10 +9,11 @@ using System;
 using System.Net;
 using System.Reflection;
 using System.Runtime.Remoting.Channels.Http;
+using System.Runtime.Remoting;
+using System.Runtime.Remoting.Channels;
 
 using Bdt.Shared.Resources;
 using Bdt.Shared.Logs;
-using System.Runtime.Remoting.Channels;
 #endregion
 
 namespace Bdt.Shared.Protocol
@@ -108,6 +109,20 @@ namespace Bdt.Shared.Protocol
         {
             Log(string.Format(Strings.CONFIGURING_CLIENT, this.GetType().Name, ServerURL), ESeverity.DEBUG);
             ChannelServices.RegisterChannel(ClientChannel, UseSSL);
+        }
+
+        /// -----------------------------------------------------------------------------
+        /// <summary>
+        /// Configuration côté serveur
+        /// </summary>
+        /// <param name="type">le type d'objet à rendre distant</param>
+        /// -----------------------------------------------------------------------------
+        public override void ConfigureServer(Type type)
+        {
+            Log(string.Format(Strings.CONFIGURING_SERVER, this.GetType().Name, Port), ESeverity.INFO);
+            ChannelServices.RegisterChannel(ServerChannel, UseSSL);
+            WellKnownServiceTypeEntry wks = new WellKnownServiceTypeEntry(type, Name, WellKnownObjectMode.Singleton);
+            RemotingConfiguration.RegisterWellKnownServiceType(wks);
         }
         #endregion
 
