@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="Configuration\ClientConfig.cs" />
     <Compile Include="Configuration\PortForward.cs" />
+    <Compile Include="Configuration\TrustAllCertificatePolicy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

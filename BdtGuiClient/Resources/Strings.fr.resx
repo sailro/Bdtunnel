@@ -312,4 +312,10 @@
   <data name="SETUPFORM_TCP_REMOTING" xml:space="preserve">
     <value>Flux binaire via TCP</value>
   </data>
+  <data name="SETUPFORM_HTTPS_BINARY_REMOTING" xml:space="preserve">
+    <value>Flux binaire via HTTPS</value>
+  </data>
+  <data name="SETUPFORM_HTTPS_SOAP_REMOTING" xml:space="preserve">
+    <value>Flux SOAP via HTTPS</value>
+  </data>
 </root>

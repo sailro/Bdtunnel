@@ -118,6 +118,8 @@ namespace Bdt.GuiClient.Forms
             ServiceNameEdit.Text = m_clientConfig.ServiceName;
             ServiceProtocolEdit.Items.Add(new ProtocolItem(Strings.SETUPFORM_HTTP_BINARY_REMOTING, typeof(HttpBinaryRemoting)));
             ServiceProtocolEdit.Items.Add(new ProtocolItem(Strings.SETUPFORM_HTTP_SOAP_REMOTING, typeof(HttpSoapRemoting)));
+            ServiceProtocolEdit.Items.Add(new ProtocolItem(Strings.SETUPFORM_HTTPS_BINARY_REMOTING, typeof(HttpSslBinaryRemoting)));
+            ServiceProtocolEdit.Items.Add(new ProtocolItem(Strings.SETUPFORM_HTTPS_SOAP_REMOTING, typeof(HttpSslSoapRemoting)));
             ServiceProtocolEdit.Items.Add(new ProtocolItem(Strings.SETUPFORM_TCP_REMOTING, typeof(TcpRemoting)));
             ServiceProtocolEdit.Items.Add(new ProtocolItem(Strings.SETUPFORM_IPC_REMOTING, typeof(IpcRemoting)));
             foreach (ProtocolItem item in ServiceProtocolEdit.Items)

@@ -9,6 +9,10 @@ using System;
 using System.Net;
 using System.Reflection;
 using System.Runtime.Remoting.Channels.Http;
+
+using Bdt.Shared.Resources;
+using Bdt.Shared.Logs;
+using System.Runtime.Remoting.Channels;
 #endregion
 
 namespace Bdt.Shared.Protocol
@@ -29,6 +33,18 @@ namespace Bdt.Shared.Protocol
         #region " Proprietes "
         /// -----------------------------------------------------------------------------
         /// <summary>
+        /// Utiliser le cryptage SSL
+        /// </summary>
+        /// -----------------------------------------------------------------------------
+        protected virtual bool UseSSL
+        {
+            get {
+                return false;
+            }
+        }
+
+        /// -----------------------------------------------------------------------------
+        /// <summary>
         /// L'URL nécessaire pour se connecter au serveur
         /// </summary>
         /// -----------------------------------------------------------------------------
@@ -36,7 +52,8 @@ namespace Bdt.Shared.Protocol
         {
             get
             {
-                return string.Format("http://{0}:{1}/{2}", Address, Port, Name);
+                String scheme = (UseSSL) ? Uri.UriSchemeHttps : Uri.UriSchemeHttp;
+                return string.Format("{0}://{1}:{2}/{3}", scheme, Address, Port, Name);
             }
         }
 
@@ -78,6 +95,19 @@ namespace Bdt.Shared.Protocol
                 FieldInfo proxyObjectFieldInfo = typeof(HttpClientChannel).GetField(HACK_PROXY_OBJECT, BindingFlags.Instance | BindingFlags.NonPublic);
                 proxyObjectFieldInfo.SetValue(ProxyChannel, value);
             }
+        }
+        #endregion
+
+        #region " Methodes "
+        /// -----------------------------------------------------------------------------
+        /// <summary>
+        /// Configuration côté client
+        /// </summary>
+        /// -----------------------------------------------------------------------------
+        public override void ConfigureClient()
+        {
+            Log(string.Format(Strings.CONFIGURING_CLIENT, this.GetType().Name, ServerURL), ESeverity.DEBUG);
+            ChannelServices.RegisterChannel(ClientChannel, UseSSL);
         }
         #endregion
 

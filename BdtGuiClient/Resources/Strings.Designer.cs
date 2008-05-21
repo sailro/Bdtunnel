@@ -601,6 +601,24 @@ namespace Bdt.GuiClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HTTPS binary stream.
+        /// </summary>
+        internal static string SETUPFORM_HTTPS_BINARY_REMOTING {
+            get {
+                return ResourceManager.GetString("SETUPFORM_HTTPS_BINARY_REMOTING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HTTPS SOAP stream.
+        /// </summary>
+        internal static string SETUPFORM_HTTPS_SOAP_REMOTING {
+            get {
+                return ResourceManager.GetString("SETUPFORM_HTTPS_SOAP_REMOTING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid input.
         /// </summary>
         internal static string SETUPFORM_INVALID_INPUT {

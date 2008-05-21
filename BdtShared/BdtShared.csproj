@@ -120,6 +120,8 @@
     <Compile Include="Logs\StringLogger.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Protocol\HttpSslSoapRemoting.cs" />
+    <Compile Include="Protocol\HttpSslBinaryRemoting.cs" />
     <Compile Include="Protocol\TcpRemoting.cs" />
     <Compile Include="Protocol\GenericHttpRemoting.cs">
       <SubType>Code</SubType>

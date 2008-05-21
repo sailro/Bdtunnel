@@ -312,4 +312,10 @@
   <data name="SETUPFORM_TCP_REMOTING" xml:space="preserve">
     <value>TCP binary stream</value>
   </data>
+  <data name="SETUPFORM_HTTPS_BINARY_REMOTING" xml:space="preserve">
+    <value>HTTPS binary stream</value>
+  </data>
+  <data name="SETUPFORM_HTTPS_SOAP_REMOTING" xml:space="preserve">
+    <value>HTTPS SOAP stream</value>
+  </data>
 </root>
