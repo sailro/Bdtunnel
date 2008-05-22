@@ -9,7 +9,7 @@ OUTPUT_SERVER = $(OUTPUT)BdtServer\\
 OUTPUT_CLIENT = $(OUTPUT)BdtClient\\
 OUTPUT_CLIGUI = $(OUTPUT)BdtGuiClient\\
 OUTPUT_WEBSRV = $(OUTPUT)BdtWebServer\\
-OUTPUT_WEBBIN = $(OUTPUT)BdtWebServer\\Bin\\
+OUTPUT_WEBBIN = $(OUTPUT)BdtWebServer\\bin\\
 
 ################################################################################
 # Tools
