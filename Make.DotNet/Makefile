@@ -166,7 +166,7 @@ $(OUTPUT_WEBSRV)Web.config:
 # Cleaning
 ################################################################################
 clean:
-		@-rm -fr *.resources
+		@-rm -fr *.resources *.bak
 		@-rm -fr $(OUTPUT_SERVER)
 		@-rm -fr $(OUTPUT_CLIENT)
 		@-rm -fr $(OUTPUT_CLIGUI)
