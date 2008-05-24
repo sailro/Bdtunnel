@@ -3,21 +3,22 @@
   
   <!--
     ***************************************************************************
-    Section "service", identification du serveur sur lequel se connecter
+    "service" section, remote server identity
   
-    name     = le nom du serveur, utilisé pour la reconnaissance, doit être
-               identique côté client et côté serveur
-    protocol = le protocole à utiliser, doit être identique côté client et
-               côté serveur:
-               - Bdt.Shared.Protocol.HttpBinaryRemoting (flux binaire / HTTP)
-               - Bdt.Shared.Protocol.HttpSoapRemoting (flux soap / HTTP)
-               - Bdt.Shared.Protocol.TcpRemoting (flux binaire / TCP)
-               - Bdt.Shared.Protocol.IpcRemoting (pour ce protocole local,
-                 la notion d'adresse/port est inutile)
-    address  = ip ou FQDN du serveur
-    port     = port du serveur
-    username = l'utilisateur déclaré sur le serveur
-    password = le mot de passe associé
+    name     = server "name", used for identification purpose.
+               Must match with the server configuration
+    protocol = Communication protocol to use, must match with the server config
+               - Bdt.Shared.Protocol.HttpBinaryRemoting (binary stream/HTTP)
+               - Bdt.Shared.Protocol.HttpSoapRemoting (soap stream/HTTP)
+               - Bdt.Shared.Protocol.TcpRemoting (binary stream/TCP)
+               - Bdt.Shared.Protocol.IpcRemoting (local)            
+               When using a server hosted in IIs / mod_mono:
+               - Bdt.Shared.Protocol.HttpSslBinaryRemoting (binary stream/HTTPS)
+               - Bdt.Shared.Protocol.HttpSslSoapRemoting (soap stream/HTTPS)
+    address  = ip or FQDN to connect to
+    port     = port
+    username = see "Users" section on the server configuration
+    password = see "Users" section on the server configuration
     ***************************************************************************
   -->
   <service
@@ -31,12 +32,11 @@
 
   <!--
     ***************************************************************************
-    Section "socks", proxy socks côté client
+    "Socks" Section, socks proxy
   
-    enabled = true|false activation/desactivation
-    shared  = true|false rendre le port disponible en dehors de la machine
-              locale
-    port    = port local pour le serveur
+    enabled = true|false enable/disable socks proxy
+    shared  = true|false bind to all ip
+    port    = port
     ***************************************************************************
   -->
   <socks
@@ -47,23 +47,22 @@
   
   <!--
     ***************************************************************************
-    Section "proxy", paramètrage du proxy HTTP pour les protocoles le
-    supportant du type Bdt.Shared.Protocol.Http*Remoting
+    "Proxy" section, HTTP proxy setup, only available if using
+    Bdt.Shared.Protocol.Http*Remoting protocols!
   
-    enabled                   = true|false activation/desactivation
+    enabled                   = true|false enable/disable
 
-    authentification/auto     = true|false si vrai, utilisation des 
-                                informations de l'utilisateur courant
-                                Sinon:
-    authentification/username = login sur le proxy
-    authentification/password = mot de passe sur le proxy
-    authentification/domain   = domaine sur le proxy
+    authentification/auto     = true|false if true, using current user
+                                credentials.
+                                Else:
+    authentification/username = ...
+    authentification/password = ...
+    authentification/domain   = ...
   
-    configuration/auto        = true|false si vrai, recherche du proxy depuis
-                                les paramètres Internet Explorer
-                                Sinon:
-    configuration/address     = adresse du proxy
-    configuration/port        = port du proxy
+    configuration/auto        = true|false if true, use Internet Explorer setup
+                                Else:
+    configuration/address     = ...
+    configuration/port        = ...
     ***************************************************************************
   -->
   <proxy
@@ -83,14 +82,13 @@
   
   <!--
     ***************************************************************************
-    Section "redirection", redirection des ports locaux au travers du tunnel
+    "Forward" section, redirect local ports via the tunnel
   
-    <portXX> XX étant le port à rediriger
-      enabled = true|false activation/desactivation
-      shared  = true|false rendre le port disponible en dehors de la machine
-                locale
-      address = ip ou FQDN du serveur de destination    
-      port    = port du serveur de destination 
+    <portXXXX> XXXX the port to redirect
+      enabled = true|false enable/disable
+      shared  = true|false bind to all ip
+      address = ip or FQDN to connect to
+      port    = target port
     </portXX>
     ***************************************************************************
   -->
@@ -141,19 +139,16 @@
      
   <!-- 
     ***************************************************************************
-    Section "logs"
+    "Logs" section
   
-    console et fichier:
-      enabled      = "true|false" - active/desactive le log
-      filter       = "DEBUG|INFO|WARN|ERROR|FATAL" - filtre par niveau de
-                   severite
-      stringformat = "{TIMESTAMP} {SEVERITY} {TYPE} {MESSAGE}" - fixe le format
-                   d'affichage
-      dateformat   = "dd/MM/yyyy HH:mm:ss" cf. format des dates .NET - fixe le
-                   format de {TIMESTAMP} 
-    fichier:
-      filename     = "..." - fichier de sortie
-      append       = "true|false" - si false efface le fichier courant
+    console and file
+      enabled      = "true|false" - enable/disable logging
+      filter       = "DEBUG|INFO|WARN|ERROR|FATAL" 
+      stringformat = "{TIMESTAMP} {SEVERITY} {TYPE} {MESSAGE}" 
+      dateformat   = "dd/MM/yyyy HH:mm:ss" see .NET date format -> {TIMESTAMP} 
+    file:
+      filename     = "..." - output file
+      append       = "true|false" - append/overwrite
     ***************************************************************************
   -->
   <logs>

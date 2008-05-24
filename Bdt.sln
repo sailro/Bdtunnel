@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Make.DotNet", "Make.DotNet"
 	ProjectSection(SolutionItems) = preProject
 		Make.DotNet\BdtClientCfg.xml = Make.DotNet\BdtClientCfg.xml
 		Make.DotNet\BdtServerCfg.xml = Make.DotNet\BdtServerCfg.xml
+		Make.DotNet\BdtWebServerCfg.xml = Make.DotNet\BdtWebServerCfg.xml
 		Make.DotNet\Makefile = Make.DotNet\Makefile
 	EndProjectSection
 EndProject
@@ -24,6 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Make.Mono", "Make.Mono", "{
 	ProjectSection(SolutionItems) = preProject
 		Make.Mono\BdtClientCfg.xml = Make.Mono\BdtClientCfg.xml
 		Make.Mono\BdtServerCfg.xml = Make.Mono\BdtServerCfg.xml
+		Make.Mono\BdtWebServerCfg.xml = Make.Mono\BdtWebServerCfg.xml
 		Make.Mono\Makefile = Make.Mono\Makefile
 	EndProjectSection
 EndProject

@@ -4,25 +4,25 @@
   <!--
     ***************************************************************************
     "Service" section, server identity
-  
-    name     = server "name", used for identification purpose.
-               Must match with the client configuration
-    protocol = Communication protocol to use, must match with the client config
-               - Bdt.Shared.Protocol.HttpBinaryRemoting (binary stream/HTTP)
-               - Bdt.Shared.Protocol.HttpSoapRemoting (soap stream/HTTP)
-               - Bdt.Shared.Protocol.TcpRemoting (binary stream/TCP)
-               - Bdt.Shared.Protocol.IpcRemoting (local)            
-               When using a server hosted in IIs / mod_mono:
-               - Bdt.Shared.Protocol.HttpSslBinaryRemoting (binary stream/HTTPS)
-               - Bdt.Shared.Protocol.HttpSslSoapRemoting (soap stream/HTTPS)
-    port     = server port 
+    
+    Not used when hosted in IIs / mod_mono, check Web.config to configure:
+    
+      <channels>
+        <channel ref="http" />
+        <serverProviders>
+          <formatter href="soap" />  -> soap/binary
+        </serverProviders>
+      </channels>
+      
+    For "soap", use on the client side:
+    - Bdt.Shared.Protocol.HttpSoapRemoting (soap stream/HTTP)
+    - Bdt.Shared.Protocol.HttpSslSoapRemoting (soap stream/HTTPS)
+
+		For "binary":
+    - Bdt.Shared.Protocol.HttpBinaryRemoting (binary stream/HTTP)
+    - Bdt.Shared.Protocol.HttpSslBinaryRemoting (binary stream/HTTPS)
     ***************************************************************************
   -->
-  <service
-    name     = "BdtServer"
-    protocol = "Bdt.Shared.Protocol.HttpBinaryRemoting"
-    port     = "80"
-  />
 
   <!--
     ***************************************************************************

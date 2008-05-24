@@ -154,7 +154,7 @@ $(OUTPUT_WEBBIN)BdtWebServer.dll:
 		$(CC) $(CFLAGS) /reference:$(DOTNET_DLL)System.Web.dll /reference:$(OUTPUT_WEBBIN)BdtShared.dll /reference:$(OUTPUT_WEBBIN)BdtServer.dll /out:$@ /target:library $(WEBSRV_FILES)
 
 $(OUTPUT_WEBSRV)BdtServerCfg.xml:
-		cp -f BdtServerCfg.xml $@ 
+		cp -f BdtWebServerCfg.xml $@ 
 
 $(OUTPUT_WEBSRV)Global.asax:
 		cp -f ..\\BdtWebServer\\Global.asax $@

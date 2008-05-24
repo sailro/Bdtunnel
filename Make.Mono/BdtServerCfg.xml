@@ -3,18 +3,19 @@
 
   <!--
     ***************************************************************************
-    Section "service", identification du serveur
+    "Service" section, server identity
   
-    name     = le nom du serveur, utilisé pour la reconnaissance, doit être
-               identique côté client et côté serveur
-    protocol = le protocole à utiliser, doit être identique côté client et
-               côté serveur:
-               - Bdt.Shared.Protocol.HttpBinaryRemoting (flux binaire / HTTP)
-               - Bdt.Shared.Protocol.HttpSoapRemoting (flux soap / HTTP)
-               - Bdt.Shared.Protocol.TcpRemoting (flux binaire / TCP)
-               - Bdt.Shared.Protocol.IpcRemoting (pour ce protocole local,
-               la notion d'adresse/port est inutile)
-    port     = port du serveur
+    name     = server "name", used for identification purpose.
+               Must match with the client configuration
+    protocol = Communication protocol to use, must match with the client config
+               - Bdt.Shared.Protocol.HttpBinaryRemoting (binary stream/HTTP)
+               - Bdt.Shared.Protocol.HttpSoapRemoting (soap stream/HTTP)
+               - Bdt.Shared.Protocol.TcpRemoting (binary stream/TCP)
+               - Bdt.Shared.Protocol.IpcRemoting (local)            
+               When using a server hosted in IIs / mod_mono:
+               - Bdt.Shared.Protocol.HttpSslBinaryRemoting (binary stream/HTTPS)
+               - Bdt.Shared.Protocol.HttpSslSoapRemoting (soap stream/HTTPS)
+    port     = server port 
     ***************************************************************************
   -->
   <service
@@ -25,11 +26,11 @@
 
   <!--
     ***************************************************************************
-    Section "utilisateurs", pour l'identification
+    "Users" section
 
-    <username où 'username' est le nom de l'utilisateur
-      enabled  = true|false activation/desactivation
-      password = le mot de passe
+    <username 
+      enabled  = true|false enable/disable user account
+      password = "..."
     />
     ***************************************************************************
   -->
@@ -46,19 +47,16 @@
 
   <!-- 
     ***************************************************************************
-    Section "logs"
+    "Logs" section
   
-    console et fichier:
-      enabled      = "true|false" - active/desactive le log
-      filter       = "DEBUG|INFO|WARN|ERROR|FATAL" - filtre par niveau de
-                   severite
-      stringformat = "{TIMESTAMP} {SEVERITY} {TYPE} {MESSAGE}" - fixe le format
-                   d'affichage
-      dateformat   = "dd/MM/yyyy HH:mm:ss" cf. format des dates .NET - fixe le
-                   format de {TIMESTAMP} 
-    fichier:
-      filename     = "..." - fichier de sortie
-      append       = "true|false" - si false efface le fichier courant
+    console and file
+      enabled      = "true|false" - enable/disable logging
+      filter       = "DEBUG|INFO|WARN|ERROR|FATAL" 
+      stringformat = "{TIMESTAMP} {SEVERITY} {TYPE} {MESSAGE}" 
+      dateformat   = "dd/MM/yyyy HH:mm:ss" see .NET date format -> {TIMESTAMP} 
+    file:
+      filename     = "..." - output file
+      append       = "true|false" - append/overwrite
     ***************************************************************************
   -->
   <logs>
