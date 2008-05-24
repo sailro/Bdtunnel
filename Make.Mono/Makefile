@@ -52,7 +52,7 @@ ORES_CLIGUI_FILES_OUT = $(call F_CLIGUI_FILES_OUT,Properties)
 ################################################################################
 # Rules
 ################################################################################
-all:					BdtClient BdtServer BdtWebServer
+all:					BdtClient BdtServer BdtGuiClient BdtWebServer
 BdtClient:		$(OUTPUT_CLIENT)BdtShared.dll $(OUTPUT_CLIENT)BdtClient.exe $(OUTPUT_CLIENT)BdtClientCfg.xml
 BdtServer:		$(OUTPUT_SERVER)BdtShared.dll $(OUTPUT_SERVER)BdtServer.exe $(OUTPUT_SERVER)BdtServerCfg.xml
 BdtGuiClient:	$(OUTPUT_CLIGUI)BdtShared.dll $(OUTPUT_CLIGUI)BdtClient.dll $(OUTPUT_CLIGUI)BdtGuiClient.exe $(OUTPUT_CLIGUI)BdtClientCfg.xml
