@@ -24,7 +24,7 @@ CFLAGS = /noconfig /warn:4 /debug- /optimize+ /reference:$(DOTNET_DLL)System.dll
 ################################################################################
 SHARED_FILES = $(subst /,\\,$(wildcard ../BdtShared/Properties/*.cs ../BdtShared/Configuration/*.cs ../BdtShared/Console/*.cs ../BdtShared/Logs/*.cs ../BdtShared/Protocol/*.cs ../BdtShared/Request/*.cs ../BdtShared/Response/*.cs ../BdtShared/Service/*.cs ../BdtShared/Runtime/*.cs ../BdtShared/Resources/*.cs))
 SERVER_FILES = $(subst /,\\,$(wildcard ../BdtServer/Properties/*.cs ../BdtServer/Runtime/*.cs ../BdtServer/Service/*.cs ../BdtServer/Resources/*.cs))
-CLIENT_FILES = $(subst /,\\,$(wildcard ../BdtClient/Properties/*.cs ../BdtClient/Configuration/*.cs ../BdtClient/Service/*.cs ../BdtClient/Runtime/*.cs ../BdtClient/Socks/*.cs ../BdtClient/Sockets/*.cs ../BdtClient/Resources/*.cs))
+CLIENT_FILES = $(subst /,\\,$(wildcard ../BdtClient/Properties/*.cs ../BdtClient/Commands/*.cs ../BdtClient/Configuration/*.cs ../BdtClient/Service/*.cs ../BdtClient/Runtime/*.cs ../BdtClient/Socks/*.cs ../BdtClient/Sockets/*.cs ../BdtClient/Resources/*.cs))
 CLIGUI_FILES = $(subst /,\\,$(wildcard ../BdtGuiClient/Properties/*.cs ../BdtGuiClient/Forms/*.cs ../BdtGuiClient/Logs/*.cs ../BdtGuiClient/Runtime/*.cs ../BdtGuiClient/Resources/*.cs))
 WEBSRV_FILES = $(subst /,\\,$(wildcard ../BdtWebServer/Properties/*.cs ../BdtWebServer/*.cs ../BdtWebServer/Runtime/*.cs))
 

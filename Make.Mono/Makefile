@@ -22,7 +22,7 @@ CFLAGS = -debug- -optimize+ -warn:4
 ################################################################################
 SHARED_FILES = $(wildcard ../BdtShared/Properties/*.cs ../BdtShared/Configuration/*.cs ../BdtShared/Console/*.cs ../BdtShared/Logs/*.cs ../BdtShared/Protocol/*.cs ../BdtShared/Request/*.cs ../BdtShared/Response/*.cs ../BdtShared/Service/*.cs ../BdtShared/Runtime/*.cs ../BdtShared/Resources/*.cs)
 SERVER_FILES = $(wildcard ../BdtServer/Properties/*.cs ../BdtServer/Runtime/*.cs ../BdtServer/Service/*.cs ../BdtServer/Resources/*.cs)
-CLIENT_FILES = $(wildcard ../BdtClient/Properties/*.cs ../BdtClient/Configuration/*.cs ../BdtClient/Service/*.cs ../BdtClient/Runtime/*.cs ../BdtClient/Socks/*.cs ../BdtClient/Sockets/*.cs ../BdtClient/Resources/*.cs)
+CLIENT_FILES = $(wildcard ../BdtClient/Properties/*.cs ../BdtClient/Commands/*.cs ../BdtClient/Configuration/*.cs ../BdtClient/Service/*.cs ../BdtClient/Runtime/*.cs ../BdtClient/Socks/*.cs ../BdtClient/Sockets/*.cs ../BdtClient/Resources/*.cs)
 CLIGUI_FILES = $(wildcard ../BdtGuiClient/Properties/*.cs ../BdtGuiClient/Forms/*.cs ../BdtGuiClient/Logs/*.cs ../BdtGuiClient/Runtime/*.cs ../BdtGuiClient/Resources/*.cs)
 WEBSRV_FILES = $(wildcard ../BdtWebServer/Properties/*.cs ../BdtWebServer/*.cs ../BdtWebServer/Runtime/*.cs)
 
