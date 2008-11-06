@@ -88,6 +88,15 @@ namespace Bdt.Server.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Administrator privileges are required.
+        /// </summary>
+        public static string ADMIN_REQUIRED {
+            get {
+                return ResourceManager.GetString("ADMIN_REQUIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cid not found.
         /// </summary>
         public static string CID_NOT_FOUND {
@@ -106,6 +115,15 @@ namespace Bdt.Server.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connection {0} from {1} session was killed by {2}.
+        /// </summary>
+        public static string CONNECTION_KILLED {
+            get {
+                return ResourceManager.GetString("CONNECTION_KILLED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connection refused to {0}:{1} {2}.
         /// </summary>
         public static string CONNECTION_REFUSED {
@@ -120,6 +138,24 @@ namespace Bdt.Server.Resources {
         public static string CONNECTION_TIMEOUT {
             get {
                 return ResourceManager.GetString("CONNECTION_TIMEOUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection idle timeout is not set for {0}, using default: {1} hour(s).
+        /// </summary>
+        public static string DEFAULT_CONNECTION_TIMEOUT {
+            get {
+                return ResourceManager.GetString("DEFAULT_CONNECTION_TIMEOUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Session idle timeout is not set for {0}, using default: {1} hour(s).
+        /// </summary>
+        public static string DEFAULT_SESSION_TIMEOUT {
+            get {
+                return ResourceManager.GetString("DEFAULT_SESSION_TIMEOUT", resourceCulture);
             }
         }
         
@@ -169,11 +205,38 @@ namespace Bdt.Server.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uid not found.
+        ///   Looks up a localized string similar to {0} session was killed by {1}.
         /// </summary>
-        public static string UID_NOT_FOUND {
+        public static string SESSION_KILLED {
             get {
-                return ResourceManager.GetString("UID_NOT_FOUND", resourceCulture);
+                return ResourceManager.GetString("SESSION_KILLED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Session closed for {0}.
+        /// </summary>
+        public static string SESSION_LOGOUT {
+            get {
+                return ResourceManager.GetString("SESSION_LOGOUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Session timeout: {0}.
+        /// </summary>
+        public static string SESSION_TIMEOUT {
+            get {
+                return ResourceManager.GetString("SESSION_TIMEOUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sid not found.
+        /// </summary>
+        public static string SID_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("SID_NOT_FOUND", resourceCulture);
             }
         }
     }

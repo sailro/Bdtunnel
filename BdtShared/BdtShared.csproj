@@ -144,14 +144,18 @@
     <Compile Include="Protocol\IpcRemoting.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Request\AuthenticateRequest.cs">
+    <Compile Include="Request\KillConnectionRequest.cs" />
+    <Compile Include="Request\KillSessionRequest.cs" />
+    <Compile Include="Request\SessionContextRequest.cs" />
+    <Compile Include="Request\ISessionContextRequest.cs" />
+    <Compile Include="Request\LoginRequest.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Request\ConnectRequest.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Request\GenericRequest.cs" />
-    <Compile Include="Request\IGenericRequest.cs">
+    <Compile Include="Request\ConnectionContextRequest.cs" />
+    <Compile Include="Request\IConnectionContextRequest.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Request\WriteRequest.cs">
@@ -162,19 +166,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="Response\AuthenticateResponse.cs">
+    <Compile Include="Response\MonitorResponse.cs" />
+    <Compile Include="Response\MinimalResponse.cs" />
+    <Compile Include="Response\LoginResponse.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Response\ConnectResponse.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Response\GenericResponse.cs" />
-    <Compile Include="Response\IGenericResponse.cs">
+    <Compile Include="Response\IMinimalResponse.cs" />
+    <Compile Include="Response\ConnectionContextResponse.cs" />
+    <Compile Include="Response\IConnectionContextResponse.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Response\ReadResponse.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Response\Connection.cs" />
+    <Compile Include="Response\Session.cs" />
     <Compile Include="Runtime\Program.cs">
       <SubType>Code</SubType>
     </Compile>

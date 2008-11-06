@@ -212,4 +212,23 @@
   <data name="VERSION_MISMATCH" xml:space="preserve">
     <value>Version mismatch between client and server</value>
   </data>
+  <data name="CHECK_PARAMETERS" xml:space="preserve">
+    <value>Check parameters!</value>
+  </data>
+  <data name="CURRENT_SID" xml:space="preserve">
+    <value>Current Session-id (Sid): {0}</value>
+    <comment>Sid</comment>
+  </data>
+  <data name="HELP_HELP" xml:space="preserve">
+    <value>Display help</value>
+  </data>
+  <data name="KILL_CONNECTION_HELP" xml:space="preserve">
+    <value>Kill an existing connection, given his sid and cid</value>
+  </data>
+  <data name="KILL_SESSION_HELP" xml:space="preserve">
+    <value>Kill an existing session, given his sid</value>
+  </data>
+  <data name="MONITOR_HELP" xml:space="preserve">
+    <value>Display all sessions and connections</value>
+  </data>
 </root>

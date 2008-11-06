@@ -89,6 +89,11 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\KillConnectionCommand.cs" />
+    <Compile Include="Commands\KillSessionCommand.cs" />
+    <Compile Include="Commands\MonitorCommand.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Configuration\ClientConfig.cs" />
     <Compile Include="Configuration\PortForward.cs" />
     <Compile Include="Configuration\TrustAllCertificatePolicy.cs" />

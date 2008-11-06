@@ -110,7 +110,8 @@
     <Compile Include="Runtime\BdtServer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Service\TunnelUser.cs" />
+    <Compile Include="Service\TimeoutObject.cs" />
+    <Compile Include="Service\TunnelSession.cs" />
     <Compile Include="Service\Tunnel.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -31,6 +31,9 @@
     <username 
       enabled  = true|false enable/disable user account
       password = "..."
+      admin    = true|false enable/disable administrative privileges    
+      stimeout = hour(s) before killing idle session (<=0 to disable)
+      ctimeout = hour(s) before killing idle connection (<=0 to disable)
     />
     ***************************************************************************
   -->
@@ -38,10 +41,16 @@
     <corbier
        enabled  = "false"
        password = "sans.ma.barbe" 
+       admin    = "false"
+       stimeout = "12"
+       ctimeout = "1"
     />
     <jacky
        enabled  = "false"
        password = "touch" 
+       admin    = "false"
+       stimeout = "12"
+       ctimeout = "1"
     />
   </users>
 

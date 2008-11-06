@@ -61,6 +61,15 @@ namespace Bdt.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check parameters!.
+        /// </summary>
+        internal static string CHECK_PARAMETERS {
+            get {
+                return ResourceManager.GetString("CHECK_PARAMETERS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Client started, press enter key to exit....
         /// </summary>
         internal static string CLIENT_STARTED {
@@ -88,6 +97,15 @@ namespace Bdt.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current Session-id (Sid): {0}.
+        /// </summary>
+        internal static string CURRENT_SID {
+            get {
+                return ResourceManager.GetString("CURRENT_SID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Port {0} already in use, disabling forward to {1}:{2}.
         /// </summary>
         internal static string FORWARD_CANCELED {
@@ -102,6 +120,15 @@ namespace Bdt.Client.Resources {
         internal static string FORWARDING {
             get {
                 return ResourceManager.GetString("FORWARDING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display help.
+        /// </summary>
+        internal static string HELP_HELP {
+            get {
+                return ResourceManager.GetString("HELP_HELP", resourceCulture);
             }
         }
         
@@ -147,6 +174,33 @@ namespace Bdt.Client.Resources {
         internal static string INVALID_SOCKS_HANDSHAKE {
             get {
                 return ResourceManager.GetString("INVALID_SOCKS_HANDSHAKE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kill an existing connection, given his sid and cid.
+        /// </summary>
+        internal static string KILL_CONNECTION_HELP {
+            get {
+                return ResourceManager.GetString("KILL_CONNECTION_HELP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kill an existing session, given his sid.
+        /// </summary>
+        internal static string KILL_SESSION_HELP {
+            get {
+                return ResourceManager.GetString("KILL_SESSION_HELP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display all sessions and connections.
+        /// </summary>
+        internal static string MONITOR_HELP {
+            get {
+                return ResourceManager.GetString("MONITOR_HELP", resourceCulture);
             }
         }
         

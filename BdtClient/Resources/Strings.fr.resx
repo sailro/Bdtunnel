@@ -212,4 +212,23 @@
   <data name="VERSION_MISMATCH" xml:space="preserve">
     <value>les versions du client et du serveur ne sont pas identiques</value>
   </data>
+  <data name="CHECK_PARAMETERS" xml:space="preserve">
+    <value>Verifiez les parametres!</value>
+  </data>
+  <data name="CURRENT_SID" xml:space="preserve">
+    <value>Jeton de session courant (Sid): {0}</value>
+    <comment>Sid</comment>
+  </data>
+  <data name="HELP_HELP" xml:space="preserve">
+    <value>Affiche l'aide</value>
+  </data>
+  <data name="KILL_CONNECTION_HELP" xml:space="preserve">
+    <value>Supprime une connexion suivant son sid et cid</value>
+  </data>
+  <data name="KILL_SESSION_HELP" xml:space="preserve">
+    <value>Supprime une session suivant son sid</value>
+  </data>
+  <data name="MONITOR_HELP" xml:space="preserve">
+    <value>Affiche toutes les sessions et connexions</value>
+  </data>
 </root>

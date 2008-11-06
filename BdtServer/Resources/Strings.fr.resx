@@ -129,12 +129,19 @@
     <value>Authentification acceptee pour {0}</value>
     <comment>Utilisateur</comment>
   </data>
+  <data name="ADMIN_REQUIRED" xml:space="preserve">
+    <value>Les droits d'administration sont requis</value>
+  </data>
   <data name="CID_NOT_FOUND" xml:space="preserve">
     <value>Le cid est introuvable</value>
   </data>
   <data name="CONNECTED" xml:space="preserve">
     <value>Connexion effectuee a {0} ({1})</value>
     <comment>(Ip:Port), Adresse</comment>
+  </data>
+  <data name="CONNECTION_KILLED" xml:space="preserve">
+    <value>La connexionn {0} de la session {1} a ete tuee par {2}</value>
+    <comment>(Ip:Port), Utilisateur</comment>
   </data>
   <data name="CONNECTION_REFUSED" xml:space="preserve">
     <value>Connexion refusee a {0}:{1} {2}</value>
@@ -143,6 +150,14 @@
   <data name="CONNECTION_TIMEOUT" xml:space="preserve">
     <value>Timeout de connexion: {0}</value>
     <comment>(Ip:Port)</comment>
+  </data>
+  <data name="DEFAULT_CONNECTION_TIMEOUT" xml:space="preserve">
+    <value>La duree maximale d'inactivite de connexion n'est pas fixee pour {0}, utilisation par defaut de: {1} heure(s)</value>
+    <comment>Utilisateur, Timeout</comment>
+  </data>
+  <data name="DEFAULT_SESSION_TIMEOUT" xml:space="preserve">
+    <value>La duree maximale d'inactivite de session n'est pas fixee pour {0}, utilisation par defaut de: {1} heure(s)</value>
+    <comment>Utilisateur, Timeout</comment>
   </data>
   <data name="DISCONNECTED" xml:space="preserve">
     <value>Deconnexion effectuee de {0}</value>
@@ -161,7 +176,19 @@
     <value>-=[ BoutDuTunnel Serveur v{0} - Sebastien LEBRETON ]=-</value>
     <comment>Version</comment>
   </data>
-  <data name="UID_NOT_FOUND" xml:space="preserve">
-    <value>Le uid est introuvable</value>
+  <data name="SESSION_KILLED" xml:space="preserve">
+    <value>La session {0} a ete tuee par {1}</value>
+    <comment>Utilisateur, Utilisateur</comment>
+  </data>
+  <data name="SESSION_LOGOUT" xml:space="preserve">
+    <value>Session terminee pour {0}</value>
+    <comment>Utilisateur</comment>
+  </data>
+  <data name="SESSION_TIMEOUT" xml:space="preserve">
+    <value>Timeout de session: {0}</value>
+    <comment>Utilisateur</comment>
+  </data>
+  <data name="SID_NOT_FOUND" xml:space="preserve">
+    <value>Le sid est introuvable</value>
   </data>
 </root>
