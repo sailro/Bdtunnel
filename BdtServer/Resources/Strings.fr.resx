@@ -140,7 +140,7 @@
     <comment>(Ip:Port), Adresse</comment>
   </data>
   <data name="CONNECTION_KILLED" xml:space="preserve">
-    <value>La connexionn {0} de la session {1} a ete tuee par {2}</value>
+    <value>La connexion {0} de la session {1} a ete tuee par {2}</value>
     <comment>(Ip:Port), Utilisateur</comment>
   </data>
   <data name="CONNECTION_REFUSED" xml:space="preserve">

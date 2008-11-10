@@ -7,6 +7,7 @@ OUTPUT_SERVER = $(OUTPUT)BdtServer/
 OUTPUT_CLIENT = $(OUTPUT)BdtClient/
 OUTPUT_CLIGUI = $(OUTPUT)BdtGuiClient/
 OUTPUT_WEBSRV = $(OUTPUT)BdtWebServer/
+OUTPUT_WEBCFG = $(OUTPUT)BdtWebServer/App_Data/
 OUTPUT_WEBBIN = $(OUTPUT)BdtWebServer/bin/
 
 ################################################################################
@@ -52,11 +53,11 @@ ORES_CLIGUI_FILES_OUT = $(call F_CLIGUI_FILES_OUT,Properties)
 ################################################################################
 # Rules
 ################################################################################
-all:					BdtClient BdtServer BdtGuiClient BdtWebServer
+all:			BdtClient BdtServer BdtGuiClient BdtWebServer
 BdtClient:		$(OUTPUT_CLIENT)BdtShared.dll $(OUTPUT_CLIENT)BdtClient.exe $(OUTPUT_CLIENT)BdtClientCfg.xml
 BdtServer:		$(OUTPUT_SERVER)BdtShared.dll $(OUTPUT_SERVER)BdtServer.exe $(OUTPUT_SERVER)BdtServerCfg.xml
 BdtGuiClient:	$(OUTPUT_CLIGUI)BdtShared.dll $(OUTPUT_CLIGUI)BdtClient.dll $(OUTPUT_CLIGUI)BdtGuiClient.exe $(OUTPUT_CLIGUI)BdtClientCfg.xml
-BdtWebServer:	$(OUTPUT_WEBBIN)BdtShared.dll $(OUTPUT_WEBBIN)BdtServer.dll $(OUTPUT_WEBBIN)BdtWebServer.dll $(OUTPUT_WEBSRV)BdtServerCfg.xml $(OUTPUT_WEBSRV)Global.asax $(OUTPUT_WEBSRV)Web.config
+BdtWebServer:	$(OUTPUT_WEBBIN)BdtShared.dll $(OUTPUT_WEBBIN)BdtServer.dll $(OUTPUT_WEBBIN)BdtWebServer.dll $(OUTPUT_WEBCFG)BdtServerCfg.xml $(OUTPUT_WEBSRV)Global.asax $(OUTPUT_WEBSRV)Web.config
 
 ################################################################################
 # Client build
@@ -100,7 +101,7 @@ $(OUTPUT_CLIGUI)BdtGuiClient.exe: $(CLIGUI_FILES) $(FORM_CLIGUI_FILES) $(ORES_CL
 		$(RESGEN) /compile $(call FCULTURE_CNV,$@)
 		$(RESGEN) /compile $(FORM_CLIGUI_FILES_CNV)
 		$(RESGEN) /compile $(ORES_CLIGUI_FILES_CNV)
-		$(CC) $(CFLAGS) /reference:$(OUTPUT_CLIGUI)BdtShared.dll /reference:$(OUTPUT_CLIGUI)BdtClient.dll /reference:System.Drawing.dll /reference:$(DOTNET_DLL)System.Data.dll /reference:$(DOTNET_DLL)System.Windows.Forms.dll /out:$@ /target:winexe /win32icon:..\\BdtGuiClient\\Resources\\client.ico /resource:$(call FCULTURE_OUT,$@) $(subst $(OUTPUT),/resource:$(OUTPUT),$(FORM_CLIGUI_FILES_OUT)) $(subst $(OUTPUT),/resource:$(OUTPUT),$(ORES_CLIGUI_FILES_OUT)) $(CLIGUI_FILES)
+		$(CC) $(CFLAGS) /reference:$(OUTPUT_CLIGUI)BdtShared.dll /reference:$(OUTPUT_CLIGUI)BdtClient.dll /reference:System.Drawing.dll /reference:$(DOTNET_DLL)System.Data.dll /reference:$(DOTNET_DLL)System.Windows.Forms.dll /out:$@ /target:winexe /win32icon:../BdtGuiClient/Resources/client.ico /resource:$(call FCULTURE_OUT,$@) $(subst $(OUTPUT),/resource:$(OUTPUT),$(FORM_CLIGUI_FILES_OUT)) $(subst $(OUTPUT),/resource:$(OUTPUT),$(ORES_CLIGUI_FILES_OUT)) $(CLIGUI_FILES)
 		$(RESGEN) /compile $(call FCULTURE_CNV,$@,.$(CULTURE_FR))
 		$(AL) /t:lib /embed:$(call FCULTURE_OUT,$@,.$(CULTURE_FR)) /culture:$(CULTURE_FR) /out:$(OUTPUT_CLIGUI)$(call FCULTURE_FR_SAT,$@)
 		@-rm *.resources
@@ -135,6 +136,7 @@ $(OUTPUT_SERVER)BdtServerCfg.xml: BdtServerCfg.xml
 $(OUTPUT_WEBBIN)BdtShared.dll:
 		mkdir -p $(OUTPUT_WEBSRV)
 		mkdir -p $(OUTPUT_WEBBIN)
+		mkdir -p $(OUTPUT_WEBCFG)
 		mkdir -p $(OUTPUT_WEBBIN)$(CULTURE_FR)
 		$(RESGEN) /compile $(call FCULTURE_CNV,$@)
 		$(CC) $(CFLAGS) /reference:System.Runtime.Remoting.dll /reference:System.Xml.dll /out:$@ /target:library /resource:$(call FCULTURE_OUT,$@) $(SHARED_FILES)
@@ -151,7 +153,7 @@ $(OUTPUT_WEBBIN)BdtServer.dll:
 $(OUTPUT_WEBBIN)BdtWebServer.dll:
 		$(CC) $(CFLAGS) /reference:System.Web.dll /reference:$(OUTPUT_WEBBIN)BdtShared.dll /reference:$(OUTPUT_WEBBIN)BdtServer.dll /out:$@ /target:library $(WEBSRV_FILES)
 
-$(OUTPUT_WEBSRV)BdtServerCfg.xml:
+$(OUTPUT_WEBCFG)BdtServerCfg.xml:
 		cp -f BdtWebServerCfg.xml $@ 
 
 $(OUTPUT_WEBSRV)Global.asax:

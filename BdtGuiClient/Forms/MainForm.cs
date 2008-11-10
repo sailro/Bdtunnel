@@ -109,6 +109,22 @@ namespace Bdt.GuiClient.Forms
 
         /// -----------------------------------------------------------------------------
         /// <summary>
+        /// Administration du serveur
+        /// </summary>
+        /// <param name="sender">l'appelant</param>
+        /// <param name="e">les parametres</param>
+        /// -----------------------------------------------------------------------------
+        private void AdminItem_Click(object sender, EventArgs e)
+        {
+            using (AdminForm admin = new AdminForm(m_client.Tunnel, m_client.Sid))
+            {
+                admin.ShowDialog();
+            }
+        }
+
+
+        /// -----------------------------------------------------------------------------
+        /// <summary>
         /// Saisie des informations d'authentification sur le proxy
         /// </summary>
         /// <param name="proxyProtocol">le protocol IProxyCompatible à alterer</param>
@@ -226,6 +242,7 @@ namespace Bdt.GuiClient.Forms
             }
             StartItem.Enabled = (m_clientState == EClientState.STOPPED);
             StopItem.Enabled = (m_clientState == EClientState.STARTED);
+            AdminItem.Enabled = (m_clientState == EClientState.STARTED);
             ConfigureItem.Enabled = (m_clientState != EClientState.CHANGING);
             QuitItem.Enabled = (m_clientState != EClientState.CHANGING);
             if (m_clientState == EClientState.CHANGING)
@@ -314,6 +331,5 @@ namespace Bdt.GuiClient.Forms
             StartItem_Click(sender, e);
         }
         #endregion
-
     }
 }

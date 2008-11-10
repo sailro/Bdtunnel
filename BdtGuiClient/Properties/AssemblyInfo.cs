@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("BoutDuTunnel")]
-[assembly: AssemblyCopyright("Copyright ©  2008 Sebastien LEBRETON")]
+[assembly: AssemblyCopyright("Copyright © 2009 Sebastien LEBRETON")]
 [assembly: AssemblyTrademark("")]
 [assembly: CLSCompliant(true)]
 
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Numéro de build
 //      Révision
 //
-[assembly: AssemblyVersion("1.4.*")]
+[assembly: AssemblyVersion("1.5.*")]
 

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0FF4CC9B-690A-48F5-8130-A2ECBC342BB9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -42,6 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AdminForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AdminForm.Designer.cs">
+      <DependentUpon>AdminForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +76,10 @@
     </Compile>
     <Compile Include="Runtime\BdtGuiClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\AdminForm.resx">
+      <DependentUpon>AdminForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -130,10 +140,13 @@
     <None Include="Resources\start.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\DataSources\Bdt.Shared.Response.Connection.datasource" />
+    <None Include="Properties\DataSources\Bdt.Shared.Response.Session.datasource" />
     <None Include="Resources\stop.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\client.ico" />
+    <Content Include="Resources\server.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
