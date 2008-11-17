@@ -164,7 +164,7 @@
             this.ServicePage.Padding = new System.Windows.Forms.Padding(3);
             this.ServicePage.Size = new System.Drawing.Size(504, 295);
             this.ServicePage.TabIndex = 0;
-            this.ServicePage.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_TUNNEL;
+            this.ServicePage.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_TUNNEL;
             this.ServicePage.UseVisualStyleBackColor = true;
             // 
             // ServicePortEdit
@@ -189,7 +189,7 @@
             this.ServicePasswordLabel.Name = "ServicePasswordLabel";
             this.ServicePasswordLabel.Size = new System.Drawing.Size(71, 13);
             this.ServicePasswordLabel.TabIndex = 12;
-            this.ServicePasswordLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_PASSWORD;
+            this.ServicePasswordLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_PASSWORD;
             // 
             // ServiceUserEdit
             // 
@@ -205,7 +205,7 @@
             this.ServiceUserNameLabel.Name = "ServiceUserNameLabel";
             this.ServiceUserNameLabel.Size = new System.Drawing.Size(53, 13);
             this.ServiceUserNameLabel.TabIndex = 10;
-            this.ServiceUserNameLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_USER;
+            this.ServiceUserNameLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_USER;
             // 
             // ServicePortLabel
             // 
@@ -214,7 +214,7 @@
             this.ServicePortLabel.Name = "ServicePortLabel";
             this.ServicePortLabel.Size = new System.Drawing.Size(26, 13);
             this.ServicePortLabel.TabIndex = 9;
-            this.ServicePortLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_PORT;
+            this.ServicePortLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_PORT;
             // 
             // ServiceAddressEdit
             // 
@@ -230,7 +230,7 @@
             this.ServiceAddressLabel.Name = "ServiceAddressLabel";
             this.ServiceAddressLabel.Size = new System.Drawing.Size(45, 13);
             this.ServiceAddressLabel.TabIndex = 7;
-            this.ServiceAddressLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_ADDRESS;
+            this.ServiceAddressLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_ADDRESS;
             // 
             // ServiceProtocolLabel
             // 
@@ -239,7 +239,7 @@
             this.ServiceProtocolLabel.Name = "ServiceProtocolLabel";
             this.ServiceProtocolLabel.Size = new System.Drawing.Size(52, 13);
             this.ServiceProtocolLabel.TabIndex = 6;
-            this.ServiceProtocolLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_PROTOCOL;
+            this.ServiceProtocolLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_PROTOCOL;
             // 
             // ServiceNameEdit
             // 
@@ -264,7 +264,7 @@
             this.ServiceNameLabel.Name = "ServiceNameLabel";
             this.ServiceNameLabel.Size = new System.Drawing.Size(29, 13);
             this.ServiceNameLabel.TabIndex = 0;
-            this.ServiceNameLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_NAME;
+            this.ServiceNameLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_NAME;
             // 
             // SocksPage
             // 
@@ -277,7 +277,7 @@
             this.SocksPage.Padding = new System.Windows.Forms.Padding(3);
             this.SocksPage.Size = new System.Drawing.Size(504, 295);
             this.SocksPage.TabIndex = 1;
-            this.SocksPage.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_SOCKS;
+            this.SocksPage.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_SOCKS;
             this.SocksPage.UseVisualStyleBackColor = true;
             // 
             // SocksPortEdit
@@ -294,7 +294,7 @@
             this.SocksPortLabel.Name = "SocksPortLabel";
             this.SocksPortLabel.Size = new System.Drawing.Size(26, 13);
             this.SocksPortLabel.TabIndex = 11;
-            this.SocksPortLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_PORT;
+            this.SocksPortLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_PORT;
             // 
             // SocksSharedEdit
             // 
@@ -303,7 +303,7 @@
             this.SocksSharedEdit.Name = "SocksSharedEdit";
             this.SocksSharedEdit.Size = new System.Drawing.Size(135, 17);
             this.SocksSharedEdit.TabIndex = 1;
-            this.SocksSharedEdit.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_SOCKS_SERVER_SHARED;
+            this.SocksSharedEdit.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_SOCKS_SERVER_SHARED;
             this.SocksSharedEdit.UseVisualStyleBackColor = true;
             // 
             // SocksEnabledEdit
@@ -313,7 +313,7 @@
             this.SocksEnabledEdit.Name = "SocksEnabledEdit";
             this.SocksEnabledEdit.Size = new System.Drawing.Size(119, 17);
             this.SocksEnabledEdit.TabIndex = 0;
-            this.SocksEnabledEdit.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_SOCKS_SERVER_ENABLED;
+            this.SocksEnabledEdit.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_SOCKS_SERVER_ENABLED;
             this.SocksEnabledEdit.UseVisualStyleBackColor = true;
             // 
             // ProxyPage
@@ -326,7 +326,7 @@
             this.ProxyPage.Padding = new System.Windows.Forms.Padding(3);
             this.ProxyPage.Size = new System.Drawing.Size(504, 295);
             this.ProxyPage.TabIndex = 2;
-            this.ProxyPage.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_HTTP_PROXY;
+            this.ProxyPage.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_HTTP_PROXY;
             this.ProxyPage.UseVisualStyleBackColor = true;
             // 
             // ConfigBox
@@ -341,7 +341,7 @@
             this.ConfigBox.Size = new System.Drawing.Size(296, 94);
             this.ConfigBox.TabIndex = 2;
             this.ConfigBox.TabStop = false;
-            this.ConfigBox.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_CONFIGURATION;
+            this.ConfigBox.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_CONFIGURATION;
             // 
             // ProxyPortEdit
             // 
@@ -357,7 +357,7 @@
             this.ProxyPortLabel.Name = "ProxyPortLabel";
             this.ProxyPortLabel.Size = new System.Drawing.Size(26, 13);
             this.ProxyPortLabel.TabIndex = 13;
-            this.ProxyPortLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_PORT;
+            this.ProxyPortLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_PORT;
             // 
             // ProxyAddressEdit
             // 
@@ -373,7 +373,7 @@
             this.ProxyAddressLabel.Name = "ProxyAddressLabel";
             this.ProxyAddressLabel.Size = new System.Drawing.Size(45, 13);
             this.ProxyAddressLabel.TabIndex = 11;
-            this.ProxyAddressLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_ADDRESS;
+            this.ProxyAddressLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_ADDRESS;
             // 
             // ProxyAutoConfigurationEdit
             // 
@@ -382,7 +382,7 @@
             this.ProxyAutoConfigurationEdit.Name = "ProxyAutoConfigurationEdit";
             this.ProxyAutoConfigurationEdit.Size = new System.Drawing.Size(85, 17);
             this.ProxyAutoConfigurationEdit.TabIndex = 0;
-            this.ProxyAutoConfigurationEdit.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_AUTO;
+            this.ProxyAutoConfigurationEdit.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_AUTO;
             this.ProxyAutoConfigurationEdit.UseVisualStyleBackColor = true;
             this.ProxyAutoConfigurationEdit.CheckedChanged += new System.EventHandler(this.ProxyAutoConfigurationEdit_CheckedChanged);
             // 
@@ -400,7 +400,7 @@
             this.AuthBox.Size = new System.Drawing.Size(296, 117);
             this.AuthBox.TabIndex = 1;
             this.AuthBox.TabStop = false;
-            this.AuthBox.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_AUTHENTIFICATION;
+            this.AuthBox.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_AUTHENTIFICATION;
             // 
             // ProxyDomainEdit
             // 
@@ -416,7 +416,7 @@
             this.ProxyDomainLabel.Name = "ProxyDomainLabel";
             this.ProxyDomainLabel.Size = new System.Drawing.Size(49, 13);
             this.ProxyDomainLabel.TabIndex = 18;
-            this.ProxyDomainLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_DOMAIN;
+            this.ProxyDomainLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_DOMAIN;
             // 
             // ProxyPasswordEdit
             // 
@@ -433,7 +433,7 @@
             this.ProxyPasswordLabel.Name = "ProxyPasswordLabel";
             this.ProxyPasswordLabel.Size = new System.Drawing.Size(71, 13);
             this.ProxyPasswordLabel.TabIndex = 16;
-            this.ProxyPasswordLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_PASSWORD;
+            this.ProxyPasswordLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_PASSWORD;
             // 
             // ProxyUserNameEdit
             // 
@@ -449,7 +449,7 @@
             this.ProxyUserNameLabel.Name = "ProxyUserNameLabel";
             this.ProxyUserNameLabel.Size = new System.Drawing.Size(53, 13);
             this.ProxyUserNameLabel.TabIndex = 14;
-            this.ProxyUserNameLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_USER;
+            this.ProxyUserNameLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_USER;
             // 
             // ProxyAuthenticationEdit
             // 
@@ -458,7 +458,7 @@
             this.ProxyAuthenticationEdit.Name = "ProxyAuthenticationEdit";
             this.ProxyAuthenticationEdit.Size = new System.Drawing.Size(85, 17);
             this.ProxyAuthenticationEdit.TabIndex = 0;
-            this.ProxyAuthenticationEdit.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_AUTO;
+            this.ProxyAuthenticationEdit.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_AUTO;
             this.ProxyAuthenticationEdit.UseVisualStyleBackColor = true;
             this.ProxyAuthenticationEdit.CheckedChanged += new System.EventHandler(this.ProxyAuthenticationEdit_CheckedChanged);
             // 
@@ -469,7 +469,7 @@
             this.ProxyEnabledEdit.Name = "ProxyEnabledEdit";
             this.ProxyEnabledEdit.Size = new System.Drawing.Size(221, 17);
             this.ProxyEnabledEdit.TabIndex = 0;
-            this.ProxyEnabledEdit.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_CONNECT_THROUGH_PROXY;
+            this.ProxyEnabledEdit.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_CONNECT_THROUGH_PROXY;
             this.ProxyEnabledEdit.UseVisualStyleBackColor = true;
             // 
             // ForwardsPage
@@ -481,7 +481,7 @@
             this.ForwardsPage.Padding = new System.Windows.Forms.Padding(3);
             this.ForwardsPage.Size = new System.Drawing.Size(504, 295);
             this.ForwardsPage.TabIndex = 3;
-            this.ForwardsPage.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_FORWARDS;
+            this.ForwardsPage.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_FORWARDS;
             this.ForwardsPage.UseVisualStyleBackColor = true;
             // 
             // BindingNavigator
@@ -520,14 +520,14 @@
             this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
             this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorAddNewItem.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_ADD_NEW;
+            this.bindingNavigatorAddNewItem.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_ADD_NEW;
             // 
             // bindingNavigatorCountItem
             // 
             this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
             this.bindingNavigatorCountItem.Size = new System.Drawing.Size(38, 22);
-            this.bindingNavigatorCountItem.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_ITEM_COUNT_OF;
-            this.bindingNavigatorCountItem.ToolTipText = Bdt.GuiClient.Resources.Strings.SETUP_FORM_ITEM_COUNT;
+            this.bindingNavigatorCountItem.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_ITEM_COUNT_OF;
+            this.bindingNavigatorCountItem.ToolTipText = Bdt.GuiClient.Resources.Strings.SETUPFORM_ITEM_COUNT;
             // 
             // bindingNavigatorDeleteItem
             // 
@@ -536,7 +536,7 @@
             this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
             this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorDeleteItem.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_DELETE;
+            this.bindingNavigatorDeleteItem.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_DELETE;
             // 
             // bindingNavigatorMoveFirstItem
             // 
@@ -545,7 +545,7 @@
             this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
             this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMoveFirstItem.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_MOVE_FIRST;
+            this.bindingNavigatorMoveFirstItem.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_MOVE_FIRST;
             // 
             // bindingNavigatorMovePreviousItem
             // 
@@ -554,7 +554,7 @@
             this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
             this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMovePreviousItem.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_MOVE_UP;
+            this.bindingNavigatorMovePreviousItem.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_MOVE_UP;
             // 
             // bindingNavigatorSeparator
             // 
@@ -568,7 +568,7 @@
             this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
             this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 21);
             this.bindingNavigatorPositionItem.Text = "0";
-            this.bindingNavigatorPositionItem.ToolTipText = Bdt.GuiClient.Resources.Strings.SETUP_FORM_CURRENT_POSITION;
+            this.bindingNavigatorPositionItem.ToolTipText = Bdt.GuiClient.Resources.Strings.SETUPFORM_CURRENT_POSITION;
             // 
             // bindingNavigatorSeparator1
             // 
@@ -582,7 +582,7 @@
             this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
             this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMoveNextItem.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_MOVE_DOWN;
+            this.bindingNavigatorMoveNextItem.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_MOVE_DOWN;
             // 
             // bindingNavigatorMoveLastItem
             // 
@@ -591,7 +591,7 @@
             this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
             this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMoveLastItem.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_MOVE_LAST;
+            this.bindingNavigatorMoveLastItem.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_MOVE_LAST;
             // 
             // bindingNavigatorSeparator2
             // 
@@ -619,28 +619,28 @@
             // PortForwardLocalPort
             // 
             this.PortForwardLocalPort.DataPropertyName = "LocalPort";
-            this.PortForwardLocalPort.HeaderText = Bdt.GuiClient.Resources.Strings.SETUP_FORM_LOCAL_PORT;
+            this.PortForwardLocalPort.HeaderText = Bdt.GuiClient.Resources.Strings.SETUPFORM_LOCAL_PORT;
             this.PortForwardLocalPort.Name = "PortForwardLocalPort";
             this.PortForwardLocalPort.Width = 76;
             // 
             // PortForwardEnabledEdit
             // 
             this.PortForwardEnabledEdit.DataPropertyName = "Enabled";
-            this.PortForwardEnabledEdit.HeaderText = Bdt.GuiClient.Resources.Strings.SETUP_FORM_ENABLED;
+            this.PortForwardEnabledEdit.HeaderText = Bdt.GuiClient.Resources.Strings.SETUPFORM_ENABLED;
             this.PortForwardEnabledEdit.Name = "PortForwardEnabledEdit";
             this.PortForwardEnabledEdit.Width = 34;
             // 
             // PortForwardSharedEdit
             // 
             this.PortForwardSharedEdit.DataPropertyName = "Shared";
-            this.PortForwardSharedEdit.HeaderText = Bdt.GuiClient.Resources.Strings.SETUP_FORM_SHARED;
+            this.PortForwardSharedEdit.HeaderText = Bdt.GuiClient.Resources.Strings.SETUPFORM_SHARED;
             this.PortForwardSharedEdit.Name = "PortForwardSharedEdit";
             this.PortForwardSharedEdit.Width = 50;
             // 
             // PortForwardAddress
             // 
             this.PortForwardAddress.DataPropertyName = "Address";
-            this.PortForwardAddress.HeaderText = Bdt.GuiClient.Resources.Strings.SETUP_FORM_ADDRESS;
+            this.PortForwardAddress.HeaderText = Bdt.GuiClient.Resources.Strings.SETUPFORM_ADDRESS;
             this.PortForwardAddress.MinimumWidth = 190;
             this.PortForwardAddress.Name = "PortForwardAddress";
             this.PortForwardAddress.Width = 190;
@@ -648,7 +648,7 @@
             // PortForwardRemotePort
             // 
             this.PortForwardRemotePort.DataPropertyName = "RemotePort";
-            this.PortForwardRemotePort.HeaderText = Bdt.GuiClient.Resources.Strings.SETUP_FORM_REMOTE_PORT;
+            this.PortForwardRemotePort.HeaderText = Bdt.GuiClient.Resources.Strings.SETUPFORM_REMOTE_PORT;
             this.PortForwardRemotePort.Name = "PortForwardRemotePort";
             this.PortForwardRemotePort.Width = 85;
             // 
@@ -682,7 +682,7 @@
             this.FileLogBox.Size = new System.Drawing.Size(296, 164);
             this.FileLogBox.TabIndex = 1;
             this.FileLogBox.TabStop = false;
-            this.FileLogBox.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_FILE;
+            this.FileLogBox.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_FILE;
             // 
             // FileLogAppendEdit
             // 
@@ -691,7 +691,7 @@
             this.FileLogAppendEdit.Name = "FileLogAppendEdit";
             this.FileLogAppendEdit.Size = new System.Drawing.Size(149, 17);
             this.FileLogAppendEdit.TabIndex = 5;
-            this.FileLogAppendEdit.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_APPEND_FILE;
+            this.FileLogAppendEdit.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_APPEND_FILE;
             this.FileLogAppendEdit.UseVisualStyleBackColor = true;
             // 
             // FileSearch
@@ -722,7 +722,7 @@
             this.FileLogNameLabel.Name = "FileLogNameLabel";
             this.FileLogNameLabel.Size = new System.Drawing.Size(38, 13);
             this.FileLogNameLabel.TabIndex = 15;
-            this.FileLogNameLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_FILE;
+            this.FileLogNameLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_FILE;
             // 
             // FileLogDateFormatEdit
             // 
@@ -738,7 +738,7 @@
             this.FileLogDateFormatLabel.Name = "FileLogDateFormatLabel";
             this.FileLogDateFormatLabel.Size = new System.Drawing.Size(78, 13);
             this.FileLogDateFormatLabel.TabIndex = 13;
-            this.FileLogDateFormatLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_DATE_FORMAT;
+            this.FileLogDateFormatLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_DATE_FORMAT;
             // 
             // FileLogStringFormatEdit
             // 
@@ -754,7 +754,7 @@
             this.FileLogStringFormatLabel.Name = "FileLogStringFormatLabel";
             this.FileLogStringFormatLabel.Size = new System.Drawing.Size(39, 13);
             this.FileLogStringFormatLabel.TabIndex = 11;
-            this.FileLogStringFormatLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_FORMAT;
+            this.FileLogStringFormatLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_FORMAT;
             // 
             // FileLogFilterLabel
             // 
@@ -763,7 +763,7 @@
             this.FileLogFilterLabel.Name = "FileLogFilterLabel";
             this.FileLogFilterLabel.Size = new System.Drawing.Size(29, 13);
             this.FileLogFilterLabel.TabIndex = 10;
-            this.FileLogFilterLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_FILTER;
+            this.FileLogFilterLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_FILTER;
             // 
             // FileLogFilterEdit
             // 
@@ -781,7 +781,7 @@
             this.FileLogEnabledEdit.Name = "FileLogEnabledEdit";
             this.FileLogEnabledEdit.Size = new System.Drawing.Size(47, 17);
             this.FileLogEnabledEdit.TabIndex = 0;
-            this.FileLogEnabledEdit.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_ENABLED;
+            this.FileLogEnabledEdit.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_ENABLED;
             this.FileLogEnabledEdit.UseVisualStyleBackColor = true;
             // 
             // ConsoleLogBox
@@ -798,7 +798,7 @@
             this.ConsoleLogBox.Size = new System.Drawing.Size(296, 116);
             this.ConsoleLogBox.TabIndex = 0;
             this.ConsoleLogBox.TabStop = false;
-            this.ConsoleLogBox.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_CONSOLE;
+            this.ConsoleLogBox.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_CONSOLE;
             // 
             // ConsoleLogDateFormatEdit
             // 
@@ -814,7 +814,7 @@
             this.ConsoleLogDateFormatLabel.Name = "ConsoleLogDateFormatLabel";
             this.ConsoleLogDateFormatLabel.Size = new System.Drawing.Size(78, 13);
             this.ConsoleLogDateFormatLabel.TabIndex = 13;
-            this.ConsoleLogDateFormatLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_DATE_FORMAT;
+            this.ConsoleLogDateFormatLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_DATE_FORMAT;
             // 
             // ConsoleLogStringFormatEdit
             // 
@@ -830,7 +830,7 @@
             this.ConsoleLogStringFormatLabel.Name = "ConsoleLogStringFormatLabel";
             this.ConsoleLogStringFormatLabel.Size = new System.Drawing.Size(39, 13);
             this.ConsoleLogStringFormatLabel.TabIndex = 11;
-            this.ConsoleLogStringFormatLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_FORMAT;
+            this.ConsoleLogStringFormatLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_FORMAT;
             // 
             // ConsoleLogFilterLabel
             // 
@@ -839,7 +839,7 @@
             this.ConsoleLogFilterLabel.Name = "ConsoleLogFilterLabel";
             this.ConsoleLogFilterLabel.Size = new System.Drawing.Size(29, 13);
             this.ConsoleLogFilterLabel.TabIndex = 10;
-            this.ConsoleLogFilterLabel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_FILTER;
+            this.ConsoleLogFilterLabel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_FILTER;
             // 
             // ConsoleLogFilterEdit
             // 
@@ -857,7 +857,7 @@
             this.ConsoleLogEnabledEdit.Name = "ConsoleLogEnabledEdit";
             this.ConsoleLogEnabledEdit.Size = new System.Drawing.Size(47, 17);
             this.ConsoleLogEnabledEdit.TabIndex = 0;
-            this.ConsoleLogEnabledEdit.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_ENABLED;
+            this.ConsoleLogEnabledEdit.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_ENABLED;
             this.ConsoleLogEnabledEdit.UseVisualStyleBackColor = true;
             // 
             // Cancel
@@ -868,7 +868,7 @@
             this.Cancel.Name = "Cancel";
             this.Cancel.Size = new System.Drawing.Size(75, 23);
             this.Cancel.TabIndex = 2;
-            this.Cancel.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_CANCEL;
+            this.Cancel.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_CANCEL;
             this.Cancel.UseVisualStyleBackColor = true;
             // 
             // BottomPanel
@@ -889,15 +889,15 @@
             this.Apply.Name = "Apply";
             this.Apply.Size = new System.Drawing.Size(75, 23);
             this.Apply.TabIndex = 1;
-            this.Apply.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_APPLY;
+            this.Apply.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_APPLY;
             this.Apply.UseVisualStyleBackColor = true;
             this.Apply.Click += new System.EventHandler(this.Apply_Click);
             // 
             // SaveFileDialog
             // 
             this.SaveFileDialog.DefaultExt = "log";
-            this.SaveFileDialog.Filter = Bdt.GuiClient.Resources.Strings.SETUP_FORM_FILE_FILTER;
-            this.SaveFileDialog.Title = Bdt.GuiClient.Resources.Strings.SETUP_FORM_CONFIGURATION;
+            this.SaveFileDialog.Filter = Bdt.GuiClient.Resources.Strings.SETUPFORM_FILE_FILTER;
+            this.SaveFileDialog.Title = Bdt.GuiClient.Resources.Strings.SETUPFORM_CONFIGURATION;
             // 
             // SetupForm
             // 
@@ -914,7 +914,7 @@
             this.Name = "SetupForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = Bdt.GuiClient.Resources.Strings.SETUP_FORM_TITLE;
+            this.Text = Bdt.GuiClient.Resources.Strings.SETUPFORM_TITLE;
             this.TopMost = true;
             this.Load += new System.EventHandler(this.SetupForm_Load);
             this.Tabs.ResumeLayout(false);

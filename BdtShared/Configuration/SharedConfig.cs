@@ -186,13 +186,16 @@ namespace Bdt.Shared.Configuration
         /// -----------------------------------------------------------------------------
         public SharedConfig (ConfigPackage config)
         {
-            m_serviceUserName = config.Value(CFG_SERVICE_USERNAME, string.Empty);
-            m_servicePassword = config.Value(CFG_SERVICE_PASSWORD, string.Empty);
-            m_serviceProtocol = config.Value(CFG_SERVICE_PROTOCOL, string.Empty);
-            m_serviceName = config.Value(CFG_SERVICE_NAME, string.Empty);
-            m_servicePort = config.ValueInt(CFG_SERVICE_PORT, 0);
-            m_serviceAddress = config.Value(CFG_SERVICE_ADDRESS, string.Empty);
-            m_serviceCulture = config.Value(CFG_SERVICE_CULTURE, string.Empty);
+            if (config != null)
+            {
+                m_serviceUserName = config.Value(CFG_SERVICE_USERNAME, string.Empty);
+                m_servicePassword = config.Value(CFG_SERVICE_PASSWORD, string.Empty);
+                m_serviceProtocol = config.Value(CFG_SERVICE_PROTOCOL, string.Empty);
+                m_serviceName = config.Value(CFG_SERVICE_NAME, string.Empty);
+                m_servicePort = config.ValueInt(CFG_SERVICE_PORT, 0);
+                m_serviceAddress = config.Value(CFG_SERVICE_ADDRESS, string.Empty);
+                m_serviceCulture = config.Value(CFG_SERVICE_CULTURE, string.Empty);
+            }
         }
         #endregion
 

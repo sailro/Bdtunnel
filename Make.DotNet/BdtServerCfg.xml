@@ -13,6 +13,8 @@
                - Bdt.Shared.Protocol.TcpRemoting (binary stream/TCP)
                - Bdt.Shared.Protocol.IpcRemoting (local)            
                When using a server hosted in IIs / mod_mono:
+               - Bdt.Shared.Protocol.HttpBinaryRemoting (binary stream/HTTP)
+               - Bdt.Shared.Protocol.HttpSoapRemoting (soap stream/HTTP)
                - Bdt.Shared.Protocol.HttpSslBinaryRemoting (binary stream/HTTPS)
                - Bdt.Shared.Protocol.HttpSslSoapRemoting (soap stream/HTTPS)
     port     = server port 

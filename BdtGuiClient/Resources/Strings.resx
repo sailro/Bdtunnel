@@ -172,125 +172,125 @@
   <data name="PROXYFORM_USER" xml:space="preserve">
     <value>User</value>
   </data>
-  <data name="SETUP_FORM_ADD_NEW" xml:space="preserve">
+  <data name="SETUPFORM_ADD_NEW" xml:space="preserve">
     <value>Add new</value>
   </data>
-  <data name="SETUP_FORM_ADDRESS" xml:space="preserve">
+  <data name="SETUPFORM_ADDRESS" xml:space="preserve">
     <value>Address</value>
   </data>
-  <data name="SETUP_FORM_APPEND_FILE" xml:space="preserve">
+  <data name="SETUPFORM_APPEND_FILE" xml:space="preserve">
     <value>Append to file</value>
   </data>
-  <data name="SETUP_FORM_APPLY" xml:space="preserve">
+  <data name="SETUPFORM_APPLY" xml:space="preserve">
     <value>Apply</value>
   </data>
-  <data name="SETUP_FORM_AUTHENTIFICATION" xml:space="preserve">
+  <data name="SETUPFORM_AUTHENTIFICATION" xml:space="preserve">
     <value>Authentication</value>
   </data>
-  <data name="SETUP_FORM_AUTO" xml:space="preserve">
+  <data name="SETUPFORM_AUTO" xml:space="preserve">
     <value>Auto</value>
   </data>
-  <data name="SETUP_FORM_CANCEL" xml:space="preserve">
+  <data name="SETUPFORM_CANCEL" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="SETUP_FORM_CONFIGURATION" xml:space="preserve">
+  <data name="SETUPFORM_CONFIGURATION" xml:space="preserve">
     <value>Configuration</value>
   </data>
-  <data name="SETUP_FORM_CONNECT_THROUGH_PROXY" xml:space="preserve">
+  <data name="SETUPFORM_CONNECT_THROUGH_PROXY" xml:space="preserve">
     <value>Connect through HTTP proxy</value>
   </data>
-  <data name="SETUP_FORM_CONSOLE" xml:space="preserve">
+  <data name="SETUPFORM_CONSOLE" xml:space="preserve">
     <value>Console (unused by GUI client)</value>
   </data>
-  <data name="SETUP_FORM_CURRENT_POSITION" xml:space="preserve">
+  <data name="SETUPFORM_CURRENT_POSITION" xml:space="preserve">
     <value>Current position</value>
   </data>
-  <data name="SETUP_FORM_DATE_FORMAT" xml:space="preserve">
+  <data name="SETUPFORM_DATE_FORMAT" xml:space="preserve">
     <value>Date format</value>
   </data>
-  <data name="SETUP_FORM_DELETE" xml:space="preserve">
+  <data name="SETUPFORM_DELETE" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="SETUP_FORM_DOMAIN" xml:space="preserve">
+  <data name="SETUPFORM_DOMAIN" xml:space="preserve">
     <value>Domain</value>
   </data>
-  <data name="SETUP_FORM_ENABLED" xml:space="preserve">
+  <data name="SETUPFORM_ENABLED" xml:space="preserve">
     <value>Enabled</value>
   </data>
-  <data name="SETUP_FORM_FILE" xml:space="preserve">
+  <data name="SETUPFORM_FILE" xml:space="preserve">
     <value>File</value>
   </data>
-  <data name="SETUP_FORM_FILE_FILTER" xml:space="preserve">
+  <data name="SETUPFORM_FILE_FILTER" xml:space="preserve">
     <value>Logfiles|*.log|All files|*.*</value>
   </data>
-  <data name="SETUP_FORM_FILTER" xml:space="preserve">
+  <data name="SETUPFORM_FILTER" xml:space="preserve">
     <value>Filter</value>
   </data>
-  <data name="SETUP_FORM_FORMAT" xml:space="preserve">
+  <data name="SETUPFORM_FORMAT" xml:space="preserve">
     <value>Format</value>
   </data>
-  <data name="SETUP_FORM_FORWARDS" xml:space="preserve">
+  <data name="SETUPFORM_FORWARDS" xml:space="preserve">
     <value>Forwards</value>
   </data>
-  <data name="SETUP_FORM_HTTP_PROXY" xml:space="preserve">
+  <data name="SETUPFORM_HTTP_PROXY" xml:space="preserve">
     <value>HTTP Proxy</value>
   </data>
-  <data name="SETUP_FORM_ITEM_COUNT" xml:space="preserve">
+  <data name="SETUPFORM_ITEM_COUNT" xml:space="preserve">
     <value>Item count</value>
   </data>
-  <data name="SETUP_FORM_ITEM_COUNT_OF" xml:space="preserve">
+  <data name="SETUPFORM_ITEM_COUNT_OF" xml:space="preserve">
     <value>of {0}</value>
     <comment>Number</comment>
   </data>
-  <data name="SETUP_FORM_LOCAL_PORT" xml:space="preserve">
+  <data name="SETUPFORM_LOCAL_PORT" xml:space="preserve">
     <value>Local port</value>
   </data>
-  <data name="SETUP_FORM_MOVE_DOWN" xml:space="preserve">
+  <data name="SETUPFORM_MOVE_DOWN" xml:space="preserve">
     <value>Move down</value>
   </data>
-  <data name="SETUP_FORM_MOVE_FIRST" xml:space="preserve">
+  <data name="SETUPFORM_MOVE_FIRST" xml:space="preserve">
     <value>Move to top</value>
   </data>
-  <data name="SETUP_FORM_MOVE_LAST" xml:space="preserve">
+  <data name="SETUPFORM_MOVE_LAST" xml:space="preserve">
     <value>Move to bottom</value>
   </data>
-  <data name="SETUP_FORM_MOVE_UP" xml:space="preserve">
+  <data name="SETUPFORM_MOVE_UP" xml:space="preserve">
     <value>Move up</value>
   </data>
-  <data name="SETUP_FORM_NAME" xml:space="preserve">
+  <data name="SETUPFORM_NAME" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="SETUP_FORM_PASSWORD" xml:space="preserve">
+  <data name="SETUPFORM_PASSWORD" xml:space="preserve">
     <value>Password</value>
   </data>
-  <data name="SETUP_FORM_PORT" xml:space="preserve">
+  <data name="SETUPFORM_PORT" xml:space="preserve">
     <value>Port</value>
   </data>
-  <data name="SETUP_FORM_PROTOCOL" xml:space="preserve">
+  <data name="SETUPFORM_PROTOCOL" xml:space="preserve">
     <value>Protocol</value>
   </data>
-  <data name="SETUP_FORM_REMOTE_PORT" xml:space="preserve">
+  <data name="SETUPFORM_REMOTE_PORT" xml:space="preserve">
     <value>Remote port</value>
   </data>
-  <data name="SETUP_FORM_SHARED" xml:space="preserve">
+  <data name="SETUPFORM_SHARED" xml:space="preserve">
     <value>Shared</value>
   </data>
-  <data name="SETUP_FORM_SOCKS" xml:space="preserve">
+  <data name="SETUPFORM_SOCKS" xml:space="preserve">
     <value>Socks</value>
   </data>
-  <data name="SETUP_FORM_SOCKS_SERVER_ENABLED" xml:space="preserve">
+  <data name="SETUPFORM_SOCKS_SERVER_ENABLED" xml:space="preserve">
     <value>Enable Socks server</value>
   </data>
-  <data name="SETUP_FORM_SOCKS_SERVER_SHARED" xml:space="preserve">
+  <data name="SETUPFORM_SOCKS_SERVER_SHARED" xml:space="preserve">
     <value>Share Socks server</value>
   </data>
-  <data name="SETUP_FORM_TITLE" xml:space="preserve">
+  <data name="SETUPFORM_TITLE" xml:space="preserve">
     <value>BoutDuTunnel (Client) - Configuration</value>
   </data>
-  <data name="SETUP_FORM_TUNNEL" xml:space="preserve">
+  <data name="SETUPFORM_TUNNEL" xml:space="preserve">
     <value>Tunnel</value>
   </data>
-  <data name="SETUP_FORM_USER" xml:space="preserve">
+  <data name="SETUPFORM_USER" xml:space="preserve">
     <value>User</value>
   </data>
   <data name="SETUPFORM_HTTP_BINARY_REMOTING" xml:space="preserve">
@@ -317,5 +317,65 @@
   </data>
   <data name="SETUPFORM_HTTPS_SOAP_REMOTING" xml:space="preserve">
     <value>HTTPS SOAP stream</value>
+  </data>
+  <data name="ADMINFORM_ADDRESS" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="ADMINFORM_ADMIN" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="ADMINFORM_CID" xml:space="preserve">
+    <value>Cid</value>
+  </data>
+  <data name="ADMINFORM_CLOSE" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ADMINFORM_CONNECTIONS" xml:space="preserve">
+    <value>Connections opened with selected session</value>
+  </data>
+  <data name="ADMINFORM_HOST" xml:space="preserve">
+    <value>Host</value>
+  </data>
+  <data name="ADMINFORM_KILL_CONNECTION" xml:space="preserve">
+    <value>Kill connection</value>
+  </data>
+  <data name="ADMINFORM_KILL_OWN_SESSION" xml:space="preserve">
+    <value>You can't kill your active session</value>
+  </data>
+  <data name="ADMINFORM_KILL_SESSION" xml:space="preserve">
+    <value>Kill session</value>
+  </data>
+  <data name="ADMINFORM_LAST_ACCESS" xml:space="preserve">
+    <value>LastAccess</value>
+  </data>
+  <data name="ADMINFORM_LOGON" xml:space="preserve">
+    <value>Logon</value>
+  </data>
+  <data name="ADMINFORM_PORT" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="ADMINFORM_READ_COUNT" xml:space="preserve">
+    <value>ReadCount</value>
+  </data>
+  <data name="ADMINFORM_REFRESH" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ADMINFORM_SESSIONS" xml:space="preserve">
+    <value>Sessions</value>
+  </data>
+  <data name="ADMINFORM_SID" xml:space="preserve">
+    <value>Sid</value>
+  </data>
+  <data name="ADMINFORM_TITLE" xml:space="preserve">
+    <value>BoutDuTunnel (Client) - Administration</value>
+  </data>
+  <data name="ADMINFORM_USER" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="ADMINFORM_WRITE_COUNT" xml:space="preserve">
+    <value>WriteCount</value>
+  </data>
+  <data name="MAINFORM_ADMIN_SERVER" xml:space="preserve">
+    <value>Remote admin server...</value>
   </data>
 </root>

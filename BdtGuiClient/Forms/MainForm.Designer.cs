@@ -34,13 +34,13 @@
             this.NotifyContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.InfoItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TopSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.BottomSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.QuitItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StartItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StopItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ConfigureItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AdminItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LogsItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BottomSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.QuitItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NotifyContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,7 +64,7 @@
             this.BottomSeparator,
             this.QuitItem});
             this.NotifyContextMenu.Name = "ContextMenu";
-            this.NotifyContextMenu.Size = new System.Drawing.Size(200, 192);
+            this.NotifyContextMenu.Size = new System.Drawing.Size(200, 170);
             this.NotifyContextMenu.Opened += new System.EventHandler(this.NotifyContextMenu_Opened);
             // 
             // InfoItem
@@ -78,18 +78,6 @@
             // 
             this.TopSeparator.Name = "TopSeparator";
             this.TopSeparator.Size = new System.Drawing.Size(196, 6);
-            // 
-            // BottomSeparator
-            // 
-            this.BottomSeparator.Name = "BottomSeparator";
-            this.BottomSeparator.Size = new System.Drawing.Size(196, 6);
-            // 
-            // QuitItem
-            // 
-            this.QuitItem.Name = "QuitItem";
-            this.QuitItem.Size = new System.Drawing.Size(199, 22);
-            this.QuitItem.Text = global::Bdt.GuiClient.Resources.Strings.MAINFORM_EXIT;
-            this.QuitItem.Click += new System.EventHandler(this.QuitItem_Click);
             // 
             // StartItem
             // 
@@ -121,7 +109,7 @@
             this.AdminItem.ImageTransparentColor = System.Drawing.Color.White;
             this.AdminItem.Name = "AdminItem";
             this.AdminItem.Size = new System.Drawing.Size(199, 22);
-            this.AdminItem.Text = "Remote admin server...";
+            this.AdminItem.Text = global::Bdt.GuiClient.Resources.Strings.MAINFORM_ADMIN_SERVER;
             this.AdminItem.Click += new System.EventHandler(this.AdminItem_Click);
             // 
             // LogsItem
@@ -132,14 +120,28 @@
             this.LogsItem.Text = global::Bdt.GuiClient.Resources.Strings.MAINFORM_VIEW_LOGS;
             this.LogsItem.Click += new System.EventHandler(this.LogsItem_Click);
             // 
+            // BottomSeparator
+            // 
+            this.BottomSeparator.Name = "BottomSeparator";
+            this.BottomSeparator.Size = new System.Drawing.Size(196, 6);
+            // 
+            // QuitItem
+            // 
+            this.QuitItem.Name = "QuitItem";
+            this.QuitItem.Size = new System.Drawing.Size(199, 22);
+            this.QuitItem.Text = global::Bdt.GuiClient.Resources.Strings.MAINFORM_EXIT;
+            this.QuitItem.Click += new System.EventHandler(this.QuitItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(115, 26);
             this.ControlBox = false;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.NotifyContextMenu.ResumeLayout(false);

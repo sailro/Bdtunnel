@@ -7,13 +7,12 @@
     
     Not used when hosted in IIs / mod_mono, check Web.config to configure:
     
-      <channels>
-        <channel ref="http" />
-        <serverProviders>
-          <formatter href="soap" />  -> soap/binary
-        </serverProviders>
-      </channels>
-      
+    <channel ref="http">
+      <serverProviders>
+        <formatter ref="binary" /> -> choose between soap/binary 
+      </serverProviders>
+    </channel>
+  
     For "soap", use on the client side:
     - Bdt.Shared.Protocol.HttpSoapRemoting (soap stream/HTTP)
     - Bdt.Shared.Protocol.HttpSslSoapRemoting (soap stream/HTTPS)

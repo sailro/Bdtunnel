@@ -70,6 +70,12 @@ namespace Bdt.GuiClient.Forms
             RefreshSessions();
         }
 
+        /// -----------------------------------------------------------------------------
+        /// <summary>
+        /// Traite une réponse du serveur
+        /// </summary>
+        /// <param name="response">la réponse</param>
+        /// -----------------------------------------------------------------------------
         private void HandleResponse(IMinimalResponse response)
         {
             if (!response.Success)
@@ -78,33 +84,56 @@ namespace Bdt.GuiClient.Forms
             }
         }
 
-        #endregion
-
+        /// -----------------------------------------------------------------------------
+        /// <summary>
+        /// Actualise la liste des sessions et connexions
+        /// </summary>
+        /// -----------------------------------------------------------------------------
         private void RefreshSessions()
         {
-            MonitorResponse response = m_tunnel.Monitor(new SessionContextRequest(m_sid));
-            if (response.Success)
+            try
             {
-                m_currentsession = default(Session);
-                SessionsBindingSource.DataSource = response.Sessions;
-                SessionsBindingSource.ResetBindings(false);
+                BtRefresh.Enabled = BtClose.Enabled = false;
+                this.UseWaitCursor = true;
 
-                if (Sessions.SelectedRows.Count > 0)
+                Application.DoEvents();
+                MonitorResponse response = m_tunnel.Monitor(new SessionContextRequest(m_sid));
+                if (response.Success)
                 {
-                    m_currentsession = (Session)Sessions.SelectedRows[0].DataBoundItem;
-                    ConnectionsBindingSource.DataSource = m_currentsession.Connections;
+                    m_currentsession = default(Session);
+                    SessionsBindingSource.DataSource = response.Sessions;
+                    SessionsBindingSource.ResetBindings(false);
+
+                    if (Sessions.SelectedRows.Count > 0)
+                    {
+                        m_currentsession = (Session)Sessions.SelectedRows[0].DataBoundItem;
+                        ConnectionsBindingSource.DataSource = m_currentsession.Connections;
+                    }
+                    else
+                    {
+                        ConnectionsBindingSource.DataSource = null;
+                    }
                 }
                 else
                 {
-                    ConnectionsBindingSource.DataSource = null;
+                    HandleResponse(response);
                 }
             }
-            else
+            finally
             {
-                HandleResponse(response);
+                BtRefresh.Enabled = BtClose.Enabled = true;
+                this.UseWaitCursor = false;
             }
+
         }
 
+        /// -----------------------------------------------------------------------------
+        /// <summary>
+        /// Clic sur un item de la liste des sessions
+        /// </summary>
+        /// <param name="sender">l'appelant</param>
+        /// <param name="e">les parametres</param>
+        /// -----------------------------------------------------------------------------
         private void Sessions_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && e.RowIndex < Sessions.Rows.Count)
@@ -114,6 +143,13 @@ namespace Bdt.GuiClient.Forms
             }
         }
 
+        /// -----------------------------------------------------------------------------
+        /// <summary>
+        /// Termine une session
+        /// </summary>
+        /// <param name="sender">l'appelant</param>
+        /// <param name="e">les parametres</param>
+        /// -----------------------------------------------------------------------------
         private void KillSessionItem_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewRow row in Sessions.SelectedRows)
@@ -125,7 +161,7 @@ namespace Bdt.GuiClient.Forms
                 {
                     if (targetsid == m_sid)
                     {
-                        MessageBox.Show("You can't kill your own session", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(Strings.ADMINFORM_KILL_OWN_SESSION, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
                     {
@@ -140,6 +176,13 @@ namespace Bdt.GuiClient.Forms
             RefreshSessions();
         }
 
+        /// -----------------------------------------------------------------------------
+        /// <summary>
+        /// Termine une connexion
+        /// </summary>
+        /// <param name="sender">l'appelant</param>
+        /// <param name="e">les parametres</param>
+        /// -----------------------------------------------------------------------------
         private void KillConnectionItem_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewRow row in Connections.SelectedRows)
@@ -161,21 +204,49 @@ namespace Bdt.GuiClient.Forms
             RefreshSessions();
         }
 
+        /// -----------------------------------------------------------------------------
+        /// <summary>
+        /// Actualise la liste des sessions et connexions
+        /// </summary>
+        /// <param name="sender">l'appelant</param>
+        /// <param name="e">les parametres</param>
+        /// -----------------------------------------------------------------------------
         private void Refresh_Click(object sender, EventArgs e)
         {
             RefreshSessions();
         }
 
+        /// -----------------------------------------------------------------------------
+        /// <summary>
+        /// Détermine si le popup doit s'ouvrir pour la liste des sessions
+        /// </summary>
+        /// <param name="sender">l'appelant</param>
+        /// <param name="e">les parametres</param>
+        /// -----------------------------------------------------------------------------
         private void SessionsMenu_Opening(object sender, CancelEventArgs e)
         {
             e.Cancel = Sessions.SelectedRows.Count == 0;
         }
 
+        /// -----------------------------------------------------------------------------
+        /// <summary>
+        /// Détermine si le popup doit s'ouvrir pour la liste des connexions
+        /// </summary>
+        /// <param name="sender">l'appelant</param>
+        /// <param name="e">les parametres</param>
+        /// -----------------------------------------------------------------------------
         private void ConnectionsMenu_Opening(object sender, CancelEventArgs e)
         {
             e.Cancel = Connections.SelectedRows.Count == 0;
         }
 
+        /// -----------------------------------------------------------------------------
+        /// <summary>
+        /// Format des lignes de sessions (pour mettre en gras la session active)
+        /// </summary>
+        /// <param name="sender">l'appelant</param>
+        /// <param name="e">les parametres</param>
+        /// -----------------------------------------------------------------------------
         private void Sessions_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             Session session = (Session)Sessions.Rows[e.RowIndex].DataBoundItem;
@@ -184,6 +255,6 @@ namespace Bdt.GuiClient.Forms
                 e.CellStyle.Font = new Font(e.CellStyle.Font, FontStyle.Bold);
             }
         }
-
+        #endregion
     }
 }

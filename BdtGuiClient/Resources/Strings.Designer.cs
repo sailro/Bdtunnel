@@ -61,6 +61,186 @@ namespace Bdt.GuiClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        internal static string ADMINFORM_ADDRESS {
+            get {
+                return ResourceManager.GetString("ADMINFORM_ADDRESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Admin.
+        /// </summary>
+        internal static string ADMINFORM_ADMIN {
+            get {
+                return ResourceManager.GetString("ADMINFORM_ADMIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cid.
+        /// </summary>
+        internal static string ADMINFORM_CID {
+            get {
+                return ResourceManager.GetString("ADMINFORM_CID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string ADMINFORM_CLOSE {
+            get {
+                return ResourceManager.GetString("ADMINFORM_CLOSE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connections opened with selected session.
+        /// </summary>
+        internal static string ADMINFORM_CONNECTIONS {
+            get {
+                return ResourceManager.GetString("ADMINFORM_CONNECTIONS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Host.
+        /// </summary>
+        internal static string ADMINFORM_HOST {
+            get {
+                return ResourceManager.GetString("ADMINFORM_HOST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kill connection.
+        /// </summary>
+        internal static string ADMINFORM_KILL_CONNECTION {
+            get {
+                return ResourceManager.GetString("ADMINFORM_KILL_CONNECTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can&apos;t kill your active session.
+        /// </summary>
+        internal static string ADMINFORM_KILL_OWN_SESSION {
+            get {
+                return ResourceManager.GetString("ADMINFORM_KILL_OWN_SESSION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kill session.
+        /// </summary>
+        internal static string ADMINFORM_KILL_SESSION {
+            get {
+                return ResourceManager.GetString("ADMINFORM_KILL_SESSION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LastAccess.
+        /// </summary>
+        internal static string ADMINFORM_LAST_ACCESS {
+            get {
+                return ResourceManager.GetString("ADMINFORM_LAST_ACCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logon.
+        /// </summary>
+        internal static string ADMINFORM_LOGON {
+            get {
+                return ResourceManager.GetString("ADMINFORM_LOGON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port.
+        /// </summary>
+        internal static string ADMINFORM_PORT {
+            get {
+                return ResourceManager.GetString("ADMINFORM_PORT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ReadCount.
+        /// </summary>
+        internal static string ADMINFORM_READ_COUNT {
+            get {
+                return ResourceManager.GetString("ADMINFORM_READ_COUNT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        internal static string ADMINFORM_REFRESH {
+            get {
+                return ResourceManager.GetString("ADMINFORM_REFRESH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sessions.
+        /// </summary>
+        internal static string ADMINFORM_SESSIONS {
+            get {
+                return ResourceManager.GetString("ADMINFORM_SESSIONS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sid.
+        /// </summary>
+        internal static string ADMINFORM_SID {
+            get {
+                return ResourceManager.GetString("ADMINFORM_SID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BoutDuTunnel (Client) - Administration.
+        /// </summary>
+        internal static string ADMINFORM_TITLE {
+            get {
+                return ResourceManager.GetString("ADMINFORM_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User.
+        /// </summary>
+        internal static string ADMINFORM_USER {
+            get {
+                return ResourceManager.GetString("ADMINFORM_USER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WriteCount.
+        /// </summary>
+        internal static string ADMINFORM_WRITE_COUNT {
+            get {
+                return ResourceManager.GetString("ADMINFORM_WRITE_COUNT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote admin server....
+        /// </summary>
+        internal static string MAINFORM_ADMIN_SERVER {
+            get {
+                return ResourceManager.GetString("MAINFORM_ADMIN_SERVER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Client started.
         /// </summary>
         internal static string MAINFORM_CLIENT_STARTED {
@@ -225,360 +405,180 @@ namespace Bdt.GuiClient.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Add new.
         /// </summary>
-        internal static string SETUP_FORM_ADD_NEW {
+        internal static string SETUPFORM_ADD_NEW {
             get {
-                return ResourceManager.GetString("SETUP_FORM_ADD_NEW", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_ADD_NEW", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Address.
         /// </summary>
-        internal static string SETUP_FORM_ADDRESS {
+        internal static string SETUPFORM_ADDRESS {
             get {
-                return ResourceManager.GetString("SETUP_FORM_ADDRESS", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_ADDRESS", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Append to file.
         /// </summary>
-        internal static string SETUP_FORM_APPEND_FILE {
+        internal static string SETUPFORM_APPEND_FILE {
             get {
-                return ResourceManager.GetString("SETUP_FORM_APPEND_FILE", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_APPEND_FILE", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Apply.
         /// </summary>
-        internal static string SETUP_FORM_APPLY {
+        internal static string SETUPFORM_APPLY {
             get {
-                return ResourceManager.GetString("SETUP_FORM_APPLY", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_APPLY", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Authentication.
         /// </summary>
-        internal static string SETUP_FORM_AUTHENTIFICATION {
+        internal static string SETUPFORM_AUTHENTIFICATION {
             get {
-                return ResourceManager.GetString("SETUP_FORM_AUTHENTIFICATION", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_AUTHENTIFICATION", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Auto.
         /// </summary>
-        internal static string SETUP_FORM_AUTO {
+        internal static string SETUPFORM_AUTO {
             get {
-                return ResourceManager.GetString("SETUP_FORM_AUTO", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_AUTO", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
-        internal static string SETUP_FORM_CANCEL {
+        internal static string SETUPFORM_CANCEL {
             get {
-                return ResourceManager.GetString("SETUP_FORM_CANCEL", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_CANCEL", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Configuration.
         /// </summary>
-        internal static string SETUP_FORM_CONFIGURATION {
+        internal static string SETUPFORM_CONFIGURATION {
             get {
-                return ResourceManager.GetString("SETUP_FORM_CONFIGURATION", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_CONFIGURATION", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Connect through HTTP proxy.
         /// </summary>
-        internal static string SETUP_FORM_CONNECT_THROUGH_PROXY {
+        internal static string SETUPFORM_CONNECT_THROUGH_PROXY {
             get {
-                return ResourceManager.GetString("SETUP_FORM_CONNECT_THROUGH_PROXY", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_CONNECT_THROUGH_PROXY", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Console (unused by GUI client).
         /// </summary>
-        internal static string SETUP_FORM_CONSOLE {
+        internal static string SETUPFORM_CONSOLE {
             get {
-                return ResourceManager.GetString("SETUP_FORM_CONSOLE", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_CONSOLE", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Current position.
         /// </summary>
-        internal static string SETUP_FORM_CURRENT_POSITION {
+        internal static string SETUPFORM_CURRENT_POSITION {
             get {
-                return ResourceManager.GetString("SETUP_FORM_CURRENT_POSITION", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_CURRENT_POSITION", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Date format.
         /// </summary>
-        internal static string SETUP_FORM_DATE_FORMAT {
+        internal static string SETUPFORM_DATE_FORMAT {
             get {
-                return ResourceManager.GetString("SETUP_FORM_DATE_FORMAT", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_DATE_FORMAT", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
-        internal static string SETUP_FORM_DELETE {
+        internal static string SETUPFORM_DELETE {
             get {
-                return ResourceManager.GetString("SETUP_FORM_DELETE", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_DELETE", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Domain.
         /// </summary>
-        internal static string SETUP_FORM_DOMAIN {
+        internal static string SETUPFORM_DOMAIN {
             get {
-                return ResourceManager.GetString("SETUP_FORM_DOMAIN", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_DOMAIN", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Enabled.
         /// </summary>
-        internal static string SETUP_FORM_ENABLED {
+        internal static string SETUPFORM_ENABLED {
             get {
-                return ResourceManager.GetString("SETUP_FORM_ENABLED", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_ENABLED", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
-        internal static string SETUP_FORM_FILE {
+        internal static string SETUPFORM_FILE {
             get {
-                return ResourceManager.GetString("SETUP_FORM_FILE", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_FILE", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Logfiles|*.log|All files|*.*.
         /// </summary>
-        internal static string SETUP_FORM_FILE_FILTER {
+        internal static string SETUPFORM_FILE_FILTER {
             get {
-                return ResourceManager.GetString("SETUP_FORM_FILE_FILTER", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_FILE_FILTER", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Filter.
         /// </summary>
-        internal static string SETUP_FORM_FILTER {
+        internal static string SETUPFORM_FILTER {
             get {
-                return ResourceManager.GetString("SETUP_FORM_FILTER", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_FILTER", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Format.
         /// </summary>
-        internal static string SETUP_FORM_FORMAT {
+        internal static string SETUPFORM_FORMAT {
             get {
-                return ResourceManager.GetString("SETUP_FORM_FORMAT", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_FORMAT", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Forwards.
         /// </summary>
-        internal static string SETUP_FORM_FORWARDS {
+        internal static string SETUPFORM_FORWARDS {
             get {
-                return ResourceManager.GetString("SETUP_FORM_FORWARDS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to HTTP Proxy.
-        /// </summary>
-        internal static string SETUP_FORM_HTTP_PROXY {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_HTTP_PROXY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Item count.
-        /// </summary>
-        internal static string SETUP_FORM_ITEM_COUNT {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_ITEM_COUNT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to of {0}.
-        /// </summary>
-        internal static string SETUP_FORM_ITEM_COUNT_OF {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_ITEM_COUNT_OF", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Local port.
-        /// </summary>
-        internal static string SETUP_FORM_LOCAL_PORT {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_LOCAL_PORT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move down.
-        /// </summary>
-        internal static string SETUP_FORM_MOVE_DOWN {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_MOVE_DOWN", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move to top.
-        /// </summary>
-        internal static string SETUP_FORM_MOVE_FIRST {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_MOVE_FIRST", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move to bottom.
-        /// </summary>
-        internal static string SETUP_FORM_MOVE_LAST {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_MOVE_LAST", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move up.
-        /// </summary>
-        internal static string SETUP_FORM_MOVE_UP {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_MOVE_UP", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        internal static string SETUP_FORM_NAME {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_NAME", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Password.
-        /// </summary>
-        internal static string SETUP_FORM_PASSWORD {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_PASSWORD", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Port.
-        /// </summary>
-        internal static string SETUP_FORM_PORT {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_PORT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Protocol.
-        /// </summary>
-        internal static string SETUP_FORM_PROTOCOL {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_PROTOCOL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remote port.
-        /// </summary>
-        internal static string SETUP_FORM_REMOTE_PORT {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_REMOTE_PORT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Shared.
-        /// </summary>
-        internal static string SETUP_FORM_SHARED {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_SHARED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Socks.
-        /// </summary>
-        internal static string SETUP_FORM_SOCKS {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_SOCKS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable Socks server.
-        /// </summary>
-        internal static string SETUP_FORM_SOCKS_SERVER_ENABLED {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_SOCKS_SERVER_ENABLED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Share Socks server.
-        /// </summary>
-        internal static string SETUP_FORM_SOCKS_SERVER_SHARED {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_SOCKS_SERVER_SHARED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to BoutDuTunnel (Client) - Configuration.
-        /// </summary>
-        internal static string SETUP_FORM_TITLE {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_TITLE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tunnel.
-        /// </summary>
-        internal static string SETUP_FORM_TUNNEL {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_TUNNEL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to User.
-        /// </summary>
-        internal static string SETUP_FORM_USER {
-            get {
-                return ResourceManager.GetString("SETUP_FORM_USER", resourceCulture);
+                return ResourceManager.GetString("SETUPFORM_FORWARDS", resourceCulture);
             }
         }
         
@@ -588,6 +588,15 @@ namespace Bdt.GuiClient.Resources {
         internal static string SETUPFORM_HTTP_BINARY_REMOTING {
             get {
                 return ResourceManager.GetString("SETUPFORM_HTTP_BINARY_REMOTING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HTTP Proxy.
+        /// </summary>
+        internal static string SETUPFORM_HTTP_PROXY {
+            get {
+                return ResourceManager.GetString("SETUPFORM_HTTP_PROXY", resourceCulture);
             }
         }
         
@@ -646,11 +655,182 @@ namespace Bdt.GuiClient.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item count.
+        /// </summary>
+        internal static string SETUPFORM_ITEM_COUNT {
+            get {
+                return ResourceManager.GetString("SETUPFORM_ITEM_COUNT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to of {0}.
+        /// </summary>
+        internal static string SETUPFORM_ITEM_COUNT_OF {
+            get {
+                return ResourceManager.GetString("SETUPFORM_ITEM_COUNT_OF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local port.
+        /// </summary>
+        internal static string SETUPFORM_LOCAL_PORT {
+            get {
+                return ResourceManager.GetString("SETUPFORM_LOCAL_PORT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move down.
+        /// </summary>
+        internal static string SETUPFORM_MOVE_DOWN {
+            get {
+                return ResourceManager.GetString("SETUPFORM_MOVE_DOWN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to top.
+        /// </summary>
+        internal static string SETUPFORM_MOVE_FIRST {
+            get {
+                return ResourceManager.GetString("SETUPFORM_MOVE_FIRST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to bottom.
+        /// </summary>
+        internal static string SETUPFORM_MOVE_LAST {
+            get {
+                return ResourceManager.GetString("SETUPFORM_MOVE_LAST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move up.
+        /// </summary>
+        internal static string SETUPFORM_MOVE_UP {
+            get {
+                return ResourceManager.GetString("SETUPFORM_MOVE_UP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string SETUPFORM_NAME {
+            get {
+                return ResourceManager.GetString("SETUPFORM_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        internal static string SETUPFORM_PASSWORD {
+            get {
+                return ResourceManager.GetString("SETUPFORM_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port.
+        /// </summary>
+        internal static string SETUPFORM_PORT {
+            get {
+                return ResourceManager.GetString("SETUPFORM_PORT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Protocol.
+        /// </summary>
+        internal static string SETUPFORM_PROTOCOL {
+            get {
+                return ResourceManager.GetString("SETUPFORM_PROTOCOL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote port.
+        /// </summary>
+        internal static string SETUPFORM_REMOTE_PORT {
+            get {
+                return ResourceManager.GetString("SETUPFORM_REMOTE_PORT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shared.
+        /// </summary>
+        internal static string SETUPFORM_SHARED {
+            get {
+                return ResourceManager.GetString("SETUPFORM_SHARED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Socks.
+        /// </summary>
+        internal static string SETUPFORM_SOCKS {
+            get {
+                return ResourceManager.GetString("SETUPFORM_SOCKS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Socks server.
+        /// </summary>
+        internal static string SETUPFORM_SOCKS_SERVER_ENABLED {
+            get {
+                return ResourceManager.GetString("SETUPFORM_SOCKS_SERVER_ENABLED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share Socks server.
+        /// </summary>
+        internal static string SETUPFORM_SOCKS_SERVER_SHARED {
+            get {
+                return ResourceManager.GetString("SETUPFORM_SOCKS_SERVER_SHARED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TCP binary stream.
         /// </summary>
         internal static string SETUPFORM_TCP_REMOTING {
             get {
                 return ResourceManager.GetString("SETUPFORM_TCP_REMOTING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BoutDuTunnel (Client) - Configuration.
+        /// </summary>
+        internal static string SETUPFORM_TITLE {
+            get {
+                return ResourceManager.GetString("SETUPFORM_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tunnel.
+        /// </summary>
+        internal static string SETUPFORM_TUNNEL {
+            get {
+                return ResourceManager.GetString("SETUPFORM_TUNNEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User.
+        /// </summary>
+        internal static string SETUPFORM_USER {
+            get {
+                return ResourceManager.GetString("SETUPFORM_USER", resourceCulture);
             }
         }
     }

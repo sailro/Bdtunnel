@@ -30,7 +30,7 @@ namespace Bdt.GuiClient.Forms
     /// Fenêtre principale de l'application, se réduit à une icône de notification
     /// </summary>
     /// -----------------------------------------------------------------------------
-    public partial class MainForm : Form
+    public partial class MainForm : Form 
     {
 
         #region " Enumerations "
@@ -73,7 +73,7 @@ namespace Bdt.GuiClient.Forms
             m_clientState = EClientState.CHANGING;
             using (SetupForm setup = new SetupForm(m_client.ClientConfig))
             {
-                if (setup.ShowDialog() == DialogResult.OK)
+                if (setup.ShowDialog(this) == DialogResult.OK)
                 {
                     /*
                      * Petite subtilite: a ce moment la configuration m_client contient de faux loggers
@@ -116,12 +116,14 @@ namespace Bdt.GuiClient.Forms
         /// -----------------------------------------------------------------------------
         private void AdminItem_Click(object sender, EventArgs e)
         {
+            EClientState previous = m_clientState;
+            m_clientState = EClientState.CHANGING;
             using (AdminForm admin = new AdminForm(m_client.Tunnel, m_client.Sid))
             {
-                admin.ShowDialog();
+                admin.ShowDialog(this);
             }
+            m_clientState = previous;
         }
-
 
         /// -----------------------------------------------------------------------------
         /// <summary>
