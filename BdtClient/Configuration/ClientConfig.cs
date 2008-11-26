@@ -325,17 +325,20 @@ namespace Bdt.Client.Configuration
             m_consoleLogger = consoleLogger;
             m_fileLogger = fileLogger;
 
-            m_proxyEnabled = config.ValueBool(CFG_PROXY_ENABLED, false);
-            m_proxyAutoConfiguration = config.ValueBool(CFG_PROXY_CONFIG_AUTO, false);
-            m_proxyAddress = config.Value(CFG_PROXY_ADDRESS, string.Empty);
-            m_proxyAutoAuthentication = config.ValueBool(CFG_PROXY_AUTH_AUTO, false);
-            m_proxyUserName = config.Value(CFG_PROXY_USERNAME, string.Empty);
-            m_proxyPassword = config.Value(CFG_PROXY_PASSWORD, string.Empty);
-            m_proxyDomain = config.Value(CFG_PROXY_DOMAIN, string.Empty);
-            m_proxyPort = config.ValueInt(CFG_PROXY_PORT, 0);
-            m_socksEnabled = config.ValueBool(CFG_SOCKS_ENABLED, false);
-            m_socksShared = config.ValueBool(CFG_SOCKS_SHARED, false);
-            m_socksPort = config.ValueInt(CFG_SOCKS_PORT, 0);
+            if (config != null)
+            {
+                m_proxyEnabled = config.ValueBool(CFG_PROXY_ENABLED, false);
+                m_proxyAutoConfiguration = config.ValueBool(CFG_PROXY_CONFIG_AUTO, false);
+                m_proxyAddress = config.Value(CFG_PROXY_ADDRESS, string.Empty);
+                m_proxyAutoAuthentication = config.ValueBool(CFG_PROXY_AUTH_AUTO, false);
+                m_proxyUserName = config.Value(CFG_PROXY_USERNAME, string.Empty);
+                m_proxyPassword = config.Value(CFG_PROXY_PASSWORD, string.Empty);
+                m_proxyDomain = config.Value(CFG_PROXY_DOMAIN, string.Empty);
+                m_proxyPort = config.ValueInt(CFG_PROXY_PORT, 0);
+                m_socksEnabled = config.ValueBool(CFG_SOCKS_ENABLED, false);
+                m_socksShared = config.ValueBool(CFG_SOCKS_SHARED, false);
+                m_socksPort = config.ValueInt(CFG_SOCKS_PORT, 0);
+            }
 
             m_forwards = new Dictionary<int,PortForward>();
             for (int i = IPEndPoint.MinPort; i <= IPEndPoint.MaxPort; i++)

@@ -136,6 +136,10 @@
     <value>Deconfiguration {0}</value>
     <comment>Protocole</comment>
   </data>
+  <data name="UNCONFIGURING_SERVER" xml:space="preserve">
+    <value>Deconfiguration {0} port {1}</value>
+    <comment>Protocol, Port</comment>
+  </data>
   <data name="UNLOADING_CONFIGURATION" xml:space="preserve">
     <value>Dechargement de la configuration</value>
   </data>

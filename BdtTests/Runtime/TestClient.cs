@@ -5,16 +5,14 @@
 // -----------------------------------------------------------------------------
 
 #region " Inclusions "
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Bdt.Server.Runtime;
-using Bdt.Shared.Logs;
+using Bdt.Client.Runtime;
 using Bdt.Shared.Configuration;
+using Bdt.Shared.Logs;
+using Bdt.Shared.Protocol;
 using Bdt.Tests.Logs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Bdt.Shared.Protocol;
+using Bdt.Client.Configuration;
+using Bdt.Shared.Resources;
 #endregion
 
 namespace Bdt.Tests.Runtime
@@ -24,12 +22,11 @@ namespace Bdt.Tests.Runtime
     /// Un client de test
     /// </summary>
     /// -----------------------------------------------------------------------------
-    class TestServer : BdtServer
+    class TestClient : BdtClient
     {
 
         #region " Attributs "
         private TestContext m_context;
-        private SharedConfig m_servercfg;
         #endregion
 
         #region " Méthodes "
@@ -41,7 +38,7 @@ namespace Bdt.Tests.Runtime
         /// -----------------------------------------------------------------------------
         public override BaseLogger CreateLoggers()
         {
-            return new TestContextLogger(m_context);
+            return new TestContextLogger(m_context); ;
         }
 
         /// -----------------------------------------------------------------------------
@@ -53,10 +50,11 @@ namespace Bdt.Tests.Runtime
         public override void LoadConfiguration(string[] args)
         {
             m_args = args;
+
             LoggedObject.GlobalLogger = CreateLoggers();
-            Log(Bdt.Shared.Resources.Strings.LOADING_CONFIGURATION, ESeverity.DEBUG);
-            m_protocol = GenericProtocol.GetInstance(m_servercfg);
-            SetCulture(m_servercfg.ServiceCulture);
+            Log(Strings.LOADING_CONFIGURATION, ESeverity.DEBUG);
+            m_protocol = GenericProtocol.GetInstance(m_clientConfig);
+            SetCulture(m_clientConfig.ServiceCulture);
         }
 
         /// -----------------------------------------------------------------------------
@@ -64,12 +62,12 @@ namespace Bdt.Tests.Runtime
         /// Constructeur
         /// </summary>
         /// <param name="context">le contexte du test</param>
-        /// <param name="config">la configuration serveur</param>
+        /// <param name="config">la configuration client</param>
         /// -----------------------------------------------------------------------------
-        public TestServer(TestContext context, ConfigPackage config)
+        public TestClient(TestContext context, ConfigPackage config)
         {
             m_context = context;
-            m_servercfg = new SharedConfig(config);
+            m_clientConfig = new ClientConfig(config, null, null);
             m_config = config;
         }
         #endregion

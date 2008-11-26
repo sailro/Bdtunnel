@@ -37,17 +37,23 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\TestConfigPackage.cs" />
     <Compile Include="Logs\TestContextLogger.cs" />
     <Compile Include="Model\Projects.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\TestServer.cs" />
+    <Compile Include="Runtime\TestClient.cs" />
+    <Compile Include="Sockets\EchoSession.cs" />
+    <Compile Include="Sockets\EchoServer.cs" />
+    <Compile Include="UnitTests\ProgramTest.cs" />
     <Compile Include="UnitTests\ResourcesTest.cs" />
     <Compile Include="UnitTests\BaseTest.cs" />
     <Compile Include="Model\Translations.cs" />
-    <Compile Include="UnitTests\ServiceTest.cs" />
+    <Compile Include="UnitTests\ProtocolsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BdtClient\BdtClient.csproj">

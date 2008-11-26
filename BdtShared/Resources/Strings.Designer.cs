@@ -106,6 +106,15 @@ namespace Bdt.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unconfiguring {0} port {1}.
+        /// </summary>
+        public static string UNCONFIGURING_SERVER {
+            get {
+                return ResourceManager.GetString("UNCONFIGURING_SERVER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unloading configuration.
         /// </summary>
         public static string UNLOADING_CONFIGURATION {

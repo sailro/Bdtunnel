@@ -155,10 +155,14 @@ namespace Bdt.Client.Configuration
             m_localPort = localPort;
             string prefix = string.Format(CFG_FORWARD_TEMPLATE, localPort);
 
-            m_enabled = config.ValueBool(prefix + ClientConfig.WORD_ENABLED, false);
-            m_shared = config.ValueBool(prefix + ClientConfig.WORD_SHARED, false);
-            m_remotePort = config.ValueInt(prefix + ClientConfig.WORD_PORT, 0);
-            m_address = config.Value(prefix + ClientConfig.WORD_ADDRESS, string.Empty);
+            if (config != null)
+            {
+                m_enabled = config.ValueBool(prefix + ClientConfig.WORD_ENABLED, false);
+                m_shared = config.ValueBool(prefix + ClientConfig.WORD_SHARED, false);
+                m_remotePort = config.ValueInt(prefix + ClientConfig.WORD_PORT, 0);
+                m_address = config.Value(prefix + ClientConfig.WORD_ADDRESS, string.Empty);
+            }
+
         }
         #endregion
     }

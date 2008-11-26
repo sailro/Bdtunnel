@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <TestRunConfiguration name="Local Test Run" id="02cb0183-29e3-4f49-bf8f-ca83972d17db" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
   <Description>This is a default test run configuration for a local test run.</Description>
+  <CodeCoverage enabled="true">
+    <Regular>
+      <CodeCoverageItem binaryFile="BdtClient\bin\Debug\BdtClient.exe" pdbFile="BdtClient\bin\Debug\BdtClient.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="BdtGuiClient\bin\Debug\BdtGuiClient.exe" pdbFile="BdtGuiClient\bin\Debug\BdtGuiClient.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="BdtServer\bin\Debug\BdtServer.exe" pdbFile="BdtServer\bin\Debug\BdtServer.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="BdtShared\bin\Debug\BdtShared.dll" pdbFile="BdtShared\bin\Debug\BdtShared.pdb" instrumentInPlace="true" />
+    </Regular>
+  </CodeCoverage>
   <NamingScheme baseName="bdtunnel" useDefault="false" />
   <TestTypeSpecific>
     <WebTestRunConfiguration testTypeId="4e7599fa-5ecb-43e9-a887-cd63cf72d207">

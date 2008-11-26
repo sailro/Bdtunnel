@@ -14,6 +14,7 @@ using System.Runtime.Remoting.Channels;
 
 using Bdt.Shared.Resources;
 using Bdt.Shared.Logs;
+using System.Collections;
 #endregion
 
 namespace Bdt.Shared.Protocol
@@ -24,7 +25,7 @@ namespace Bdt.Shared.Protocol
     /// Protocole de communication basé sur le remoting .NET et sur le protocole HTTP
     /// </summary>
     /// -----------------------------------------------------------------------------
-    public abstract class GenericHttpRemoting : GenericRemoting, IProxyCompatible
+    public abstract class GenericHttpRemoting : GenericRemoting<HttpChannel>, IProxyCompatible
     {
         #region " Constantes "
         private const string HACK_CLIENT_CHANNEL = "_clientChannel";
@@ -34,18 +35,6 @@ namespace Bdt.Shared.Protocol
         #region " Proprietes "
         /// -----------------------------------------------------------------------------
         /// <summary>
-        /// Utiliser le cryptage SSL
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected virtual bool UseSSL
-        {
-            get {
-                return false;
-            }
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
         /// L'URL nécessaire pour se connecter au serveur
         /// </summary>
         /// -----------------------------------------------------------------------------
@@ -53,7 +42,7 @@ namespace Bdt.Shared.Protocol
         {
             get
             {
-                String scheme = (UseSSL) ? Uri.UriSchemeHttps : Uri.UriSchemeHttp;
+                String scheme = (IsSecured) ? Uri.UriSchemeHttps : Uri.UriSchemeHttp;
                 return string.Format("{0}://{1}:{2}/{3}", scheme, Address, Port, Name);
             }
         }
@@ -96,33 +85,6 @@ namespace Bdt.Shared.Protocol
                 FieldInfo proxyObjectFieldInfo = typeof(HttpClientChannel).GetField(HACK_PROXY_OBJECT, BindingFlags.Instance | BindingFlags.NonPublic);
                 proxyObjectFieldInfo.SetValue(ProxyChannel, value);
             }
-        }
-        #endregion
-
-        #region " Methodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Configuration côté client
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public override void ConfigureClient()
-        {
-            Log(string.Format(Strings.CONFIGURING_CLIENT, this.GetType().Name, ServerURL), ESeverity.DEBUG);
-            ChannelServices.RegisterChannel(ClientChannel, UseSSL);
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Configuration côté serveur
-        /// </summary>
-        /// <param name="type">le type d'objet à rendre distant</param>
-        /// -----------------------------------------------------------------------------
-        public override void ConfigureServer(Type type)
-        {
-            Log(string.Format(Strings.CONFIGURING_SERVER, this.GetType().Name, Port), ESeverity.INFO);
-            ChannelServices.RegisterChannel(ServerChannel, UseSSL);
-            WellKnownServiceTypeEntry wks = new WellKnownServiceTypeEntry(type, Name, WellKnownObjectMode.Singleton);
-            RemotingConfiguration.RegisterWellKnownServiceType(wks);
         }
         #endregion
 

@@ -136,6 +136,10 @@
     <value>Unconfiguring {0}</value>
     <comment>Protocol</comment>
   </data>
+  <data name="UNCONFIGURING_SERVER" xml:space="preserve">
+    <value>Unconfiguring {0} port {1}</value>
+    <comment>Protocol, Port</comment>
+  </data>
   <data name="UNLOADING_CONFIGURATION" xml:space="preserve">
     <value>Unloading configuration</value>
   </data>
