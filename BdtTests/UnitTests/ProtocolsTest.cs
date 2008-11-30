@@ -30,6 +30,7 @@ using Bdt.Shared.Request;
 using Bdt.Shared.Response;
 using Bdt.Tests.Sockets;
 using Bdt.Client.Sockets;
+using System.Net;
 #endregion
 
 namespace Bdt.Tests.UnitTests
@@ -194,12 +195,15 @@ namespace Bdt.Tests.UnitTests
             Assert.AreEqual(2, monr.Sessions[0].Connections.Length);
 
             var connections = (from c in monr.Sessions[0].Connections orderby c.Port select c).ToArray();
+            string hostname = Dns.GetHostEntry(connections[0].Address).HostName;
 
+            Assert.AreEqual(hostname, connections[0].Host);
             Assert.AreEqual("127.0.0.1", connections[0].Address);
             Assert.AreEqual(port + ECHO_OFFSET, connections[0].Port);
             Assert.AreEqual(totalread, connections[0].ReadCount);
             Assert.AreEqual(totalread, connections[0].WriteCount);
 
+            Assert.AreEqual(hostname, connections[1].Host);
             Assert.AreEqual("127.0.0.1", connections[1].Address);
             Assert.AreEqual(port + GATEWAY_OFFSET, connections[1].Port);
             Assert.AreEqual(totalread, connections[1].ReadCount);
