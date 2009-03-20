@@ -30,7 +30,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Make.Mono", "Make.Mono", "{
 		Make.Mono\BdtClientCfg.xml = Make.Mono\BdtClientCfg.xml
 		Make.Mono\BdtServerCfg.xml = Make.Mono\BdtServerCfg.xml
 		Make.Mono\BdtWebServerCfg.xml = Make.Mono\BdtWebServerCfg.xml
-		Make.Mono\Makefile = Make.Mono\Makefile
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BdtTests", "BdtTests\BdtTests.csproj", "{E8E5AFB6-4B39-4B49-A45D-BA857F916267}"
