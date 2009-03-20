@@ -28,7 +28,7 @@ namespace Bdt.Shared.Protocol
     public abstract class GenericHttpRemoting : GenericRemoting<HttpChannel>, IProxyCompatible
     {
         #region " Constantes "
-        private const string HACK_CLIENT_CHANNEL = "_clientChannel";
+        private readonly string[] HACK_CLIENT_CHANNEL = new string[] {"_clientChannel", "clientChannel", "client" };
         private const string HACK_PROXY_OBJECT = "_proxyObject";
         #endregion
 
@@ -56,15 +56,26 @@ namespace Bdt.Shared.Protocol
         {
             get
             {
-                FieldInfo clientChannelFieldInfo;
-                clientChannelFieldInfo = typeof(HttpChannel).GetField(HACK_CLIENT_CHANNEL, BindingFlags.Instance | BindingFlags.NonPublic);
+                FieldInfo clientChannelFieldInfo = null;
+                foreach (string fieldname in HACK_CLIENT_CHANNEL)
+                {
+                    clientChannelFieldInfo = typeof(HttpChannel).GetField(fieldname, BindingFlags.Instance | BindingFlags.NonPublic);
+                    if (clientChannelFieldInfo != null)
+                    {
+                        break;
+                    }
+                }
                 if (clientChannelFieldInfo == null)
                 {
-                    // HACK: MONO
-                    clientChannelFieldInfo = typeof(HttpChannel).GetField(HACK_CLIENT_CHANNEL.Substring(1), BindingFlags.Instance | BindingFlags.NonPublic);
+                    // Thanks MONO 2.2 ...
+                    Log("Failed to get ProxyChannel. If you are using Mono, try a version before v2.2", ESeverity.WARN);
+                    return null;
                 }
-                HttpClientChannel channel = ((HttpClientChannel)clientChannelFieldInfo.GetValue(ClientChannel));
-                return channel;
+                else
+                {
+                    HttpClientChannel channel = ((HttpClientChannel)clientChannelFieldInfo.GetValue(ClientChannel));
+                    return channel;
+                }
             }
         }
 
@@ -78,12 +89,29 @@ namespace Bdt.Shared.Protocol
             get
             {
                 FieldInfo proxyObjectFieldInfo = typeof(HttpClientChannel).GetField(HACK_PROXY_OBJECT, BindingFlags.Instance | BindingFlags.NonPublic);
-                return ((IWebProxy)proxyObjectFieldInfo.GetValue(ProxyChannel));
+                if (proxyObjectFieldInfo == null)
+                {
+                    // Thanks MONO 2.2 ...
+                    Log("Failed to get Proxy. If you are using Mono, try a version before v2.2", ESeverity.WARN);
+                    return null;
+                }
+                else
+                {
+                    return ((IWebProxy)proxyObjectFieldInfo.GetValue(ProxyChannel));
+                }
             }
             set
             {
                 FieldInfo proxyObjectFieldInfo = typeof(HttpClientChannel).GetField(HACK_PROXY_OBJECT, BindingFlags.Instance | BindingFlags.NonPublic);
-                proxyObjectFieldInfo.SetValue(ProxyChannel, value);
+                if (proxyObjectFieldInfo == null)
+                {
+                    // Thanks MONO 2.2 ...
+                    Log("Failed to set Proxy. If you are using Mono, try a version before v2.2", ESeverity.WARN);
+                }
+                else
+                {
+                    proxyObjectFieldInfo.SetValue(ProxyChannel, value);
+                }
             }
         }
         #endregion
