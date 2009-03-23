@@ -67,8 +67,8 @@ namespace Bdt.Shared.Protocol
                 }
                 if (clientChannelFieldInfo == null)
                 {
-                    // Thanks MONO 2.2 ...
-                    Log("Failed to get ProxyChannel. If you are using Mono, try a version before v2.2", ESeverity.WARN);
+                    // Thanks MONO 2.0 ...
+                    Log("Failed to get ProxyChannel. If you are using Mono, try a version before v2.x", ESeverity.WARN);
                     return null;
                 }
                 else
@@ -91,8 +91,8 @@ namespace Bdt.Shared.Protocol
                 FieldInfo proxyObjectFieldInfo = typeof(HttpClientChannel).GetField(HACK_PROXY_OBJECT, BindingFlags.Instance | BindingFlags.NonPublic);
                 if (proxyObjectFieldInfo == null)
                 {
-                    // Thanks MONO 2.2 ...
-                    Log("Failed to get Proxy. If you are using Mono, try a version before v2.2", ESeverity.WARN);
+                    // Thanks MONO 2.0 ...
+                    Log("Failed to get Proxy. If you are using Mono, try a version before v2.x", ESeverity.WARN);
                     return null;
                 }
                 else
@@ -105,8 +105,8 @@ namespace Bdt.Shared.Protocol
                 FieldInfo proxyObjectFieldInfo = typeof(HttpClientChannel).GetField(HACK_PROXY_OBJECT, BindingFlags.Instance | BindingFlags.NonPublic);
                 if (proxyObjectFieldInfo == null)
                 {
-                    // Thanks MONO 2.2 ...
-                    Log("Failed to set Proxy. If you are using Mono, try a version before v2.2", ESeverity.WARN);
+                    // Thanks MONO 2.0 ...
+                    Log("Failed to set Proxy. If you are using Mono, try a version before v2.x", ESeverity.WARN);
                 }
                 else
                 {
