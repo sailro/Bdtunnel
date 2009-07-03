@@ -33,7 +33,7 @@ namespace Bdt.GuiClient.Runtime
     {
 
         #region " Attributs "
-        protected MainForm m_mainForm;
+        protected MainComponent m_mainComponent;
         #endregion
 
         #region " Proprietes "
@@ -55,11 +55,11 @@ namespace Bdt.GuiClient.Runtime
         /// La fenetre principale
         /// </summary>
         /// -----------------------------------------------------------------------------
-        public MainForm MainForm
+        public MainComponent MainComponent
         {
             get
             {
-                return m_mainForm;
+                return m_mainComponent;
             }
         }
         #endregion
@@ -100,7 +100,7 @@ namespace Bdt.GuiClient.Runtime
         /// -----------------------------------------------------------------------------
         protected override void InputProxyCredentials (IProxyCompatible proxyProtocol, ref bool retry)
         {
-            m_mainForm.InputProxyCredentials(proxyProtocol, ref retry);
+            m_mainComponent.InputProxyCredentials(proxyProtocol, ref retry);
         }
 
         /// -----------------------------------------------------------------------------
@@ -203,8 +203,8 @@ namespace Bdt.GuiClient.Runtime
 #pragma warning restore
 
             LoadConfiguration(args);
-            m_mainForm = new MainForm(this);
-            Application.Run(m_mainForm);
+            m_mainComponent = new MainComponent(this);
+            Application.Run();
             UnLoadConfiguration();
         }
         #endregion

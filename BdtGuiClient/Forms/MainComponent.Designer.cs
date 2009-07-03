@@ -1,16 +1,16 @@
 ﻿namespace Bdt.GuiClient.Forms
 {
-    partial class MainForm
+    partial class MainComponent
     {
         /// <summary>
-        /// Variable nécessaire au concepteur.
+        /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Nettoyage des ressources utilisées.
+        /// <summary> 
+        /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true si les ressources managées doivent être supprimées ; sinon, false.</param>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,16 +20,16 @@
             base.Dispose(disposing);
         }
 
-        #region Code généré par le Concepteur Windows Form
+        #region Component Designer generated code
 
         /// <summary>
-        /// Méthode requise pour la prise en charge du concepteur - ne modifiez pas
-        /// le contenu de cette méthode avec l'éditeur de code.
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainComponent));
             this.NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.NotifyContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.InfoItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,8 +41,8 @@
             this.LogsItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BottomSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.QuitItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Timer = new System.Windows.Forms.Timer(this.components);
             this.NotifyContextMenu.SuspendLayout();
-            this.SuspendLayout();
             // 
             // NotifyIcon
             // 
@@ -64,7 +64,7 @@
             this.BottomSeparator,
             this.QuitItem});
             this.NotifyContextMenu.Name = "ContextMenu";
-            this.NotifyContextMenu.Size = new System.Drawing.Size(200, 170);
+            this.NotifyContextMenu.Size = new System.Drawing.Size(200, 192);
             this.NotifyContextMenu.Opened += new System.EventHandler(this.NotifyContextMenu_Opened);
             // 
             // InfoItem
@@ -132,35 +132,28 @@
             this.QuitItem.Text = global::Bdt.GuiClient.Resources.Strings.MAINFORM_EXIT;
             this.QuitItem.Click += new System.EventHandler(this.QuitItem_Click);
             // 
-            // MainForm
+            // Timer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(115, 26);
-            this.ControlBox = false;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "MainForm";
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
-            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Timer.Enabled = true;
+            this.Timer.Interval = 1000;
+            this.Timer.Tick += new System.EventHandler(this.Timer_Tick);
             this.NotifyContextMenu.ResumeLayout(false);
-            this.ResumeLayout(false);
 
         }
 
         #endregion
 
+        internal System.Windows.Forms.NotifyIcon NotifyIcon;
         private System.Windows.Forms.ContextMenuStrip NotifyContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem InfoItem;
+        private System.Windows.Forms.ToolStripSeparator TopSeparator;
         private System.Windows.Forms.ToolStripMenuItem StartItem;
         private System.Windows.Forms.ToolStripMenuItem StopItem;
         private System.Windows.Forms.ToolStripMenuItem ConfigureItem;
+        private System.Windows.Forms.ToolStripMenuItem AdminItem;
+        private System.Windows.Forms.ToolStripMenuItem LogsItem;
         private System.Windows.Forms.ToolStripSeparator BottomSeparator;
         private System.Windows.Forms.ToolStripMenuItem QuitItem;
-        private System.Windows.Forms.ToolStripMenuItem InfoItem;
-        private System.Windows.Forms.ToolStripSeparator TopSeparator;
-        private System.Windows.Forms.ToolStripMenuItem LogsItem;
-        internal System.Windows.Forms.NotifyIcon NotifyIcon;
-        private System.Windows.Forms.ToolStripMenuItem AdminItem;
+        private System.Windows.Forms.Timer Timer;
     }
 }

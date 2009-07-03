@@ -64,9 +64,9 @@ namespace Bdt.GuiClient.Logs
         /// -----------------------------------------------------------------------------
         public override void Log(object sender, string message, ESeverity severity)
         {
-            if ((severity == ESeverity.ERROR) && (m_guiclient != null) && (m_guiclient.MainForm != null) && (m_guiclient.MainForm.NotifyIcon != null))
+            if ((severity == ESeverity.ERROR) && (m_guiclient != null) && (m_guiclient.MainComponent != null) && (m_guiclient.MainComponent.NotifyIcon != null))
             {
-                m_guiclient.MainForm.NotifyIcon.ShowBalloonTip(m_timeout, m_tipTitle, message, ToolTipIcon.Error);
+                m_guiclient.MainComponent.NotifyIcon.ShowBalloonTip(m_timeout, m_tipTitle, message, ToolTipIcon.Error);
             }
         }
 

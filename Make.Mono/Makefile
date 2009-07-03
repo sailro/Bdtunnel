@@ -1,7 +1,7 @@
 ################################################################################
 # Path
 ################################################################################
-MONO          = C:/progra~1/Mono-2.2/bin/
+MONO          = C:/progra~1/Mono-2.4.2/bin/
 OUTPUT        = ./
 OUTPUT_SERVER = $(OUTPUT)BdtServer/
 OUTPUT_CLIENT = $(OUTPUT)BdtClient/

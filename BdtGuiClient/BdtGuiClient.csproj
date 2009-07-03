@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0FF4CC9B-690A-48F5-8130-A2ECBC342BB9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -48,11 +48,11 @@
     <Compile Include="Forms\AdminForm.Designer.cs">
       <DependentUpon>AdminForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MainForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Forms\MainComponent.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Forms\MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="Forms\MainComponent.Designer.cs">
+      <DependentUpon>MainComponent.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ProxyForm.cs">
       <SubType>Form</SubType>
@@ -80,9 +80,8 @@
       <DependentUpon>AdminForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MainForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\MainComponent.resx">
+      <DependentUpon>MainComponent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ProxyForm.resx">
       <SubType>Designer</SubType>

@@ -1,4 +1,4 @@
-// -----------------------------------------------------------------------------
+ï»¿// -----------------------------------------------------------------------------
 // BoutDuTunnel
 // Sebastien LEBRETON
 // sebastien.lebreton[-at-]free.fr
@@ -8,31 +8,27 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Net;
 using System.Text;
-using System.Windows.Forms;
-
-using Bdt.GuiClient.Resources;
-using Bdt.Client.Runtime;
-using Bdt.Shared.Logs;
 using Bdt.Shared.Protocol;
+using Bdt.Client.Runtime;
+using System.Windows.Forms;
+using System.Net;
+using System.IO;
+using Bdt.Shared.Logs;
+using Bdt.GuiClient.Resources;
+using System.Threading;
 #endregion
 
 namespace Bdt.GuiClient.Forms
 {
-
     /// -----------------------------------------------------------------------------
     /// <summary>
-    /// Fenêtre principale de l'application, se réduit à une icône de notification
+    /// Traitement principal de l'application, se rÃ©duit Ã  une icÃ´ne de notification
     /// </summary>
     /// -----------------------------------------------------------------------------
-    public partial class MainForm : Form 
+    public partial class MainComponent : Component
     {
-
         #region " Enumerations "
         public enum EClientState
         {
@@ -47,19 +43,7 @@ namespace Bdt.GuiClient.Forms
         protected EClientState m_clientState = EClientState.STOPPED;
         #endregion
 
-        #region " Methodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur
-        /// </summary>
-        /// <param name="client">le client Bdt associé</param>
-        /// -----------------------------------------------------------------------------
-        public MainForm (BdtClient client)
-        {
-            m_client = client;
-            InitializeComponent();
-        }
-
+        #region " MÃ©thodes "
         /// -----------------------------------------------------------------------------
         /// <summary>
         /// Configuration du client
@@ -67,13 +51,13 @@ namespace Bdt.GuiClient.Forms
         /// <param name="sender">l'appelant</param>
         /// <param name="e">les parametres</param>
         /// -----------------------------------------------------------------------------
-        private void ConfigureItem_Click (object sender, EventArgs e)
+        private void ConfigureItem_Click(object sender, EventArgs e)
         {
             EClientState previous = m_clientState;
             m_clientState = EClientState.CHANGING;
             using (SetupForm setup = new SetupForm(m_client.ClientConfig))
             {
-                if (setup.ShowDialog(this) == DialogResult.OK)
+                if (setup.ShowDialog() == DialogResult.OK)
                 {
                     /*
                      * Petite subtilite: a ce moment la configuration m_client contient de faux loggers
@@ -120,7 +104,7 @@ namespace Bdt.GuiClient.Forms
             m_clientState = EClientState.CHANGING;
             using (AdminForm admin = new AdminForm(m_client.Tunnel, m_client.Sid))
             {
-                admin.ShowDialog(this);
+                admin.ShowDialog();
             }
             m_clientState = previous;
         }
@@ -129,10 +113,10 @@ namespace Bdt.GuiClient.Forms
         /// <summary>
         /// Saisie des informations d'authentification sur le proxy
         /// </summary>
-        /// <param name="proxyProtocol">le protocol IProxyCompatible à alterer</param>
+        /// <param name="proxyProtocol">le protocol IProxyCompatible Ã  alterer</param>
         /// <param name="retry">pour permettre les essais multiples</param>
         /// -----------------------------------------------------------------------------
-        public void InputProxyCredentials (IProxyCompatible proxyProtocol, ref bool retry)
+        public void InputProxyCredentials(IProxyCompatible proxyProtocol, ref bool retry)
         {
             using (ProxyForm proxy = new ProxyForm(m_client.ClientConfig))
             {
@@ -150,12 +134,12 @@ namespace Bdt.GuiClient.Forms
 
         /// -----------------------------------------------------------------------------
         /// <summary>
-        /// Démarrage du client
+        /// DÃ©marrage du client
         /// </summary>
         /// <param name="sender">l'appelant</param>
         /// <param name="e">les parametres</param>
         /// -----------------------------------------------------------------------------
-        private void StartItem_Click (object sender, EventArgs e)
+        internal void StartItem_Click(object sender, EventArgs e)
         {
             m_clientState = EClientState.CHANGING;
             UpdateNotifyIcon(Strings.MAINFORM_CLIENT_STARTING, false);
@@ -164,12 +148,12 @@ namespace Bdt.GuiClient.Forms
 
         /// -----------------------------------------------------------------------------
         /// <summary>
-        /// Arrêt du client
+        /// ArrÃªt du client
         /// </summary>
         /// <param name="sender">l'appelant</param>
         /// <param name="e">les parametres</param>
         /// -----------------------------------------------------------------------------
-        private void StopItem_Click (object sender, EventArgs e)
+        private void StopItem_Click(object sender, EventArgs e)
         {
             m_clientState = EClientState.CHANGING;
             UpdateNotifyIcon(Strings.MAINFORM_CLIENT_STOPPING, false);
@@ -178,18 +162,18 @@ namespace Bdt.GuiClient.Forms
 
         /// -----------------------------------------------------------------------------
         /// <summary>
-        /// Démarrage effectif du client
+        /// DÃ©marrage effectif du client
         /// </summary>
         /// <param name="state">les parametres</param>
         /// -----------------------------------------------------------------------------
-        private void StartClient (Object state)
+        private void StartClient(Object state)
         {
             try
             {
                 m_client.StartClient();
                 m_clientState = EClientState.STARTED;
-                // On utilise un Invoke car le thread courant est différent du thread créateur du contrôle (modèle STA)
-                this.Invoke(new UpdateNotifyIconDelegate(UpdateNotifyIcon), new object[] { Strings.MAINFORM_CLIENT_STARTED, true });
+                // On utilise un Invoke car le thread courant est diffÃ©rent du thread crÃ©ateur du contrÃ´le (modÃ¨le STA)
+                NotifyContextMenu.Invoke(new UpdateNotifyIconDelegate(UpdateNotifyIcon), new object[] { Strings.MAINFORM_CLIENT_STARTED, true });
             }
             catch (Exception e)
             {
@@ -202,18 +186,18 @@ namespace Bdt.GuiClient.Forms
 
         /// -----------------------------------------------------------------------------
         /// <summary>
-        /// Arrêt effectif du client
+        /// ArrÃªt effectif du client
         /// </summary>
         /// <param name="state">les parametres</param>
         /// -----------------------------------------------------------------------------
-        private void StopClient (Object state)
+        private void StopClient(Object state)
         {
             try
             {
                 m_client.StopClient();
                 m_clientState = EClientState.STOPPED;
-                // On utilise un Invoke car le thread courant est différent du thread créateur du contrôle (modèle STA)
-                this.Invoke(new UpdateNotifyIconDelegate(UpdateNotifyIcon), new object[] { Strings.MAINFORM_CLIENT_STOPPED, false });
+                // On utilise un Invoke car le thread courant est diffÃ©rent du thread crÃ©ateur du contrÃ´le (modÃ¨le STA)
+                NotifyContextMenu.Invoke(new UpdateNotifyIconDelegate(UpdateNotifyIcon), new object[] { Strings.MAINFORM_CLIENT_STOPPED, false });
             }
             catch (Exception e)
             {
@@ -224,19 +208,19 @@ namespace Bdt.GuiClient.Forms
 
         /// -----------------------------------------------------------------------------
         /// <summary>
-        /// Délégué pour l'appel inter-thread de UpdateNotifyIcon
+        /// DÃ©lÃ©guÃ© pour l'appel inter-thread de UpdateNotifyIcon
         /// </summary>
         /// <param name="text">le texte a fixer (null si inutile)</param>
         /// -----------------------------------------------------------------------------
-        private delegate void UpdateNotifyIconDelegate (string text, bool useBalloon);
+        private delegate void UpdateNotifyIconDelegate(string text, bool useBalloon);
 
         /// -----------------------------------------------------------------------------
         /// <summary>
-        /// Mise à jour de l'icône de notification
+        /// Mise Ã  jour de l'icÃ´ne de notification
         /// </summary>
         /// <param name="text">le texte a fixer (null si inutile)</param>
         /// -----------------------------------------------------------------------------
-        private void UpdateNotifyIcon (string text, bool useBalloon)
+        private void UpdateNotifyIcon(string text, bool useBalloon)
         {
             if (text != null)
             {
@@ -264,19 +248,19 @@ namespace Bdt.GuiClient.Forms
 
         /// -----------------------------------------------------------------------------
         /// <summary>
-        /// Arrêt du client si nécessaire
+        /// ArrÃªt du client si nÃ©cessaire
         /// </summary>
         /// <param name="state">les parametres</param>
         /// -----------------------------------------------------------------------------
-        private void WaitThenStopClientIfNeeded ()
+        private void WaitThenStopClientIfNeeded()
         {
-            // On attends que le traitement en cours s'achève
+            // On attends que le traitement en cours s'achÃ¨ve
             while (m_clientState == EClientState.CHANGING)
             {
                 Application.DoEvents();
             }
 
-            // Arrêt du client si nécessaire
+            // ArrÃªt du client si nÃ©cessaire
             if (m_clientState == EClientState.STARTED)
             {
                 StopClient(null);
@@ -290,10 +274,10 @@ namespace Bdt.GuiClient.Forms
         /// <param name="sender">l'appelant</param>
         /// <param name="e">les parametres</param>
         /// -----------------------------------------------------------------------------
-        private void QuitItem_Click (object sender, EventArgs e)
+        private void QuitItem_Click(object sender, EventArgs e)
         {
             WaitThenStopClientIfNeeded();
-            Close();
+            Application.Exit();
         }
 
         /// -----------------------------------------------------------------------------
@@ -303,7 +287,7 @@ namespace Bdt.GuiClient.Forms
         /// <param name="sender">l'appelant</param>
         /// <param name="e">les parametres</param>
         /// -----------------------------------------------------------------------------
-        private void LogsItem_Click (object sender, EventArgs e)
+        private void LogsItem_Click(object sender, EventArgs e)
         {
             ProcessStartInfo info = new ProcessStartInfo(m_client.ClientConfig.FileLogger.Filename);
             Process.Start(info);
@@ -316,22 +300,51 @@ namespace Bdt.GuiClient.Forms
         /// <param name="sender">l'appelant</param>
         /// <param name="e">les parametres</param>
         /// -----------------------------------------------------------------------------
-        private void NotifyContextMenu_Opened (object sender, EventArgs e)
+        private void NotifyContextMenu_Opened(object sender, EventArgs e)
         {
             UpdateNotifyIcon(null, false);
         }
 
         /// -----------------------------------------------------------------------------
         /// <summary>
-        /// Chargement de la page
+        /// Constructeur
+        /// </summary>
+        /// -----------------------------------------------------------------------------
+        public MainComponent()
+        {
+            InitializeComponent();
+            this.UpdateNotifyIcon("Hello", true);
+        }
+
+        /// -----------------------------------------------------------------------------
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="client">le client Bdt associÃ©</param>
+        /// -----------------------------------------------------------------------------
+        public MainComponent(BdtClient client)
+        {
+            m_client = client;
+            InitializeComponent();
+        }
+
+        /// -----------------------------------------------------------------------------
+        /// <summary>
+        /// Workaround pour reproduire le comportement OnLoad avec un composant
         /// </summary>
         /// <param name="sender">l'appelant</param>
         /// <param name="e">les parametres</param>
         /// -----------------------------------------------------------------------------
-        private void MainForm_Load (object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
-            StartItem_Click(sender, e);
+            IntPtr handle = this.NotifyContextMenu.Handle;
+            if (handle.ToInt32() > 0)
+            {
+                Timer.Enabled = false;
+                StartItem_Click(sender, e);
+            }
         }
         #endregion
+
     }
 }
