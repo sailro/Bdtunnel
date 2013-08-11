@@ -3,7 +3,7 @@
 ################################################################################
 DOTNET        = C:\\WINDOWS\\Microsoft.NET\\Framework\\v3.5\\
 DOTNET_DLL    = C:\\WINDOWS\\Microsoft.NET\\Framework\\v2.0.50727\\
-DOTNET_SDK    = C:\\Program\ Files\\Microsoft\ SDKs\\Windows\\v6.0A\\Bin\\
+DOTNET_SDK    = C:\\Program\ Files\ \(x86\)\\Microsoft\ SDKs\\Windows\\v7.0A\\Bin\\
 OUTPUT        = .\\
 OUTPUT_SERVER = $(OUTPUT)BdtServer\\
 OUTPUT_CLIENT = $(OUTPUT)BdtClient\\

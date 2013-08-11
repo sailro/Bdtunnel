@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Make.Mono", "Make.Mono", "{
 		Make.Mono\BdtClientCfg.xml = Make.Mono\BdtClientCfg.xml
 		Make.Mono\BdtServerCfg.xml = Make.Mono\BdtServerCfg.xml
 		Make.Mono\BdtWebServerCfg.xml = Make.Mono\BdtWebServerCfg.xml
+		Make.Mono\Makefile = Make.Mono\Makefile
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BdtShared", "BdtShared\BdtShared.csproj", "{3CB456B0-7C1C-4FF8-97C4-4F06154327A6}"

@@ -45,9 +45,9 @@ namespace Bdt.Tests.UnitTests
         [TestMethod]
         public void TestStaticXorEncoder()
         {
-            for (int key = 0; key < byte.MaxValue; key++)
+            for (var key = 0; key < byte.MaxValue; key++)
             {
-                for (int datalength = 0; datalength < 1024; datalength = (datalength == 0) ? 1 : datalength * 2)
+                for (var datalength = 0; datalength < 1024; datalength = (datalength == 0) ? 1 : datalength * 2)
                 {
                     var buffer = new byte[datalength];
                     var outbuffer = new byte[datalength];
@@ -59,10 +59,8 @@ namespace Bdt.Tests.UnitTests
                     Program.StaticXorEncoder(ref buffer, key);
                     Program.StaticXorEncoder(ref buffer, key);
 
-                    for (int i = 0; i < datalength; i++)
-                    {
-                        Assert.AreEqual(buffer[i], outbuffer[i], String.Format("Offset {0}, key={1}", i, key));
-                    }
+	                for (var i = 0; i < datalength; i++)
+		                Assert.AreEqual(buffer[i], outbuffer[i], String.Format("Offset {0}, key={1}", i, key));
                 }
             }
         }
