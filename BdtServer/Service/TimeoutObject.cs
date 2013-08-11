@@ -37,42 +37,24 @@ namespace Bdt.Server.Service
     /// -----------------------------------------------------------------------------
     public abstract class TimeoutObject
     {
-        #region " Attributs "
-        protected DateTime m_lastAccess;
-        protected int m_timeoutdelay = 0; // heures -> CheckTimeout <=0 pour disabled
-        #endregion
 
         #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Delai de Timeout
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public int TimeoutDelay
-        {
-            get
-            {
-                return m_timeoutdelay;
-            }
-        }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// La date de dernière opération I/O
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public DateTime LastAccess
-        {
-            get
-            {
-                return m_lastAccess;
-            }
-            set
-            {
-                m_lastAccess = value;
-            }
-        }
-        #endregion
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Delai de Timeout
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    private int TimeoutDelay { get; set; }
+
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// La date de dernière opération I/O
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public DateTime LastAccess { get; set; }
+
+	    #endregion
 
         #region " Methodes "
         /// -----------------------------------------------------------------------------
@@ -83,7 +65,7 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         protected TimeoutObject(int timeoutdelay)
         {
-            m_timeoutdelay = timeoutdelay;
+            TimeoutDelay = timeoutdelay;
         }
 
         /// -----------------------------------------------------------------------------
@@ -101,11 +83,9 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         protected virtual bool CheckTimeout(ILogger logger)
         {
-            if (TimeoutDelay > 0)
-            {
-                return DateTime.Now.Subtract(LastAccess).TotalHours > TimeoutDelay;
-            }
-            return false;
+	        if (TimeoutDelay > 0)
+		        return DateTime.Now.Subtract(LastAccess).TotalHours > TimeoutDelay;
+	        return false;
         }
 
         /// -----------------------------------------------------------------------------
@@ -120,12 +100,12 @@ namespace Bdt.Server.Service
         {
             foreach (int key in new ArrayList(collection.Keys))
             {
-                T item = collection[key];
-                if (item.CheckTimeout(logger))
-                {
-                    item.Timeout(logger);
-                    collection.Remove(key);
-                }
+                var item = collection[key];
+	            if (!item.CheckTimeout(logger))
+					continue;
+	            
+				item.Timeout(logger);
+	            collection.Remove(key);
             }
         
         }

@@ -37,64 +37,43 @@ namespace Bdt.Shared.Configuration
     {
 
         #region " Constantes "
-        public const string SOURCE_PATH_SEPARATOR = "/";
-        public const string SOURCE_ITEM_ATTRIBUTE = "@";
-        public const string SOURCE_ITEM_EQUALS = "=";
-        public const string SOURCE_SCRAMBLED_START = "[";
-        public const string SOURCE_SCRAMBLED_END = "]";
+	    protected const string SourcePathSeparator = "/";
+        public const string SourceItemAttribute = "@";
+	    protected const string SourceItemEquals = "=";
         #endregion
 
         #region " Attributs "
-        protected SortedList m_values = new SortedList(); // Les elements classés par code
-        protected int m_priority = 0; // La priorité de cette source
-        #endregion
+        private readonly SortedList _values = new SortedList(); // Les elements classés par code
+
+	    #endregion
 
         #region " Propriétés "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Retourne/Fixe la priorité de la source
-        /// </summary>
-        /// <returns>la priorité de la source</returns>
-        /// -----------------------------------------------------------------------------
-        public int Priority
-        {
-            get
-            {
-                return m_priority;
-            }
-            set
-            {
-                m_priority = value;
-            }
-        }
 
-        /// -----------------------------------------------------------------------------
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Retourne/Fixe la priorité de la source
+	    /// </summary>
+	    /// <returns>la priorité de la source</returns>
+	    /// -----------------------------------------------------------------------------
+	    private int Priority { get; set; }
+
+	    /// -----------------------------------------------------------------------------
         /// <summary>
         /// Retourne/Fixe la priorité de la source
         /// </summary>
         /// <returns>la priorité de la source</returns>
         /// -----------------------------------------------------------------------------
         public string Value(string code, string defaultValue)
+	    {
+		    return _values.ContainsKey(code) ? Convert.ToString(_values[code]) : defaultValue;
+	    }
+
+	    public void SetValue(string code, string value)
         {
-            if (m_values.ContainsKey(code))
-            {
-                return System.Convert.ToString(m_values[code]);
-            }
+            if (_values.ContainsKey(code))
+                _values[code] = value;
             else
-            {
-                return defaultValue;
-            }
-        }
-        public void SetValue(string code, string Value)
-        {
-            if (m_values.ContainsKey(code))
-            {
-                m_values[code] = Value;
-            }
-            else
-            {
-                m_values.Add(code, Value);
-            }
+                _values.Add(code, value);
         }
         #endregion
 
@@ -108,7 +87,7 @@ namespace Bdt.Shared.Configuration
         /// -----------------------------------------------------------------------------
         protected BaseConfig(int priority)
         {
-            this.Priority = priority;
+            Priority = priority;
         }
 
         /// -----------------------------------------------------------------------------
@@ -126,14 +105,12 @@ namespace Bdt.Shared.Configuration
         /// -----------------------------------------------------------------------------
         public sealed override string ToString()
         {
-            string returnValue;
-            returnValue = string.Empty;
+	        string returnValue = string.Empty;
 
-            foreach (string key in m_values.Keys)
-            {
-                returnValue += "   <" + this.GetType().Name + "(" + Priority + ")" + "> [" + key + "] " + SOURCE_ITEM_EQUALS + " [" + Value(key, String.Empty) + "]" + "\r\n";
-            }
-            return returnValue;
+            foreach (string key in _values.Keys)
+                returnValue += "   <" + GetType().Name + "(" + Priority + ")" + "> [" + key + "] " + SourceItemEquals + " [" + Value(key, String.Empty) + "]" + "\r\n";
+
+			return returnValue;
         }
 
         /// -----------------------------------------------------------------------------
@@ -145,16 +122,13 @@ namespace Bdt.Shared.Configuration
         /// -----------------------------------------------------------------------------
         public int CompareTo(object obj)
         {
-            if ((obj) is BaseConfig)
-            {
-                return this.Priority - ((BaseConfig)obj).Priority;
-            }
-            else
-            {
-                return 0;
-            }
+	        if ((obj) is BaseConfig)
+                return Priority - ((BaseConfig)obj).Priority;
+
+			return 0;
         }
-        #endregion
+
+	    #endregion
 
     }
 }

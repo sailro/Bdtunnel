@@ -36,51 +36,39 @@ namespace Bdt.Shared.Runtime
     /// Une ébauche de programme
     /// </summary>
     /// -----------------------------------------------------------------------------
-    public abstract class Program : Bdt.Shared.Logs.LoggedObject
+    public abstract class Program : LoggedObject
     {
 
         #region " Constantes "
-        protected const string CFG_LOG = SharedConfig.WORD_LOGS + SharedConfig.TAG_ELEMENT;
-        protected const string CFG_CONSOLE = CFG_LOG + SharedConfig.WORD_CONSOLE;
-        protected const string CFG_FILE = CFG_LOG + SharedConfig.WORD_FILE;
+	    private const string CfgLog = SharedConfig.WordLogs + SharedConfig.TagElement;
+        protected const string CfgConsole = CfgLog + SharedConfig.WordConsole;
+        protected const string CfgFile = CfgLog + SharedConfig.WordFile;
         #endregion
 
         #region " Attributs "
-        protected ConfigPackage m_config;
-        protected GenericProtocol m_protocol;
-        protected BaseLogger m_consoleLogger;
-        protected FileLogger m_fileLogger;
-        protected string[] m_args;
+
+	    protected BaseLogger ConsoleLogger;
+        protected FileLogger FileLogger;
+        protected string[] Args;
         #endregion
 
         #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le protocole de communication
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public virtual GenericProtocol Protocol
-        {
-            get
-            {
-                return m_protocol;
-            }
-        }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le protocole de communication
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public virtual ConfigPackage Configuration
-        {
-            get
-            {
-                return m_config;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le protocole de communication
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public GenericProtocol Protocol { get; protected set; }
 
-        /// -----------------------------------------------------------------------------
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le protocole de communication
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public ConfigPackage Configuration { get; protected set; }
+
+	    /// -----------------------------------------------------------------------------
         /// <summary>
         /// Le fichier de configuration
         /// </summary>
@@ -102,7 +90,7 @@ namespace Bdt.Shared.Runtime
         /// -----------------------------------------------------------------------------
         public void LoadConfiguration()
         {
-            LoadConfiguration(m_args);
+            LoadConfiguration(Args);
         }
 
         /// -----------------------------------------------------------------------------
@@ -111,19 +99,19 @@ namespace Bdt.Shared.Runtime
         /// </summary>
         /// <returns>un MultiLogger lié à une source fichier et console</returns>
         /// -----------------------------------------------------------------------------
-        public virtual BaseLogger CreateLoggers ()
+        protected virtual BaseLogger CreateLoggers ()
         {
-            StringConfig ldcConfig = new StringConfig(m_args, 0);
-            XMLConfig xmlConfig = new XMLConfig(ConfigFile, 1);
-            m_config = new ConfigPackage();
-            m_config.AddSource(ldcConfig);
-            m_config.AddSource(xmlConfig);
+            var ldcConfig = new StringConfig(Args, 0);
+            var xmlConfig = new XMLConfig(ConfigFile, 1);
+            Configuration = new ConfigPackage();
+            Configuration.AddSource(ldcConfig);
+            Configuration.AddSource(xmlConfig);
 
-            MultiLogger log = new MultiLogger();
-            m_consoleLogger = new ConsoleLogger(CFG_CONSOLE, m_config);
-            m_fileLogger = new Bdt.Shared.Logs.FileLogger(CFG_FILE, m_config);
-            log.AddLogger(m_consoleLogger);
-            log.AddLogger(m_fileLogger);
+            var log = new MultiLogger();
+            ConsoleLogger = new ConsoleLogger(CfgConsole, Configuration);
+            FileLogger = new FileLogger(CfgFile, Configuration);
+            log.AddLogger(ConsoleLogger);
+            log.AddLogger(FileLogger);
 
             return log;
         }
@@ -136,12 +124,12 @@ namespace Bdt.Shared.Runtime
         /// -----------------------------------------------------------------------------
         public virtual void LoadConfiguration(string[] args)
         {
-            m_args = args;
+            Args = args;
 
-            LoggedObject.GlobalLogger = CreateLoggers();
+            GlobalLogger = CreateLoggers();
             Log(Strings.LOADING_CONFIGURATION, ESeverity.DEBUG);
-            SharedConfig cfg = new SharedConfig(m_config);
-            m_protocol = GenericProtocol.GetInstance(cfg);
+            var cfg = new SharedConfig(Configuration);
+            Protocol = GenericProtocol.GetInstance(cfg);
             SetCulture(cfg.ServiceCulture);
         }
 
@@ -151,12 +139,10 @@ namespace Bdt.Shared.Runtime
         /// </summary>
         /// <param name="name">le nom de la culture</param>
         /// -----------------------------------------------------------------------------
-        public virtual void SetCulture(String name)
+        protected virtual void SetCulture(String name)
         {
-            if ((name != null) && (name != String.Empty))
-            {
-                Bdt.Shared.Resources.Strings.Culture = new CultureInfo(name);
-            }
+	        if (!string.IsNullOrEmpty(name))
+		        Strings.Culture = new CultureInfo(name);
         }
 
         /// -----------------------------------------------------------------------------
@@ -168,21 +154,21 @@ namespace Bdt.Shared.Runtime
         {
             Log(Strings.UNLOADING_CONFIGURATION, ESeverity.DEBUG);
 
-            if (m_consoleLogger != null)
+            if (ConsoleLogger != null)
             {
-                m_consoleLogger.Close();
-                m_consoleLogger = null;
+                ConsoleLogger.Close();
+                ConsoleLogger = null;
             }
 
-            if (m_fileLogger != null)
+            if (FileLogger != null)
             {
-                m_fileLogger.Close();
-                m_fileLogger = null;
+                FileLogger.Close();
+                FileLogger = null;
             }
 
-            LoggedObject.GlobalLogger = null;
-            m_config = null;
-            m_protocol = null;
+            GlobalLogger = null;
+            Configuration = null;
+            Protocol = null;
         }
 
         /// -----------------------------------------------------------------------------
@@ -192,8 +178,8 @@ namespace Bdt.Shared.Runtime
         /// -----------------------------------------------------------------------------
         public static string FrameworkVersion()
         {
-            string plateform = (Type.GetType("Mono.Runtime", false) == null) ? ".NET" : "Mono";
-            return string.Format(Strings.POWERED_BY, plateform, System.Environment.Version);
+            var plateform = (Type.GetType("Mono.Runtime", false) == null) ? ".NET" : "Mono";
+            return string.Format(Strings.POWERED_BY, plateform, Environment.Version);
         }
 
         /*

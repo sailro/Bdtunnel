@@ -41,43 +41,31 @@ namespace Bdt.Client.Sockets
     {
 
         #region " Constantes "
-        public const int ACCEPT_POLLING_TIME = 50;
+	    private const int AcceptPollingTime = 50;
         #endregion
 
         #region " Attributs "
-        private TcpListener m_listener;
-        private ManualResetEvent m_mre = new ManualResetEvent(false);
-        private IPAddress m_ip = IPAddress.Any;
-        private int m_port;
-        #endregion
+        private readonly TcpListener _listener;
+        private readonly ManualResetEvent _mre = new ManualResetEvent(false);
+	    #endregion
 
         #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// L'ip d'écoute
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public IPAddress Ip
-        {
-            get
-            {
-                return m_ip;
-            }
-        }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le port d'écoute
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public int Port
-        {
-            get
-            {
-                return m_port;
-            }
-        }
-        #endregion
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// L'ip d'écoute
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    protected IPAddress Ip { get; private set; }
+
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le port d'écoute
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    private int Port { get; set; }
+
+	    #endregion
 
         #region " Methodes "
         /// -----------------------------------------------------------------------------
@@ -87,13 +75,13 @@ namespace Bdt.Client.Sockets
         /// <param name="port">port local côté client</param>
         /// <param name="shared">bind sur toutes les ip/ip locale</param>
         /// -----------------------------------------------------------------------------
-        public TcpServer(int port, bool shared)
+        protected TcpServer(int port, bool shared)
         {
-            m_ip = (IPAddress)(shared ? IPAddress.Any : IPAddress.Loopback);
-            m_port = port;
+            Ip = shared ? IPAddress.Any : IPAddress.Loopback;
+            Port = port;
 
-            m_listener = new TcpListener(m_ip, m_port);
-            Thread thr = new Thread(new System.Threading.ThreadStart(ServerThread));
+            _listener = new TcpListener(Ip, Port);
+            var thr = new Thread(ServerThread);
             thr.Start();
         }
 
@@ -112,8 +100,8 @@ namespace Bdt.Client.Sockets
         /// -----------------------------------------------------------------------------
         public void CloseServer()
         {
-            m_mre.Set();
-            m_listener.Stop();
+            _mre.Set();
+            _listener.Stop();
         }
 
         /// -----------------------------------------------------------------------------
@@ -121,16 +109,16 @@ namespace Bdt.Client.Sockets
         /// Traitement principal du thread
         /// </summary>
         /// -----------------------------------------------------------------------------
-        protected void ServerThread()
+        private void ServerThread()
         {
             try
             {
-                m_listener.Start();
-                while (!m_mre.WaitOne(ACCEPT_POLLING_TIME, false))
+                _listener.Start();
+                while (!_mre.WaitOne(AcceptPollingTime, false))
                 {
                     try
                     {
-                        TcpClient client = m_listener.AcceptTcpClient();
+                        TcpClient client = _listener.AcceptTcpClient();
                         OnNewConnection(client);
                     }
                     catch (SocketException ex)
@@ -152,7 +140,7 @@ namespace Bdt.Client.Sockets
             {
                 if (ex.SocketErrorCode == SocketError.AddressAlreadyInUse)
                 {
-                    Log(String.Format(Strings.TCP_SERVER_DISABLED, m_port), ESeverity.WARN);
+                    Log(String.Format(Strings.TCP_SERVER_DISABLED, Port), ESeverity.WARN);
                 }
                 else
                 {

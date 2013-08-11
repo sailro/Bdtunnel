@@ -20,9 +20,6 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 
 using Bdt.Shared.Logs;
@@ -42,9 +39,9 @@ namespace Bdt.GuiClient.Logs
     {
 
         #region " Attributs "
-        protected BdtGuiClient m_guiclient = null;
-        protected string m_tipTitle = null;
-        protected int m_timeout = 0;
+	    private BdtGuiClient _guiclient;
+	    private readonly string _tipTitle;
+	    private readonly int _timeout;
         #endregion
 
         #region " Méthodes "
@@ -64,9 +61,9 @@ namespace Bdt.GuiClient.Logs
             // on utilise le référence d'un BdtGuiClient au lieu de passer directement un NotifyIcon car à ce stade
             // on ne peut pas créer de formulaire, car la Culture serait incorrecte, le fichier de configuration
             // n'étant pas déjà parsé
-            m_guiclient = guiclient;
-            m_tipTitle = tipTitle;
-            m_timeout = timeout;
+            _guiclient = guiclient;
+            _tipTitle = tipTitle;
+            _timeout = timeout;
         }
 
         /// -----------------------------------------------------------------------------
@@ -79,10 +76,9 @@ namespace Bdt.GuiClient.Logs
         /// -----------------------------------------------------------------------------
         public override void Log(object sender, string message, ESeverity severity)
         {
-            if ((severity == ESeverity.ERROR) && (m_guiclient != null) && (m_guiclient.MainComponent != null) && (m_guiclient.MainComponent.NotifyIcon != null))
-            {
-                m_guiclient.MainComponent.NotifyIcon.ShowBalloonTip(m_timeout, m_tipTitle, message, ToolTipIcon.Error);
-            }
+	        if ((severity == ESeverity.ERROR) && (_guiclient != null) && (_guiclient.MainComponent != null) &&
+	            (_guiclient.MainComponent.NotifyIcon != null))
+		        _guiclient.MainComponent.NotifyIcon.ShowBalloonTip(_timeout, _tipTitle, message, ToolTipIcon.Error);
         }
 
         /// -----------------------------------------------------------------------------
@@ -92,7 +88,7 @@ namespace Bdt.GuiClient.Logs
         /// -----------------------------------------------------------------------------
         public override void Close()
         {
-            m_guiclient = null;
+            _guiclient = null;
         }
         #endregion
 

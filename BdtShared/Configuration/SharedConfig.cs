@@ -19,14 +19,6 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Bdt.Shared.Configuration;
-#endregion
-
 namespace Bdt.Shared.Configuration
 {
 
@@ -39,158 +31,80 @@ namespace Bdt.Shared.Configuration
 	{
 
         #region " Constantes "
-        public const string TAG_ATTRIBUTE = "@";
-        public const string TAG_ELEMENT = "/";
-        public const string WORD_SERVICE = "service";
-        public const string WORD_PROTOCOL = "protocol";
-        public const string WORD_NAME = "name";
-        public const string WORD_PORT = "port";
-        public const string WORD_ADDRESS = "address";
-        public const string WORD_USERNAME = "username";
-        public const string WORD_PASSWORD = "password";
-        public const string WORD_LOGS = "logs";
-        public const string WORD_CONSOLE = "console";
-        public const string WORD_FILE = "file";
-        public const string WORD_CULTURE = "culture";
+        public const string TagAttribute = "@";
+        public const string TagElement = "/";
+	    protected const string WordService = "service";
+	    protected const string WordProtocol = "protocol";
+	    protected const string WordName = "name";
+        public const string WordPort = "port";
+        public const string WordAddress = "address";
+	    protected const string WordUsername = "username";
+	    protected const string WordPassword = "password";
+        public const string WordLogs = "logs";
+        public const string WordConsole = "console";
+        public const string WordFile = "file";
+	    protected const string WordCulture = "culture";
 
-        protected const string CFG_SERVICE_USERNAME = WORD_SERVICE + TAG_ATTRIBUTE + WORD_USERNAME;
-        protected const string CFG_SERVICE_PASSWORD = WORD_SERVICE + TAG_ATTRIBUTE + WORD_PASSWORD;
-        protected const string CFG_SERVICE_PROTOCOL = WORD_SERVICE + TAG_ATTRIBUTE + WORD_PROTOCOL;
-        protected const string CFG_SERVICE_NAME = WORD_SERVICE + TAG_ATTRIBUTE + WORD_NAME;
-        protected const string CFG_SERVICE_PORT = WORD_SERVICE + TAG_ATTRIBUTE + WORD_PORT;
-        protected const string CFG_SERVICE_ADDRESS = WORD_SERVICE + TAG_ATTRIBUTE + WORD_ADDRESS;
-        protected const string CFG_SERVICE_CULTURE = WORD_SERVICE + TAG_ATTRIBUTE + WORD_CULTURE;
-        #endregion
-
-        #region  " Attributs "
-        protected string m_serviceUserName;
-        protected string m_servicePassword;
-        protected string m_serviceProtocol;
-        protected string m_serviceName;
-        protected int m_servicePort;
-        protected string m_serviceAddress;
-        protected string m_serviceCulture;
+	    private const string CfgServiceUsername = WordService + TagAttribute + WordUsername;
+		private const string CfgServicePassword = WordService + TagAttribute + WordPassword;
+		private const string CfgServiceProtocol = WordService + TagAttribute + WordProtocol;
+		private const string CfgServiceName = WordService + TagAttribute + WordName;
+		private const string CfgServicePort = WordService + TagAttribute + WordPort;
+		private const string CfgServiceAddress = WordService + TagAttribute + WordAddress;
+		private const string CfgServiceCulture = WordService + TagAttribute + WordCulture;
         #endregion
 
         #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// L'utilisateur du tunnel
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public string ServiceUserName
-        {
-            get
-            {
-                return m_serviceUserName;
-            }
-            set {
-                m_serviceUserName = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// L'utilisateur du tunnel
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public string ServiceUserName { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le mot de passe du tunnel
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public string ServicePassword
-        {
-            get
-            {
-                return m_servicePassword;
-            }
-            set
-            {
-                m_servicePassword = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le mot de passe du tunnel
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public string ServicePassword { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le protocole à utiliser
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public string ServiceProtocol
-        {
-            get
-            {
-                return m_serviceProtocol;
-            }
-            set
-            {
-                m_serviceProtocol = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le protocole à utiliser
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public string ServiceProtocol { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le nom du tunnel
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public string ServiceName
-        {
-            get
-            {
-                return m_serviceName;
-            }
-            set
-            {
-                m_serviceName = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le nom du tunnel
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public string ServiceName { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le port du serveur
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public int ServicePort
-        {
-            get
-            {
-                return m_servicePort;
-            }
-            set
-            {
-                m_servicePort = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le port du serveur
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public int ServicePort { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// L'adresse du serveur
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public string ServiceAddress
-        {
-            get
-            {
-                return m_serviceAddress;
-            }
-            set
-            {
-                m_serviceAddress = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// L'adresse du serveur
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public string ServiceAddress { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// La culture
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public string ServiceCulture
-        {
-            get
-            {
-                return m_serviceCulture;
-            }
-            set
-            {
-                m_serviceCulture = value;
-            }
-        }
-        #endregion
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// La culture
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public string ServiceCulture { get; private set; }
+
+	    #endregion
 
         #region " Methodes "
         /// -----------------------------------------------------------------------------
@@ -201,16 +115,16 @@ namespace Bdt.Shared.Configuration
         /// -----------------------------------------------------------------------------
         public SharedConfig (ConfigPackage config)
         {
-            if (config != null)
-            {
-                m_serviceUserName = config.Value(CFG_SERVICE_USERNAME, string.Empty);
-                m_servicePassword = config.Value(CFG_SERVICE_PASSWORD, string.Empty);
-                m_serviceProtocol = config.Value(CFG_SERVICE_PROTOCOL, string.Empty);
-                m_serviceName = config.Value(CFG_SERVICE_NAME, string.Empty);
-                m_servicePort = config.ValueInt(CFG_SERVICE_PORT, 0);
-                m_serviceAddress = config.Value(CFG_SERVICE_ADDRESS, string.Empty);
-                m_serviceCulture = config.Value(CFG_SERVICE_CULTURE, string.Empty);
-            }
+	        if (config == null)
+				return;
+	        
+			ServiceUserName = config.Value(CfgServiceUsername, string.Empty);
+	        ServicePassword = config.Value(CfgServicePassword, string.Empty);
+	        ServiceProtocol = config.Value(CfgServiceProtocol, string.Empty);
+	        ServiceName = config.Value(CfgServiceName, string.Empty);
+	        ServicePort = config.ValueInt(CfgServicePort, 0);
+	        ServiceAddress = config.Value(CfgServiceAddress, string.Empty);
+	        ServiceCulture = config.Value(CfgServiceCulture, string.Empty);
         }
         #endregion
 

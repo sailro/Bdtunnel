@@ -23,8 +23,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net;
-
 using Bdt.Server.Resources;
 using Bdt.Shared.Logs;
 using Bdt.Shared.Request;
@@ -38,90 +36,48 @@ namespace Bdt.Server.Service
     /// Une session utilisateur au sein du tunnel
     /// </summary>
     /// -----------------------------------------------------------------------------
-    public class TunnelSession : TimeoutObject 
+    public sealed class TunnelSession : TimeoutObject 
     {
         #region " Constantes "
         // Le test de la connexion effective
-        public const int SOCKET_TEST_POLLING_TIME = 100; // msec
+	    private const int SocketTestPollingTime = 100; // msec
         #endregion
 
         #region " Attributs "
-        protected string m_username;
-        protected bool m_admin; 
-        protected DateTime m_logon;
-        protected int m_connectiontimeoutdelay;
-        private Dictionary<int, TunnelConnection> m_connections = new Dictionary<int, TunnelConnection>();
-        #endregion
+	    private readonly int _connectiontimeoutdelay;
+	    #endregion
 
         #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Les connexions
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        internal virtual Dictionary<int, TunnelConnection> Connections
-        {
-            get
-            {
-                return m_connections;
-            }
-            set
-            {
-                m_connections = value;
-            }
-        }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le nom associé
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public string Username
-        {
-            get
-            {
-                return m_username;
-            }
-            set
-            {
-                m_username = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Les connexions
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    private Dictionary<int, TunnelConnection> Connections { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Utilisateur en mode admin
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public bool Admin
-        {
-            get
-            {
-                return m_admin;
-            }
-            set
-            {
-                m_admin = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le nom associé
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public string Username { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// La date de login
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public DateTime Logon
-        {
-            get
-            {
-                return m_logon;
-            }
-            set
-            {
-                m_logon = value;
-            }
-        }
-        #endregion
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Utilisateur en mode admin
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public bool Admin { get; set; }
+
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// La date de login
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public DateTime Logon { get; set; }
+
+	    #endregion
 
         #region " Méthodes "
         /// -----------------------------------------------------------------------------
@@ -134,10 +90,11 @@ namespace Bdt.Server.Service
         public TunnelSession(int timeoutdelay, int connectiontimeoutdelay)
             : base(timeoutdelay)
         {
-            m_connectiontimeoutdelay = connectiontimeoutdelay;
+	        Connections = new Dictionary<int, TunnelConnection>();
+	        _connectiontimeoutdelay = connectiontimeoutdelay;
         }
 
-        /// -----------------------------------------------------------------------------
+	    /// -----------------------------------------------------------------------------
         /// <summary>
         /// Timeout de l'objet
         /// </summary>
@@ -168,7 +125,9 @@ namespace Bdt.Server.Service
         /// <param name="response">la réponse à préparer</param>
         /// <returns>La connexion si la connexion est valide</returns>
         /// -----------------------------------------------------------------------------
+// ReSharper disable InconsistentNaming
         internal TunnelConnection CheckConnection<I, O>(ref I request, ref O response)
+// ReSharper restore InconsistentNaming
             where I : IConnectionContextRequest
             where O : IConnectionContextResponse
         {
@@ -179,23 +138,21 @@ namespace Bdt.Server.Service
                 response.Message = Strings.SERVER_SIDE + Strings.CID_NOT_FOUND;
                 return null;
             }
-            else
-            {
-                connection.LastAccess = DateTime.Now;
-                try
-                {
-                    response.Connected = (!(connection.TcpClient.Client.Poll(SOCKET_TEST_POLLING_TIME, System.Net.Sockets.SelectMode.SelectRead) && connection.TcpClient.Client.Available == 0));
-                    response.DataAvailable = connection.TcpClient.Client.Available > 0;
-                }
-                catch (Exception)
-                {
-                    response.Connected = false;
-                    response.DataAvailable = false;
-                }
-                response.Success = true;
-                response.Message = string.Empty;
-                return connection;
-            }
+	        
+			connection.LastAccess = DateTime.Now;
+	        try
+	        {
+		        response.Connected = (!(connection.TcpClient.Client.Poll(SocketTestPollingTime, System.Net.Sockets.SelectMode.SelectRead) && connection.TcpClient.Client.Available == 0));
+		        response.DataAvailable = connection.TcpClient.Client.Available > 0;
+	        }
+	        catch (Exception)
+	        {
+		        response.Connected = false;
+		        response.DataAvailable = false;
+	        }
+	        response.Success = true;
+	        response.Message = string.Empty;
+	        return connection;
         }
 
         /// -----------------------------------------------------------------------------
@@ -204,7 +161,7 @@ namespace Bdt.Server.Service
         /// </summary>
         /// <returns>un entier unique</returns>
         /// -----------------------------------------------------------------------------
-        protected int GetNewCid()
+        private int GetNewCid()
         {
             return Tunnel.GetNewId(Connections);
         }
@@ -218,7 +175,7 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         internal int AddConnection(TunnelConnection connection)
         {
-            int cid = GetNewCid();
+            var cid = GetNewCid();
             Connections.Add(cid, connection);
             return cid;
         }
@@ -231,7 +188,7 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         internal TunnelConnection CreateConnection()
         {
-            return new TunnelConnection(m_connectiontimeoutdelay);
+            return new TunnelConnection(_connectiontimeoutdelay);
         }
 
         /// -----------------------------------------------------------------------------
@@ -254,7 +211,7 @@ namespace Bdt.Server.Service
         {
             foreach (int cid in new ArrayList(Connections.Keys))
             {
-                TunnelConnection connection = Connections[cid];
+                var connection = Connections[cid];
                 connection.SafeDisconnect();
                 RemoveConnection(cid);
             }
@@ -268,20 +225,22 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         public Connection[] GetConnectionsStruct()
         {
-            List<Connection> result = new List<Connection>();
+            var result = new List<Connection>();
 
-            foreach (int cid in Connections.Keys)
+            foreach (var cid in Connections.Keys)
             {
-                TunnelConnection connection = Connections[cid];
-                Connection export = new Connection();
-                export.Cid = cid.ToString("x");
-                export.Address = connection.Address;
-                export.Host = connection.Host;
-                export.Port = connection.Port;
-                export.ReadCount = connection.ReadCount;
-                export.WriteCount = connection.WriteCount;
-                export.LastAccess = connection.LastAccess;
-                result.Add(export);
+                var connection = Connections[cid];
+                var export = new Connection
+	            {
+		            Cid = cid.ToString("x"),
+		            Address = connection.Address,
+		            Host = connection.Host,
+		            Port = connection.Port,
+		            ReadCount = connection.ReadCount,
+		            WriteCount = connection.WriteCount,
+		            LastAccess = connection.LastAccess
+	            };
+	            result.Add(export);
             }
 
             return result.ToArray();

@@ -19,10 +19,6 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
-using System;
-#endregion
-
 namespace Bdt.Shared.Configuration
 {
 
@@ -34,29 +30,17 @@ namespace Bdt.Shared.Configuration
     public sealed class StringConfig : BaseConfig
     {
 
-        #region " Attributs "
-        private string[] m_args; //Les arguments de la ligne de commande
-        #endregion
-
         #region " Propriétés "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Retourne/Fixe les arguments de la ligne de commande
-        /// </summary>
-        /// <returns>les arguments de la ligne de commande</returns>
-        /// -----------------------------------------------------------------------------
-        public string[] Args
-        {
-            get
-            {
-                return m_args;
-            }
-            set
-            {
-                m_args = value;
-            }
-        }
-        #endregion
+
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Retourne/Fixe les arguments de la ligne de commande
+	    /// </summary>
+	    /// <returns>les arguments de la ligne de commande</returns>
+	    /// -----------------------------------------------------------------------------
+	    private string[] Args { get; set; }
+
+	    #endregion
 
         #region " Méthodes "
         /// -----------------------------------------------------------------------------
@@ -69,7 +53,7 @@ namespace Bdt.Shared.Configuration
         public StringConfig(string[] args, int priority)
             : base(priority)
         {
-            this.Args = args;
+            Args = args;
             Rehash();
         }
 
@@ -82,11 +66,9 @@ namespace Bdt.Shared.Configuration
         {
             foreach (string arg in Args)
             {
-                int equalIndex = arg.IndexOf(SOURCE_ITEM_EQUALS);
+                var equalIndex = arg.IndexOf(SourceItemEquals, System.StringComparison.Ordinal);
                 if ((equalIndex >= 0) && equalIndex + 1 < arg.Length)
-                {
-                    this.SetValue(arg.Substring(0, equalIndex), arg.Substring(equalIndex + 1));
-                }
+                    SetValue(arg.Substring(0, equalIndex), arg.Substring(equalIndex + 1));
             }
         }
         #endregion

@@ -20,7 +20,6 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
-using System;
 using System.Xml;
 #endregion
 
@@ -35,29 +34,17 @@ namespace Bdt.Shared.Configuration
     public sealed class XMLConfig : BaseConfig
     {
 
-        #region " Attributs "
-        private string m_filename = ""; //Le nom du fichier XML associé à la source
-        #endregion
-
         #region " Propriétés "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Retourne/Fixe le nom du fichier XML associé à la source
-        /// </summary>
-        /// <returns>le nom du fichier XML associé à la source</returns>
-        /// -----------------------------------------------------------------------------
-        public string FileName
-        {
-            get
-            {
-                return m_filename;
-            }
-            set
-            {
-                m_filename = value;
-            }
-        }
-        #endregion
+
+		/// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Retourne/Fixe le nom du fichier XML associé à la source
+	    /// </summary>
+	    /// <returns>le nom du fichier XML associé à la source</returns>
+	    /// -----------------------------------------------------------------------------
+		private string FileName { get; set; }
+
+	    #endregion
 
         #region " Méthodes "
         /// -----------------------------------------------------------------------------
@@ -70,7 +57,7 @@ namespace Bdt.Shared.Configuration
         public XMLConfig(string filename, int priority)
             : base(priority)
         {
-            this.FileName = filename;
+            FileName = filename;
             Rehash();
         }
 
@@ -91,20 +78,16 @@ namespace Bdt.Shared.Configuration
                     foreach (XmlAttribute attr in subnode.Attributes)
                     {
                         if (attr.Value != string.Empty)
-                        {
-                            this.SetValue(path + subnode.Name + SOURCE_ITEM_ATTRIBUTE + attr.Name, attr.Value);
-                        }
+                            SetValue(path + subnode.Name + SourceItemAttribute + attr.Name, attr.Value);
                     }
                     if (subnode.InnerText != string.Empty)
-                    {
-                        this.SetValue(path + subnode.Name, subnode.InnerText);
-                    }
+                        SetValue(path + subnode.Name, subnode.InnerText);
                 }
 
                 if ((subnode.HasChildNodes) && (subnode.ChildNodes[0].NodeType == XmlNodeType.Element || subnode.ChildNodes[0].NodeType == XmlNodeType.Comment))
                 {
                     // Chemin
-                    ParseNode(path + subnode.Name + SOURCE_PATH_SEPARATOR, subnode);
+                    ParseNode(path + subnode.Name + SourcePathSeparator, subnode);
                 }
             }
         }
@@ -116,7 +99,7 @@ namespace Bdt.Shared.Configuration
         /// -----------------------------------------------------------------------------
         public override void Rehash()
         {
-            XmlDocument docXML = new XmlDocument();
+            var docXML = new XmlDocument();
             docXML.Load(FileName);
             ParseNode(string.Empty, docXML.DocumentElement);
         }

@@ -19,13 +19,6 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
-using System;
-using System.IO;
-
-using Bdt.Shared.Configuration;
-#endregion
-
 namespace Bdt.Shared.Logs
 {
     #region " Enumerations "
@@ -36,12 +29,16 @@ namespace Bdt.Shared.Logs
     /// -----------------------------------------------------------------------------
     public enum ESeverity
     {
+		// ReSharper disable InconsistentNaming
         DEBUG = 1,
         INFO = 2,
         WARN = 3,
         @ERROR = 4,
+		// ReSharper disable UnusedMember.Global
         FATAL = 5
-    }
+		// ReSharper restore UnusedMember.Global
+		// ReSharper restore InconsistentNaming
+	}
     #endregion
 
     /// -----------------------------------------------------------------------------

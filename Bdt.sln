@@ -1,16 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BdtShared", "BdtShared\BdtShared.csproj", "{3CB456B0-7C1C-4FF8-97C4-4F06154327A6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BdtServer", "BdtServer\BdtServer.csproj", "{EB676069-AA5C-4B7A-BBD3-DCE0E7062265}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BdtClient", "BdtClient\BdtClient.csproj", "{587AC682-E429-45BA-B487-71CBF0318B42}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BdtGuiClient", "BdtGuiClient\BdtGuiClient.csproj", "{0FF4CC9B-690A-48F5-8130-A2ECBC342BB9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BdtWebServer", "BdtWebServer\BdtWebServer.csproj", "{FFF84EAA-2238-45E4-8400-01B0D1E88B6B}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8E0BB008-90FA-4CD5-B478-A64349CF4234}"
 	ProjectSection(SolutionItems) = preProject
 		Bdt.vsmdi = Bdt.vsmdi
@@ -31,6 +21,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Make.Mono", "Make.Mono", "{
 		Make.Mono\BdtServerCfg.xml = Make.Mono\BdtServerCfg.xml
 		Make.Mono\BdtWebServerCfg.xml = Make.Mono\BdtWebServerCfg.xml
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BdtShared", "BdtShared\BdtShared.csproj", "{3CB456B0-7C1C-4FF8-97C4-4F06154327A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BdtServer", "BdtServer\BdtServer.csproj", "{EB676069-AA5C-4B7A-BBD3-DCE0E7062265}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BdtClient", "BdtClient\BdtClient.csproj", "{587AC682-E429-45BA-B487-71CBF0318B42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BdtGuiClient", "BdtGuiClient\BdtGuiClient.csproj", "{0FF4CC9B-690A-48F5-8130-A2ECBC342BB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BdtWebServer", "BdtWebServer\BdtWebServer.csproj", "{FFF84EAA-2238-45E4-8400-01B0D1E88B6B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BdtTests", "BdtTests\BdtTests.csproj", "{E8E5AFB6-4B39-4B49-A45D-BA857F916267}"
 EndProject

@@ -21,9 +21,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
 using System;
-using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Bdt.Tests.Model;
 using Bdt.Shared.Runtime;
 #endregion
 
@@ -51,10 +49,10 @@ namespace Bdt.Tests.UnitTests
             {
                 for (int datalength = 0; datalength < 1024; datalength = (datalength == 0) ? 1 : datalength * 2)
                 {
-                    byte[] buffer = new byte[datalength];
-                    byte[] outbuffer = new byte[datalength];
+                    var buffer = new byte[datalength];
+                    var outbuffer = new byte[datalength];
 
-                    Random rnd = new Random();
+                    var rnd = new Random();
                     rnd.NextBytes(buffer);
                     Array.Copy(buffer, outbuffer, datalength);
 

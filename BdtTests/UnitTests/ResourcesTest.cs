@@ -20,10 +20,8 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
-using System;
-using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Bdt.Tests.Model;
 #endregion
 
 namespace Bdt.Tests.UnitTests
@@ -47,30 +45,21 @@ namespace Bdt.Tests.UnitTests
         [TestMethod]
         public void TestTranslatedResources()
         {
-            foreach (Project project in AllTranslatedProjects)
+            foreach (var project in AllTranslatedProjects)
             {
-                Dictionary<string, string> reference = ReadResources(project);
-                foreach (Translation translation in AllTranslationsExceptDefault)
+                var reference = ReadResources(project);
+                foreach (var translation in AllTranslationsExceptDefault)
                 {
-                    Dictionary<string, string> translated = ReadResources(project, translation);
+                    var translated = ReadResources(project, translation);
 
                     // default -> translated
-                    foreach (string key in reference.Keys)
-                    {
-                        if (!translated.ContainsKey(key))
-                        {
-                            Assert.Fail(String.Format("Check project={0}, translation={1}, entry={2} doesn't exists", project, translation, key));
-                        }
-                    }
+                    foreach (var key in reference.Keys.Where(key => !translated.ContainsKey(key)))
+	                    Assert.Fail("Check project={0}, translation={1}, entry={2} doesn't exists", project, translation, key);
 
                     // translated -> default (reverse check)
-                    foreach (string key in translated.Keys)
-                    {
-                        if (!reference.ContainsKey(key))
-                        {
-                            Assert.Fail(String.Format("Check project={0}, translation={1}, entry={2} doesn't exists in the default resource", project, translation, key));
-                        }
-                    }
+	                foreach (var key in translated.Keys.Where(key => !reference.ContainsKey(key)))
+		                Assert.Fail("Check project={0}, translation={1}, entry={2} doesn't exists in the default resource",
+		                            project, translation, key);
                 }
             }
         }

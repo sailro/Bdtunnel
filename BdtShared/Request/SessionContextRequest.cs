@@ -31,28 +31,20 @@ namespace Bdt.Shared.Request
     /// Une demande générique dans le contexte d'une session
     /// </summary>
     /// -----------------------------------------------------------------------------
-    [Serializable()]
+    [Serializable]
     public struct SessionContextRequest : ISessionContextRequest 
     {
 
-        #region " Attributs "
-        private int m_sid;
-        #endregion
-
         #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le jeton de session
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public int Sid
-        {
-            get
-            {
-                return m_sid;
-            }
-        }
-        #endregion
+
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le jeton de session
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public int Sid { get; private set; }
+
+	    #endregion
 
         #region " Methodes "
         /// -----------------------------------------------------------------------------
@@ -61,9 +53,9 @@ namespace Bdt.Shared.Request
         /// </summary>
         /// <param name="sid">Le jeton de session</param>
         /// -----------------------------------------------------------------------------
-        public SessionContextRequest(int sid)
+        public SessionContextRequest(int sid) : this()
         {
-            this.m_sid = sid;
+            Sid = sid;
         }
         #endregion
 

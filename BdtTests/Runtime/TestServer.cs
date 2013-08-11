@@ -20,10 +20,6 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Bdt.Server.Runtime;
 using Bdt.Shared.Logs;
 using Bdt.Shared.Configuration;
@@ -43,8 +39,8 @@ namespace Bdt.Tests.Runtime
     {
 
         #region " Attributs "
-        private TestContext m_context;
-        private SharedConfig m_servercfg;
+        private readonly TestContext _context;
+        private readonly SharedConfig _servercfg;
         #endregion
 
         #region " Méthodes "
@@ -54,9 +50,9 @@ namespace Bdt.Tests.Runtime
         /// </summary>
         /// <returns>un MultiLogger lié à une source fichier et console</returns>
         /// -----------------------------------------------------------------------------
-        public override BaseLogger CreateLoggers()
+        protected override BaseLogger CreateLoggers()
         {
-            return new TestContextLogger(m_context);
+            return new TestContextLogger(_context);
         }
 
         /// -----------------------------------------------------------------------------
@@ -67,11 +63,11 @@ namespace Bdt.Tests.Runtime
         /// -----------------------------------------------------------------------------
         public override void LoadConfiguration(string[] args)
         {
-            m_args = args;
-            LoggedObject.GlobalLogger = CreateLoggers();
-            Log(Bdt.Shared.Resources.Strings.LOADING_CONFIGURATION, ESeverity.DEBUG);
-            m_protocol = GenericProtocol.GetInstance(m_servercfg);
-            SetCulture(m_servercfg.ServiceCulture);
+            Args = args;
+            GlobalLogger = CreateLoggers();
+            Log(Shared.Resources.Strings.LOADING_CONFIGURATION, ESeverity.DEBUG);
+            Protocol = GenericProtocol.GetInstance(_servercfg);
+            SetCulture(_servercfg.ServiceCulture);
         }
 
         /// -----------------------------------------------------------------------------
@@ -83,9 +79,9 @@ namespace Bdt.Tests.Runtime
         /// -----------------------------------------------------------------------------
         public TestServer(TestContext context, ConfigPackage config)
         {
-            m_context = context;
-            m_servercfg = new SharedConfig(config);
-            m_config = config;
+            _context = context;
+            _servercfg = new SharedConfig(config);
+            Configuration = config;
         }
         #endregion
 

@@ -43,26 +43,26 @@ namespace Bdt.Client.Sockets
 
         #region " Constantes "
         // La taille du buffer d'IO
-        public const int BUFFER_SIZE = 32768;
+	    private const int BufferSize = 32768;
         // La durée minimale entre deux tests de l'état de connexion
-        public const int STATE_POLLING_MIN_TIME = 10;
+	    private const int StatePollingMinTime = 10;
         // La durée maximale entre deux tests de l'état de connexion
-        public const int STATE_POLLING_MAX_TIME = 5000;
+	    private const int StatePollingMaxTime = 5000;
         // Le coefficient de décélération,
-        public const double STATE_POLLING_FACTOR = 1.1;
+	    private const double StatePollingFactor = 1.1;
         // Le test de la connexion effective
-        public const int SOCKET_TEST_POLLING_TIME = 100;
+	    private const int SocketTestPollingTime = 100;
         #endregion
 
         #region " Attributs "
-        protected TcpClient m_client;
-        protected NetworkStream m_stream;
-        protected ManualResetEvent m_mre = new ManualResetEvent(false);
-        protected ITunnel m_tunnel;
-        protected int m_sid;
-        protected string m_address;
-        protected int m_port;
-        protected int m_cid;
+        private TcpClient _client;
+        private NetworkStream _stream;
+        private readonly ManualResetEvent _mre = new ManualResetEvent(false);
+        private readonly ITunnel _tunnel;
+        private readonly int _sid;
+        private readonly string _address;
+        private readonly int _port;
+        private int _cid;
         #endregion
 
         #region " Méthodes "
@@ -78,16 +78,15 @@ namespace Bdt.Client.Sockets
         /// -----------------------------------------------------------------------------
         public Gateway(TcpClient client, ITunnel tunnel, int sid, string address, int port)
         {
-            m_client = client;
-            m_tunnel = tunnel;
-            m_sid = sid;
-            m_stream = client.GetStream();
-            m_address = address;
-            m_port = port;
+            _client = client;
+            _tunnel = tunnel;
+            _sid = sid;
+            _stream = client.GetStream();
+            _address = address;
+            _port = port;
 
-            Thread thr = new Thread(new System.Threading.ThreadStart(CommunicationThread));
-            thr.IsBackground = true;
-            thr.Start();
+            var thr = new Thread(CommunicationThread) {IsBackground = true};
+	        thr.Start();
         }
 
         /// -----------------------------------------------------------------------------
@@ -96,7 +95,7 @@ namespace Bdt.Client.Sockets
         /// </summary>
         /// <param name="response">la réponse du tunnel</param>
         /// -----------------------------------------------------------------------------
-        protected void HandleError(IConnectionContextResponse response)
+        private void HandleError(IConnectionContextResponse response)
         {
             HandleError(response.Message, true);
         }
@@ -108,7 +107,7 @@ namespace Bdt.Client.Sockets
         /// <param name="ex">l'exception à gérer</param>
         /// <param name="show">affichage du message d'erreur</param>
         /// -----------------------------------------------------------------------------
-        protected void HandleError(Exception ex, bool show)
+        private void HandleError(Exception ex, bool show)
         {
             HandleError(ex.Message, show);
         }
@@ -120,13 +119,12 @@ namespace Bdt.Client.Sockets
         /// <param name="message">le message à gérer</param>
         /// <param name="show">affichage du message d'erreur</param>
         /// -----------------------------------------------------------------------------
-        protected void HandleError(string message, bool show)
+        private void HandleError(string message, bool show)
         {
             if (show)
-            {
                 Log(message, ESeverity.ERROR);
-            }
-            m_mre.Set();
+
+			_mre.Set();
         }
 
         /// -----------------------------------------------------------------------------
@@ -135,12 +133,10 @@ namespace Bdt.Client.Sockets
         /// </summary>
         /// <param name="response">la réponse du tunnel</param>
         /// -----------------------------------------------------------------------------
-        protected void HandleState(IConnectionContextResponse response)
+        private void HandleState(IConnectionContextResponse response)
         {
             if (!response.Connected)
-            {
-                m_mre.Set();
-            }
+                _mre.Set();
         }
 
         /// -----------------------------------------------------------------------------
@@ -151,134 +147,119 @@ namespace Bdt.Client.Sockets
         /// <param name="adjpolltime">ajustement (durée du dernier aller-retour</param>
         /// <returns></returns>
         /// -----------------------------------------------------------------------------
-        protected int WaitTime (int polltime, int adjpolltime)
+        private int WaitTime (int polltime, int adjpolltime)
         {
-            if (adjpolltime > polltime)
-            {
-                return 0;
-            }
-            else
-            {
-                return Math.Max(polltime - adjpolltime, STATE_POLLING_MIN_TIME);
-            }
+	        return adjpolltime > polltime ? 0 : Math.Max(polltime - adjpolltime, StatePollingMinTime);
         }
 
-        /// -----------------------------------------------------------------------------
+	    /// -----------------------------------------------------------------------------
         /// <summary>
         /// Traitement principal du thread
         /// </summary>
         /// -----------------------------------------------------------------------------
-        protected void CommunicationThread()
+	    private void CommunicationThread()
         {
-            byte[] buffer = new byte[BUFFER_SIZE];
-            int polltime = STATE_POLLING_MIN_TIME;
-            int adjpolltime = 0;
+            var buffer = new byte[BufferSize];
+            var polltime = StatePollingMinTime;
+            var adjpolltime = 0;
 
-            ConnectResponse response = m_tunnel.Connect(new ConnectRequest(m_sid, m_address, m_port));
+            var response = _tunnel.Connect(new ConnectRequest(_sid, _address, _port));
             Log(response.Message, ESeverity.INFO);
-            if (response.Success)
-            {
-                m_cid = response.Cid;
+		    
+			if (!response.Success)
+				return;
+		    
+			_cid = response.Cid;
 
-                while (!m_mre.WaitOne(WaitTime(polltime, adjpolltime), false))
-                {
-                    DateTime startmarker = DateTime.Now;
+		    while (!_mre.WaitOne(WaitTime(polltime, adjpolltime), false))
+		    {
+			    var startmarker = DateTime.Now;
 
-                    // Si des données sont présentes sur le socket, envoi au tunnel
-                    bool isConnected = false;
-                    bool isDataAvailAble = false;
+			    // Si des données sont présentes sur le socket, envoi au tunnel
+			    var isConnected = false;
+			    var isDataAvailAble = false;
                     
-                    try
-                    {
-                        isConnected = (!(m_client.Client.Poll(SOCKET_TEST_POLLING_TIME, System.Net.Sockets.SelectMode.SelectRead) && m_client.Client.Available == 0));
-                        isDataAvailAble = m_stream.DataAvailable;
-                    }
-                    catch (Exception ex)
-                    {
-                        HandleError(ex, false);
-                    }
+			    try
+			    {
+				    isConnected = (!(_client.Client.Poll(SocketTestPollingTime, SelectMode.SelectRead) && _client.Client.Available == 0));
+				    isDataAvailAble = _stream.DataAvailable;
+			    }
+			    catch (Exception ex)
+			    {
+				    HandleError(ex, false);
+			    }
 
-                    if (isConnected)
-                    {
-                        if (isDataAvailAble)
-                        {
-                            int count = 0;
-                            try
-                            {
-                                count = m_stream.Read(buffer, 0, BUFFER_SIZE);
-                            }
-                            catch (Exception ex)
-                            {
-                                HandleError(ex, true);
-                            }
-                            if (count > 0)
-                            {
-                                // Des données sont présentes en local, envoi
-                                byte[] transBuffer = new byte[count];
-                                Array.Copy(buffer, transBuffer, count);
-                                Bdt.Shared.Runtime.Program.StaticXorEncoder(ref transBuffer, m_cid);
-                                IConnectionContextResponse writeResponse = m_tunnel.Write(new WriteRequest(m_sid, m_cid, transBuffer));
-                                transBuffer = null;
-                                if (writeResponse.Success)
-                                {
-                                    HandleState(writeResponse);
-                                }
-                                else
-                                {
-                                    HandleError(writeResponse);
-                                }
+			    if (isConnected)
+			    {
+				    if (isDataAvailAble)
+				    {
+					    var count = 0;
+					    try
+					    {
+						    count = _stream.Read(buffer, 0, BufferSize);
+					    }
+					    catch (Exception ex)
+					    {
+						    HandleError(ex, true);
+					    }
+					    if (count > 0)
+					    {
+						    // Des données sont présentes en local, envoi
+						    var transBuffer = new byte[count];
+						    Array.Copy(buffer, transBuffer, count);
+						    Shared.Runtime.Program.StaticXorEncoder(ref transBuffer, _cid);
+						    IConnectionContextResponse writeResponse = _tunnel.Write(new WriteRequest(_sid, _cid, transBuffer));
+						    if (writeResponse.Success)
+							    HandleState(writeResponse);
+						    else
+							    HandleError(writeResponse);
 
-                                // Si des données sont présentes, on repasse en mode 'actif'
-                                polltime = STATE_POLLING_MIN_TIME;
-                            }
-                        }
-                        else
-                        {
-                            // Sinon on augmente le temps de latence
-                            polltime = Convert.ToInt32(Math.Round(STATE_POLLING_FACTOR * polltime));
-                            polltime = Math.Min(polltime, STATE_POLLING_MAX_TIME);
-                        }
+						    // Si des données sont présentes, on repasse en mode 'actif'
+						    polltime = StatePollingMinTime;
+					    }
+				    }
+				    else
+				    {
+					    // Sinon on augmente le temps de latence
+					    polltime = Convert.ToInt32(Math.Round(StatePollingFactor * polltime));
+					    polltime = Math.Min(polltime, StatePollingMaxTime);
+				    }
 
 
-                        // Si des données sont présentes dans le tunnel, envoi au socket
-                        ReadResponse readResponse = m_tunnel.Read(new ConnectionContextRequest(m_sid, m_cid));
-                        if (readResponse.Success)
-                        {
-                            if (readResponse.Connected && readResponse.DataAvailable)
-                            {
-                                // Puis écriture sur le socket local
-                                byte[] result = readResponse.Data;
-                                Bdt.Shared.Runtime.Program.StaticXorEncoder(ref result, m_cid);
-                                try
-                                {
-                                    m_stream.Write(result, 0, result.Length);
-                                }
-                                catch (Exception ex)
-                                {
-                                    HandleError(ex, true);
-                                }
-                                // Si des données sont présentes, on repasse en mode 'actif'
-                                polltime = STATE_POLLING_MIN_TIME;
-                            }
-                            else
-                            {
-                                HandleState(readResponse);
-                            }
-                        }
-                        else
-                        {
-                            HandleError(readResponse);
-                        }
-                    }
-                    else
-                    {
-                        // Deconnexion
-                        m_mre.Set();
-                    }
-                    adjpolltime = Convert.ToInt32(DateTime.Now.Subtract(startmarker).TotalMilliseconds);
-                }
-                Disconnect();
-            }
+				    // Si des données sont présentes dans le tunnel, envoi au socket
+				    var readResponse = _tunnel.Read(new ConnectionContextRequest(_sid, _cid));
+				    if (readResponse.Success)
+				    {
+					    if (readResponse.Connected && readResponse.DataAvailable)
+					    {
+						    // Puis écriture sur le socket local
+						    var result = readResponse.Data;
+						    Shared.Runtime.Program.StaticXorEncoder(ref result, _cid);
+						    try
+						    {
+							    _stream.Write(result, 0, result.Length);
+						    }
+						    catch (Exception ex)
+						    {
+							    HandleError(ex, true);
+						    }
+						    // Si des données sont présentes, on repasse en mode 'actif'
+						    polltime = StatePollingMinTime;
+					    }
+					    else
+						    HandleState(readResponse);
+				    }
+				    else
+					    HandleError(readResponse);
+			    }
+			    else
+			    {
+				    // Deconnexion
+				    _mre.Set();
+			    }
+			    adjpolltime = Convert.ToInt32(DateTime.Now.Subtract(startmarker).TotalMilliseconds);
+		    }
+		    Disconnect();
         }
 
         /// -----------------------------------------------------------------------------
@@ -286,17 +267,17 @@ namespace Bdt.Client.Sockets
         /// Deconnexion
         /// </summary>
         /// -----------------------------------------------------------------------------
-        protected void Disconnect()
+        private void Disconnect()
         {
-            if (m_client != null)
-            {
-                m_stream.Close();
-                m_client.Close();
-                IConnectionContextResponse response = m_tunnel.Disconnect(new ConnectionContextRequest(m_sid, m_cid));
-                Log(response.Message, ESeverity.INFO);
-                m_stream = null;
-                m_client = null;
-            }
+	        if (_client == null)
+				return;
+	        
+			_stream.Close();
+	        _client.Close();
+	        IConnectionContextResponse response = _tunnel.Disconnect(new ConnectionContextRequest(_sid, _cid));
+	        Log(response.Message, ESeverity.INFO);
+	        _stream = null;
+	        _client = null;
         }
 
         #endregion

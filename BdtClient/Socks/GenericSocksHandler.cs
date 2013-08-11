@@ -40,15 +40,7 @@ namespace Bdt.Client.Socks
 
         #region " Constantes "
         // La taille du buffer d'IO
-        public const int BUFFER_SIZE = 32768;
-        #endregion
-
-        #region " Attributs "
-        private int m_version;
-        private int m_command;
-        private string m_address;
-        private int m_remoteport;
-        private byte[] m_buffer;
+	    protected const int BufferSize = 32768;
         #endregion
 
         #region " Proprietes "
@@ -57,7 +49,7 @@ namespace Bdt.Client.Socks
         /// Le handler est-il adapté à la requête?
         /// </summary>
         /// -----------------------------------------------------------------------------
-        public abstract bool IsHandled
+        protected abstract bool IsHandled
         {
             get;
         }
@@ -67,93 +59,47 @@ namespace Bdt.Client.Socks
         /// Les données de réponse
         /// </summary>
         /// -----------------------------------------------------------------------------
-        public abstract byte[] Reply
-        {
-            get;
-        }
+		protected abstract byte[] Reply
+		{
+			get; set;
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// La version de la requête socks
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected int Version
-        {
-            get
-            {
-                return m_version;
-            }
-            set
-            {
-                m_version = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// La version de la requête socks
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    protected int Version { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// La commande de la requête socks
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected int Command
-        {
-            get
-            {
-                return m_command;
-            }
-            set
-            {
-                m_command = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// La commande de la requête socks
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    protected int Command { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le port distant
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public int RemotePort
-        {
-            get
-            {
-                return m_remoteport;
-            }
-            protected set
-            {
-                m_remoteport = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le port distant
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public int RemotePort { get; protected set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// L'adresse distante
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public string Address
-        {
-            get
-            {
-                return m_address;
-            }
-            protected set
-            {
-                m_address = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// L'adresse distante
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public string Address { get; protected set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le buffer de la requête
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected byte[] Buffer
-        {
-            get
-            {
-                return m_buffer;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le buffer de la requête
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    protected byte[] Buffer { get; private set; }
 
-        #endregion
+	    #endregion
 
         #region " Méthodes "
         /// -----------------------------------------------------------------------------
@@ -164,7 +110,7 @@ namespace Bdt.Client.Socks
         /// -----------------------------------------------------------------------------
         protected GenericSocksHandler(byte[] buffer)
         {
-            m_buffer = buffer;
+            Buffer = buffer;
         }
 
         /// -----------------------------------------------------------------------------
@@ -176,19 +122,16 @@ namespace Bdt.Client.Socks
         /// -----------------------------------------------------------------------------
         public static GenericSocksHandler GetInstance(TcpClient client)
         {
-            byte[] buffer = new byte[BUFFER_SIZE];
+            var buffer = new byte[BufferSize];
 
-            NetworkStream stream = client.GetStream();
-            int size = stream.Read(buffer, 0, BUFFER_SIZE);
+            var stream = client.GetStream();
+            var size = stream.Read(buffer, 0, BufferSize);
             Array.Resize(ref buffer, size);
 
             if (size < 3)
-            {
                 throw (new ArgumentException(Strings.INVALID_SOCKS_HANDSHAKE));
-            }
 
-            GenericSocksHandler result;
-            result = new Socks4Handler(buffer);
+	        GenericSocksHandler result = new Socks4Handler(buffer);
             if (!result.IsHandled)
             {
                 result = new Socks4AHandler(buffer);
@@ -196,13 +139,11 @@ namespace Bdt.Client.Socks
                 {
                     result = new Socks5Handler(client, buffer);
                     if (!result.IsHandled)
-                    {
                         throw (new ArgumentException(Strings.NO_VALID_SOCKS_HANDLER));
-                    }
                 }
             }
 
-            byte[] reply = result.Reply;
+            var reply = result.Reply;
             client.GetStream().Write(reply, 0, reply.Length);
 
             return result;

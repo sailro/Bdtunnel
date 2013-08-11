@@ -20,7 +20,6 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
-using System;
 using System.Collections.Generic;
 #endregion
 
@@ -36,7 +35,7 @@ namespace Bdt.Shared.Logs
     {
 
         #region " Attributs "
-        private List<ILogger> m_loggers = new List<ILogger>();
+        private readonly List<ILogger> _loggers = new List<ILogger>();
         #endregion
 
         #region " Méthodes "
@@ -58,21 +57,10 @@ namespace Bdt.Shared.Logs
         /// -----------------------------------------------------------------------------
         public void AddLogger(ILogger logger)
         {
-            m_loggers.Add(logger);
+            _loggers.Add(logger);
         }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Supprime le logger de ce flux multiple
-        /// </summary>
-        /// <param name="logger"></param>
-        /// -----------------------------------------------------------------------------
-        public void RemoveLogger(ILogger logger)
-        {
-            m_loggers.Remove(logger);
-        }
-
-        /// -----------------------------------------------------------------------------
+	    /// -----------------------------------------------------------------------------
         /// <summary>
         /// Ecriture d'une entrée de log. Ne sera pas prise en compte si le log est inactif
         /// ou si le filtre l'impose. L'écriture sera propagée à tous les flux associés
@@ -85,10 +73,8 @@ namespace Bdt.Shared.Logs
         {
             if (Enabled)
             {
-                foreach (ILogger logger in m_loggers)
-                {
-                    logger.Log(sender, message, severity);
-                }
+	            foreach (var logger in _loggers)
+		            logger.Log(sender, message, severity);
             }
         }
         #endregion

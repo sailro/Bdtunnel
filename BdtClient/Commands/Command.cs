@@ -42,14 +42,16 @@ namespace Bdt.Client.Commands
         /// </summary>
         /// <returns>un tableau de commandes</returns>
         /// -----------------------------------------------------------------------------
-        public static Command[] GetCommands()
+        protected static IEnumerable<Command> GetCommands()
         {
-            List<Command> result = new List<Command>();
-            result.Add(new HelpCommand());
-            result.Add(new KillConnectionCommand());
-            result.Add(new KillSessionCommand());
-            result.Add(new MonitorCommand());
-            return result.ToArray();
+            var result = new List<Command>
+	        {
+		        new HelpCommand(),
+		        new KillConnectionCommand(),
+		        new KillSessionCommand(),
+		        new MonitorCommand()
+	        };
+	        return result.ToArray();
         }
 
         /// -----------------------------------------------------------------------------
@@ -107,17 +109,17 @@ namespace Bdt.Client.Commands
         {
             if (args.Length > 0)
             {
-                string sw = args[0];
-                string[] parameters = new string[args.Length - 1];
+                var sw = args[0];
+                var parameters = new string[args.Length - 1];
                 Array.ConstrainedCopy(args, 1, parameters, 0, parameters.Length);
 
-                foreach (Command cmd in Command.GetCommands())
+                foreach (var cmd in GetCommands())
                 {
-                    if ((sw == cmd.Switch) && (parameters.Length == cmd.ParametersName.Length))
-                    {
-                        cmd.Execute(parameters, logger, tunnel, sid);
-                        return true;
-                    }
+	                if ((sw != cmd.Switch) || (parameters.Length != cmd.ParametersName.Length)) 
+						continue;
+	                
+					cmd.Execute(parameters, logger, tunnel, sid);
+	                return true;
                 }
             }
 

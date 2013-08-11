@@ -31,15 +31,9 @@ namespace Bdt.Shared.Request
     /// Une demande d'écriture
     /// </summary>
     /// -----------------------------------------------------------------------------
-    [Serializable()]
+    [Serializable]
     public struct WriteRequest : IConnectionContextRequest
     {
-
-        #region " Attributs "
-        private byte[] m_data;
-        private int m_cid;
-        private int m_sid;
-        #endregion
 
         #region " Proprietes "
         /// -----------------------------------------------------------------------------
@@ -47,40 +41,23 @@ namespace Bdt.Shared.Request
         /// Le jeton de connexion
         /// </summary>
         /// -----------------------------------------------------------------------------
-        public int Cid
-        {
-            get
-            {
-                return m_cid;
-            }
-        }
+        public int Cid { get; private set; }
 
         /// -----------------------------------------------------------------------------
         /// <summary>
         /// Le jeton de session
         /// </summary>
         /// -----------------------------------------------------------------------------
-        public int Sid
-        {
-            get
-            {
-                return m_sid;
-            }
-        }
+        public int Sid { get; private set; }
 
         /// -----------------------------------------------------------------------------
         /// <summary>
         /// Les données à écrire
         /// </summary>
         /// -----------------------------------------------------------------------------
-        public byte[] Data
-        {
-            get
-            {
-                return m_data;
-            }
-        }
-        #endregion
+        public byte[] Data { get; private set; }
+
+		#endregion
 
         #region " Methodes "
         /// -----------------------------------------------------------------------------
@@ -91,11 +68,11 @@ namespace Bdt.Shared.Request
         /// <param name="cid">Le jeton de connexion</param>
         /// <param name="data">Les données à écrire</param>
         /// -----------------------------------------------------------------------------
-        public WriteRequest(int sid, int cid, byte[] data)
+        public WriteRequest(int sid, int cid, byte[] data) : this()
         {
-            this.m_sid = sid;
-            this.m_cid = cid;
-            this.m_data = data;
+            Sid = sid;
+            Cid = cid;
+            Data = data;
         }
         #endregion
 

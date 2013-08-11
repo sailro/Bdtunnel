@@ -24,12 +24,7 @@ using System;
 using System.Net;
 using System.Reflection;
 using System.Runtime.Remoting.Channels.Http;
-using System.Runtime.Remoting;
-using System.Runtime.Remoting.Channels;
-
-using Bdt.Shared.Resources;
 using Bdt.Shared.Logs;
-using System.Collections;
 #endregion
 
 namespace Bdt.Shared.Protocol
@@ -43,8 +38,8 @@ namespace Bdt.Shared.Protocol
     public abstract class GenericHttpRemoting : GenericRemoting<HttpChannel>, IProxyCompatible
     {
         #region " Constantes "
-        private readonly string[] HACK_CLIENT_CHANNEL = new string[] {"_clientChannel", "clientChannel", "client" };
-        private const string HACK_PROXY_OBJECT = "_proxyObject";
+        private readonly string[] _hackClientChannel = new [] {"_clientChannel", "clientChannel", "client" };
+        private const string HackProxyObject = "_proxyObject";
         #endregion
 
         #region " Proprietes "
@@ -72,7 +67,7 @@ namespace Bdt.Shared.Protocol
             get
             {
                 FieldInfo clientChannelFieldInfo = null;
-                foreach (string fieldname in HACK_CLIENT_CHANNEL)
+                foreach (var fieldname in _hackClientChannel)
                 {
                     clientChannelFieldInfo = typeof(HttpChannel).GetField(fieldname, BindingFlags.Instance | BindingFlags.NonPublic);
                     if (clientChannelFieldInfo != null)
@@ -86,11 +81,9 @@ namespace Bdt.Shared.Protocol
                     Log("Failed to get ProxyChannel. If you are using Mono, try a version before v2.x", ESeverity.WARN);
                     return null;
                 }
-                else
-                {
-                    HttpClientChannel channel = ((HttpClientChannel)clientChannelFieldInfo.GetValue(ClientChannel));
-                    return channel;
-                }
+	            
+				var channel = ((HttpClientChannel)clientChannelFieldInfo.GetValue(ClientChannel));
+	            return channel;
             }
         }
 
@@ -99,25 +92,23 @@ namespace Bdt.Shared.Protocol
         /// Le proxy utilisé par le canal de communication côté client
         /// </summary>
         /// -----------------------------------------------------------------------------
-        public System.Net.IWebProxy Proxy
+        public IWebProxy Proxy
         {
             get
             {
-                FieldInfo proxyObjectFieldInfo = typeof(HttpClientChannel).GetField(HACK_PROXY_OBJECT, BindingFlags.Instance | BindingFlags.NonPublic);
+                var proxyObjectFieldInfo = typeof(HttpClientChannel).GetField(HackProxyObject, BindingFlags.Instance | BindingFlags.NonPublic);
                 if (proxyObjectFieldInfo == null)
                 {
                     // Thanks MONO 2.0 ...
                     Log("Failed to get Proxy. If you are using Mono, try a version before v2.x", ESeverity.WARN);
                     return null;
                 }
-                else
-                {
-                    return ((IWebProxy)proxyObjectFieldInfo.GetValue(ProxyChannel));
-                }
+	            
+				return ((IWebProxy)proxyObjectFieldInfo.GetValue(ProxyChannel));
             }
             set
             {
-                FieldInfo proxyObjectFieldInfo = typeof(HttpClientChannel).GetField(HACK_PROXY_OBJECT, BindingFlags.Instance | BindingFlags.NonPublic);
+                var proxyObjectFieldInfo = typeof(HttpClientChannel).GetField(HackProxyObject, BindingFlags.Instance | BindingFlags.NonPublic);
                 if (proxyObjectFieldInfo == null)
                 {
                     // Thanks MONO 2.0 ...

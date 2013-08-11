@@ -20,9 +20,6 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
-using System;
-
-using Bdt.Shared.Configuration;
 using Bdt.Shared.Logs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 #endregion
@@ -38,7 +35,7 @@ namespace Bdt.Tests.Logs
     public class TestContextLogger : BaseLogger
     {
         #region " Attributs "
-        private TestContext m_context;
+        private readonly TestContext _context;
         #endregion
 
         #region " Méthodes "
@@ -50,7 +47,7 @@ namespace Bdt.Tests.Logs
         /// -----------------------------------------------------------------------------
         public TestContextLogger(TestContext context)
         {
-            m_context = context;
+            _context = context;
         }
 
         /// -----------------------------------------------------------------------------
@@ -63,7 +60,7 @@ namespace Bdt.Tests.Logs
         /// -----------------------------------------------------------------------------
         public override void Log(object sender, string message, ESeverity severity)
         {
-            m_context.WriteLine("[{0}] {1} {2}", severity, sender.GetType().Name, message);
+            _context.WriteLine("[{0}] {1} {2}", severity, sender.GetType().Name, message);
         }
 
         /// -----------------------------------------------------------------------------

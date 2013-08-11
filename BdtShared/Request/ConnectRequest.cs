@@ -31,56 +31,34 @@ namespace Bdt.Shared.Request
     /// Une demande de connexion
     /// </summary>
     /// -----------------------------------------------------------------------------
-    [Serializable()]
+    [Serializable]
     public struct ConnectRequest : ISessionContextRequest 
     {
 
-        #region " Attributs "
-        private string m_address;
-        private int m_port;
-        private int m_sid;
-        #endregion
+		#region " Proprietes "
 
-        #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le jeton de session
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public int Sid
-        {
-            get
-            {
-                return m_sid;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le jeton de session
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public int Sid { get; private set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// L'adresse distante
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public string Address
-        {
-            get
-            {
-                return m_address;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// L'adresse distante
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public string Address { get; private set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le port distant
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public int Port
-        {
-            get
-            {
-                return m_port;
-            }
-        }
-        #endregion
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le port distant
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public int Port { get; private set; }
+
+	    #endregion
 
         #region " Methodes "
         /// -----------------------------------------------------------------------------
@@ -91,11 +69,11 @@ namespace Bdt.Shared.Request
         /// <param name="address">L'adresse distante</param>
         /// <param name="port">Le port distant</param>
         /// -----------------------------------------------------------------------------
-        public ConnectRequest(int sid, string address, int port)
+        public ConnectRequest(int sid, string address, int port) : this()
         {
-            this.m_sid = sid;
-            this.m_address = address;
-            this.m_port = port;
+            Sid = sid;
+            Address = address;
+            Port = port;
         }
         #endregion
 

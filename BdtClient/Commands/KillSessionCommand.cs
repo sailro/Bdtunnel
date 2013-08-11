@@ -23,7 +23,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 using Bdt.Client.Resources;
 using Bdt.Shared.Logs;
 using Bdt.Shared.Request;
-using Bdt.Shared.Response;
 using Bdt.Shared.Service;
 #endregion
 
@@ -66,7 +65,7 @@ namespace Bdt.Client.Commands
         {
             get
             {
-                return new string[] { "sid" };
+                return new[] { "sid" };
             }
         }
 
@@ -81,19 +80,12 @@ namespace Bdt.Client.Commands
         /// -----------------------------------------------------------------------------
         public override void Execute(string[] parameters, ILogger logger, ITunnel tunnel, int sid)
         {
-            int targetsid = 0;
+            int targetsid;
 
             if (int.TryParse(parameters[0], System.Globalization.NumberStyles.HexNumber, null, out targetsid))
             {
-                MinimalResponse response = tunnel.KillSession(new KillSessionRequest(targetsid, sid));
-                if (response.Success)
-                {
-                    logger.Log(this, response.Message, ESeverity.INFO);
-                }
-                else
-                {
-                    logger.Log(this, response.Message, ESeverity.ERROR);
-                }
+	            var response = tunnel.KillSession(new KillSessionRequest(targetsid, sid));
+	            logger.Log(this, response.Message, response.Success ? ESeverity.INFO : ESeverity.ERROR);
             }
             else
             {

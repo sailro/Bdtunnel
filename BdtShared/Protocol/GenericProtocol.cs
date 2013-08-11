@@ -22,7 +22,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 #region " Inclusions "
 using System;
 using Bdt.Shared.Configuration;
-using Bdt.Shared.Logs;
 using Bdt.Shared.Service;
 #endregion
 
@@ -34,55 +33,33 @@ namespace Bdt.Shared.Protocol
     /// Classe générique pour un protocole de communication
     /// </summary>
     /// -----------------------------------------------------------------------------
-    public abstract class GenericProtocol : Bdt.Shared.Logs.LoggedObject
+    public abstract class GenericProtocol : Logs.LoggedObject
     {
 
-        #region " Attributs "
-        protected string m_name;
-        protected int m_port;
-        protected string m_address;
-        #endregion
-
         #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le nom du serveur
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public string Name
-        {
-            get
-            {
-                return m_name;
-            }
-        }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le port du serveur
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public int Port
-        {
-            get
-            {
-                return m_port;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le nom du serveur
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    protected string Name { get; private set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// L'adresse du serveur
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public string Address
-        {
-            get
-            {
-                return m_address;
-            }
-        }
-        #endregion
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le port du serveur
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    protected int Port { get; private set; }
+
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// L'adresse du serveur
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    protected string Address { get; private set; }
+
+	    #endregion
 
         #region " Methodes "
         /// -----------------------------------------------------------------------------
@@ -131,14 +108,13 @@ namespace Bdt.Shared.Protocol
         /// -----------------------------------------------------------------------------
         public static GenericProtocol GetInstance(SharedConfig config)
         {
-            GenericProtocol protoObj = ((GenericProtocol)typeof(GenericProtocol).Assembly.CreateInstance(config.ServiceProtocol));
+            var protoObj = ((GenericProtocol)typeof(GenericProtocol).Assembly.CreateInstance(config.ServiceProtocol));
             if (protoObj == null)
-            {
                 throw new NotSupportedException(config.ServiceProtocol);
-            }
-            protoObj.m_name = config.ServiceName;
-            protoObj.m_port = config.ServicePort;
-            protoObj.m_address = config.ServiceAddress;
+
+			protoObj.Name = config.ServiceName;
+            protoObj.Port = config.ServicePort;
+            protoObj.Address = config.ServiceAddress;
             return protoObj;
         }
         #endregion

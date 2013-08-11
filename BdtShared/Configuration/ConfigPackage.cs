@@ -22,6 +22,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 #region " Inclusions "
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+
 #endregion
 
 namespace Bdt.Shared.Configuration
@@ -37,58 +39,9 @@ namespace Bdt.Shared.Configuration
     /// -----------------------------------------------------------------------------
     public class ConfigPackage
     {
-
-        #region " Evenements "
-        public delegate void ReadStringEventHandler(ConfigPackage sender, ref string value);
-        private ReadStringEventHandler ReadStringEvent;
-
-        public event ReadStringEventHandler ReadString
-        {
-            add
-            {
-                ReadStringEvent = (ReadStringEventHandler)System.Delegate.Combine(ReadStringEvent, value);
-            }
-            remove
-            {
-                ReadStringEvent = (ReadStringEventHandler)System.Delegate.Remove(ReadStringEvent, value);
-            }
-        }
-
-        public delegate void ReadIntEventHandler(ConfigPackage sender, ref int value);
-        private ReadIntEventHandler ReadIntEvent;
-
-        public event ReadIntEventHandler ReadInt
-        {
-            add
-            {
-                ReadIntEvent = (ReadIntEventHandler)System.Delegate.Combine(ReadIntEvent, value);
-            }
-            remove
-            {
-                ReadIntEvent = (ReadIntEventHandler)System.Delegate.Remove(ReadIntEvent, value);
-            }
-        }
-
-        public delegate void ReadBoolEventHandler(ConfigPackage sender, ref bool value);
-        private ReadBoolEventHandler ReadBoolEvent;
-
-        public event ReadBoolEventHandler ReadBool
-        {
-            add
-            {
-                ReadBoolEvent = (ReadBoolEventHandler)System.Delegate.Combine(ReadBoolEvent, value);
-            }
-            remove
-            {
-                ReadBoolEvent = (ReadBoolEventHandler)System.Delegate.Remove(ReadBoolEvent, value);
-            }
-        }
-
-        #endregion
-
         #region " Attributs "
         //Les sources sont triées par priorité grâce au compareTo de SourceConfiguration (IComparable)
-        private List<BaseConfig> m_sources = new List<BaseConfig>();
+        private readonly List<BaseConfig> _sources = new List<BaseConfig>();
         #endregion
 
         #region " Propriétés "
@@ -102,15 +55,13 @@ namespace Bdt.Shared.Configuration
         /// -----------------------------------------------------------------------------
         public virtual string Value(string code, string defaultValue)
         {
-            foreach (BaseConfig source in m_sources)
+            foreach (var source in _sources)
             {
-                string result = source.Value(code, null);
-                if (result != null)
-                {
-                    if (ReadStringEvent != null)
-                        ReadStringEvent(this, ref result);
-                    return result;
-                }
+                var result = source.Value(code, null);
+	            if (result == null) 
+					continue;
+
+	            return result;
             }
             return defaultValue;
         }
@@ -127,10 +78,7 @@ namespace Bdt.Shared.Configuration
         {
             try
             {
-                int result = int.Parse(Value(code, defaultValue.ToString()));
-                if (ReadIntEvent != null)
-                    ReadIntEvent(this, ref result);
-                return result;
+                return int.Parse(Value(code, defaultValue.ToString(CultureInfo.InvariantCulture)));
             }
             catch (Exception)
             {
@@ -150,11 +98,8 @@ namespace Bdt.Shared.Configuration
         {
             try
             {
-                bool result = bool.Parse(Value(code, defaultValue.ToString()));
-                if (ReadBoolEvent != null)
-                    ReadBoolEvent(this, ref result);
-                return result;
-            }
+                return bool.Parse(Value(code, defaultValue.ToString()));
+			}
             catch (Exception)
             {
                 return defaultValue;
@@ -171,35 +116,11 @@ namespace Bdt.Shared.Configuration
         /// -----------------------------------------------------------------------------
         public void AddSource(BaseConfig source)
         {
-            m_sources.Add(source);
-            m_sources.Sort();
+            _sources.Add(source);
+            _sources.Sort();
         }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Enleve une source de ce contexte de configuration
-        /// </summary>
-        /// <param name="source">la source à supprimer</param>
-        /// -----------------------------------------------------------------------------
-        public void RemoveSource(BaseConfig source)
-        {
-            m_sources.Remove(source);
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Force un rechargement de toutes les sources de données liées
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public void RehashAll()
-        {
-            foreach (BaseConfig source in m_sources)
-            {
-                source.Rehash();
-            }
-        }
-
-        /// -----------------------------------------------------------------------------
+	    /// -----------------------------------------------------------------------------
         /// <summary>
         /// Concatène tous les éléments depuis toutes les sources
         /// </summary>
@@ -207,13 +128,11 @@ namespace Bdt.Shared.Configuration
         /// -----------------------------------------------------------------------------
         public override string ToString()
         {
-            string returnValue;
-            returnValue = string.Empty;
-            foreach (BaseConfig source in m_sources)
-            {
+	        string returnValue = string.Empty;
+            foreach (var source in _sources)
                 returnValue += source.ToString();
-            }
-            return returnValue;
+
+			return returnValue;
         }
         #endregion
 

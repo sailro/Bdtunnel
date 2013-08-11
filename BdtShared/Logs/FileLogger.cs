@@ -20,7 +20,6 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
-using System;
 using System.IO;
 
 using Bdt.Shared.Configuration;
@@ -38,52 +37,29 @@ namespace Bdt.Shared.Logs
     {
 
         #region " Constantes "
-        public const string CONFIG_APPEND = "append";
-        public const string CONFIG_FILENAME = "filename";
-        #endregion
-
-        #region " Attributs "
-        protected string m_filename = null;
-        protected bool m_append = false;
+        public const string ConfigAppend = "append";
+        public const string ConfigFilename = "filename";
         #endregion
 
         #region " Propriétés "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Retourne le nom du fichier utilisé pour l'écriture des logs
-        /// </summary>
-        /// <returns>le nom du fichier utilisé pour l'écriture des logs</returns>
-        /// -----------------------------------------------------------------------------
-        public string Filename
-        {
-            get
-            {
-                return m_filename;
-            }
-            protected set
-            {
-                m_filename = value;
-            }
-        }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Retourne l'état indiquant si les données doivent être ajoutées au fichier
-        /// </summary>
-        /// <returns>l'état indiquant si les données doivent être ajoutées au fichier</returns>
-        /// -----------------------------------------------------------------------------
-        public bool Append
-        {
-            get
-            {
-                return m_append;
-            }
-            protected set
-            {
-                m_append = value;
-            }
-        }
-        #endregion
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Retourne le nom du fichier utilisé pour l'écriture des logs
+	    /// </summary>
+	    /// <returns>le nom du fichier utilisé pour l'écriture des logs</returns>
+	    /// -----------------------------------------------------------------------------
+	    public string Filename { get; protected set; }
+
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Retourne l'état indiquant si les données doivent être ajoutées au fichier
+	    /// </summary>
+	    /// <returns>l'état indiquant si les données doivent être ajoutées au fichier</returns>
+	    /// -----------------------------------------------------------------------------
+	    public bool Append { get; protected set; }
+
+	    #endregion
 
         #region " Méthodes "
         /// -----------------------------------------------------------------------------
@@ -105,30 +81,14 @@ namespace Bdt.Shared.Logs
         public FileLogger(string prefix, ConfigPackage config)
             : base(null, prefix, config)
         {
-            m_filename = config.Value(prefix + Bdt.Shared.Configuration.BaseConfig.SOURCE_ITEM_ATTRIBUTE + CONFIG_FILENAME, m_filename);
-            m_append = config.ValueBool(prefix + Bdt.Shared.Configuration.BaseConfig.SOURCE_ITEM_ATTRIBUTE + CONFIG_APPEND, m_append);
-            if (Enabled)
-            {
-                m_writer = new StreamWriter(m_filename, m_append, System.Text.Encoding.Default);
-            }
+            Filename = config.Value(prefix + BaseConfig.SourceItemAttribute + ConfigFilename, Filename);
+            Append = config.ValueBool(prefix + BaseConfig.SourceItemAttribute + ConfigAppend, Append);
+	        
+			if (Enabled)
+		        Writer = new StreamWriter(Filename, Append, System.Text.Encoding.Default);
         }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur pour un log
-        /// </summary>
-        /// <param name="filename">le nom du fichier dans lequel écrire</param>
-        /// <param name="append">si false la fichier sera écrasé</param>
-        /// <param name="dateFormat">le format des dates de timestamp</param>
-        /// <param name="filter">le niveau de filtrage pour la sortie des logs</param>
-        /// -----------------------------------------------------------------------------
-        public FileLogger(string filename, bool append, string dateFormat, ESeverity filter)
-            : base(new StreamWriter(filename, append, System.Text.Encoding.Default), dateFormat, filter)
-        {
-            m_filename = filename;
-            m_append = append;
-        }
-        #endregion
+	    #endregion
 
     }
 

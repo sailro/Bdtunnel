@@ -32,56 +32,42 @@ namespace Bdt.Shared.Logs
     /// Classe de base pour un objet utilisant un flux de log
     /// </summary>
     /// -----------------------------------------------------------------------------
-    [Serializable(), TypeConverter(typeof(ExpandableObjectConverter))]
+    [Serializable, TypeConverter(typeof(ExpandableObjectConverter))]
     public class LoggedObject : ILogger
     {
 
-        #region " Attributs "
-        protected static BaseLogger m_globalLogger = null;
-        protected DateTime startmarker = DateTime.Now;
-        protected BaseLogger m_logger = null;
-        #endregion
-
         #region " Propriétés "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Fixe/retourne le loggueur assocé à cet objet
-        /// </summary>
-        /// <returns>le loggueur assocé à cet objet</returns>
-        /// -----------------------------------------------------------------------------
-        public BaseLogger Logger
-        {
-            get
-            {
-                return m_logger;
-            }
-            set
-            {
-                m_logger = value;
-            }
-        }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Fixe/retourne le loggueur assocé à tous les objets dérivés.
-        /// </summary>
-        /// <returns>le loggueur assocé à tous les objets dérivés</returns>
-        /// -----------------------------------------------------------------------------
-        public static BaseLogger GlobalLogger
-        {
-            get
-            {
-                return m_globalLogger;
-            }
-            set
-            {
-                m_globalLogger = value;
-            }
-        }
-        #endregion
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Fixe/retourne le loggueur assocé à cet objet
+	    /// </summary>
+	    /// <returns>le loggueur assocé à cet objet</returns>
+	    /// -----------------------------------------------------------------------------
+	    private BaseLogger Logger { get; set; }
+
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Fixe/retourne le loggueur assocé à tous les objets dérivés.
+	    /// </summary>
+	    /// <returns>le loggueur assocé à tous les objets dérivés</returns>
+	    /// -----------------------------------------------------------------------------
+	    public static BaseLogger GlobalLogger { get; protected set; }
+
+	    #endregion
 
         #region " Méthodes "
-        /// -----------------------------------------------------------------------------
+		protected LoggedObject()
+		{
+			Logger = null;
+		}
+
+		static LoggedObject()
+		{
+			GlobalLogger = null;
+		}
+		
+		/// -----------------------------------------------------------------------------
         /// <summary>
         /// Ecriture d'une entrée de log. Ne sera pas prise en compte si le log est inactif
         /// ou si le filtre l'impose
@@ -89,7 +75,7 @@ namespace Bdt.Shared.Logs
         /// <param name="message">le message à logger</param>
         /// <param name="severity">la sévérité</param>
         /// -----------------------------------------------------------------------------
-        public virtual void Log(string message, ESeverity severity)
+        public void Log(string message, ESeverity severity)
         {
             Log(this, message, severity);
         }
@@ -104,13 +90,13 @@ namespace Bdt.Shared.Logs
         /// -----------------------------------------------------------------------------
         public virtual void Log(object sender, string message, ESeverity severity)
         {
-            if (m_logger != null)
+            if (Logger != null)
             {
-                m_logger.Log(sender, message, severity);
+                Logger.Log(sender, message, severity);
             }
-            if (m_globalLogger != null)
+            if (GlobalLogger != null)
             {
-                m_globalLogger.Log(sender, message, severity);
+                GlobalLogger.Log(sender, message, severity);
             }
         }
 
@@ -121,9 +107,9 @@ namespace Bdt.Shared.Logs
         /// -----------------------------------------------------------------------------
         public void Close()
         {
-            if (m_logger != null)
+            if (Logger != null)
             {
-                m_logger.Close();
+                Logger.Close();
             }
         }
         #endregion

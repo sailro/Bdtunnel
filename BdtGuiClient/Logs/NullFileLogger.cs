@@ -21,11 +21,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
 using System;
-using System.Collections.Generic;
-using System.Text;
-
 using Bdt.Shared.Logs;
-using Bdt.Shared.Configuration;
+
 #endregion
 
 namespace Bdt.GuiClient.Logs

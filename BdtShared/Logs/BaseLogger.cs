@@ -21,10 +21,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
 using System;
+using System.Globalization;
 using System.IO;
 using System.ComponentModel;
-
-using Bdt.Shared.Configuration;
 #endregion
 
 namespace Bdt.Shared.Logs
@@ -35,18 +34,17 @@ namespace Bdt.Shared.Logs
     /// Classe de base pour la génération d'un log
     /// </summary>
     /// -----------------------------------------------------------------------------
-    [Serializable(), TypeConverter(typeof(ExpandableObjectConverter))]
+    [Serializable, TypeConverter(typeof(ExpandableObjectConverter))]
     public abstract class BaseLogger : ILogger
     {
 
         #region " Constantes "
-        public const string DEFAULT_DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
-        public const string CONFIG_ENABLED = "enabled";
-        public const string CONFIG_FILTER = "filter";
-        public const string CONFIG_DATE_FORMAT = "dateformat";
-        public const string CONFIG_STRING_FORMAT = "stringformat";
-        public const string CONFIG_TAG_START = "{";
-        public const string CONFIG_TAG_END = "}";
+        public const string ConfigEnabled = "enabled";
+        public const string ConfigFilter = "filter";
+        public const string ConfigDateFormat = "dateformat";
+        public const string ConfigStringFormat = "stringformat";
+	    private const string ConfigTagStart = "{";
+	    private const string ConfigTagEnd = "}";
         #endregion
 
         #region " Enumerations "
@@ -55,97 +53,57 @@ namespace Bdt.Shared.Logs
         /// Ces tags permettent de construire une chaine de sortie personnalisée
         /// </summary>
         /// -----------------------------------------------------------------------------
-        public enum ETags
+		// ReSharper disable InconsistentNaming
+		private enum ETags
         {
             TIMESTAMP = 0,
             SEVERITY = 1,
             TYPE = 2,
             MESSAGE = 3
         }
-        #endregion
+		// ReSharper restore InconsistentNaming
+		#endregion
 
         #region " Attributs "
-        protected TextWriter m_writer = null;
-        protected string m_stringFormat = CONFIG_TAG_START + ETags.TIMESTAMP + CONFIG_TAG_END + " " + CONFIG_TAG_START + ETags.SEVERITY + CONFIG_TAG_END + " [" + CONFIG_TAG_START + ETags.TYPE + CONFIG_TAG_END + "] " + CONFIG_TAG_START + ETags.MESSAGE + CONFIG_TAG_END;
-        protected string m_dateFormat = "dd/MM/yyyy HH:mm:ss";
-        protected ESeverity m_filter = ESeverity.DEBUG;
-        protected bool m_enabled = true;
-        #endregion
+        protected TextWriter Writer;
+	    #endregion
 
         #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Fixe/retourne l'état d'activation du log
-        /// </summary>
-        /// <returns>l'état d'activation du log</returns>
-        /// -----------------------------------------------------------------------------
-        public bool Enabled
-        {
-            get
-            {
-                return m_enabled;
-            }
-            set
-            {
-                m_enabled = value;
-            }
-        }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Fixe/retourne la chaine personnalisée pour la sortie des logs.
-        /// Utiliser les constantes ETags entre accolades {}
-        /// </summary>
-        /// <returns>la chaine personnalisée pour la sortie des logs</returns>
-        /// -----------------------------------------------------------------------------
-        public string StringFormat
-        {
-            get
-            {
-                return m_stringFormat;
-            }
-            set
-            {
-                m_stringFormat = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Fixe/retourne l'état d'activation du log
+	    /// </summary>
+	    /// <returns>l'état d'activation du log</returns>
+	    /// -----------------------------------------------------------------------------
+	    public bool Enabled { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Retourne/Fixe le format des dates de timestamp
-        /// </summary>
-        /// <returns>le format des dates de timestamp</returns>
-        /// -----------------------------------------------------------------------------
-        public string DateFormat
-        {
-            get
-            {
-                return m_dateFormat;
-            }
-            set
-            {
-                m_dateFormat = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Fixe/retourne la chaine personnalisée pour la sortie des logs.
+	    /// Utiliser les constantes ETags entre accolades {}
+	    /// </summary>
+	    /// <returns>la chaine personnalisée pour la sortie des logs</returns>
+	    /// -----------------------------------------------------------------------------
+	    public string StringFormat { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Retourne/fixe le niveau de filtrage pour la sortie des logs
-        /// </summary>
-        /// <returns>le niveau de filtrage pour la sortie des logs</returns>
-        /// -----------------------------------------------------------------------------
-        public ESeverity Filter
-        {
-            get
-            {
-                return m_filter;
-            }
-            set
-            {
-                m_filter = value;
-            }
-        }
-        #endregion
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Retourne/Fixe le format des dates de timestamp
+	    /// </summary>
+	    /// <returns>le format des dates de timestamp</returns>
+	    /// -----------------------------------------------------------------------------
+	    public string DateFormat { get; protected set; }
+
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Retourne/fixe le niveau de filtrage pour la sortie des logs
+	    /// </summary>
+	    /// <returns>le niveau de filtrage pour la sortie des logs</returns>
+	    /// -----------------------------------------------------------------------------
+	    public ESeverity Filter { get; protected set; }
+
+	    #endregion
 
         #region " Méthodes "
         /// -----------------------------------------------------------------------------
@@ -155,9 +113,13 @@ namespace Bdt.Shared.Logs
         /// -----------------------------------------------------------------------------
         protected BaseLogger ()
         {
+	        Filter = ESeverity.DEBUG;
+	        DateFormat = "dd/MM/yyyy HH:mm:ss";
+	        StringFormat = ConfigTagStart + ETags.TIMESTAMP + ConfigTagEnd + " " + ConfigTagStart + ETags.SEVERITY + ConfigTagEnd + " [" + ConfigTagStart + ETags.TYPE + ConfigTagEnd + "] " + ConfigTagStart + ETags.MESSAGE + ConfigTagEnd;
+	        Enabled = true;
         }
 
-        /// -----------------------------------------------------------------------------
+	    /// -----------------------------------------------------------------------------
         /// <summary>
         /// Constructeur pour un log à partir des données fournies dans une configuration
         /// </summary>
@@ -165,14 +127,14 @@ namespace Bdt.Shared.Logs
         /// <param name="prefix">le prefixe dans la configuration ex: application/log</param>
         /// <param name="config">la configuration pour la lecture des parametres</param>
         /// -----------------------------------------------------------------------------
-        public BaseLogger(TextWriter writer, string prefix, Bdt.Shared.Configuration.ConfigPackage config)
+	    protected BaseLogger(TextWriter writer, string prefix, Configuration.ConfigPackage config)
         {
-            m_writer = writer;
+            Writer = writer;
 
-            m_enabled = config.ValueBool(prefix + Bdt.Shared.Configuration.BaseConfig.SOURCE_ITEM_ATTRIBUTE + CONFIG_ENABLED, m_enabled);
-            m_filter = ((ESeverity)ESeverity.Parse(typeof(ESeverity), config.Value(prefix + Bdt.Shared.Configuration.BaseConfig.SOURCE_ITEM_ATTRIBUTE + CONFIG_FILTER, m_filter.ToString())));
-            m_dateFormat = config.Value(prefix + Bdt.Shared.Configuration.BaseConfig.SOURCE_ITEM_ATTRIBUTE + CONFIG_DATE_FORMAT, m_dateFormat);
-            m_stringFormat = config.Value(prefix + Bdt.Shared.Configuration.BaseConfig.SOURCE_ITEM_ATTRIBUTE + CONFIG_STRING_FORMAT, m_stringFormat);
+            Enabled = config.ValueBool(prefix + Configuration.BaseConfig.SourceItemAttribute + ConfigEnabled, Enabled);
+            Filter = ((ESeverity)Enum.Parse(typeof(ESeverity), config.Value(prefix + Configuration.BaseConfig.SourceItemAttribute + ConfigFilter, Filter.ToString())));
+            DateFormat = config.Value(prefix + Configuration.BaseConfig.SourceItemAttribute + ConfigDateFormat, DateFormat);
+            StringFormat = config.Value(prefix + Configuration.BaseConfig.SourceItemAttribute + ConfigStringFormat, StringFormat);
         }
 
         /// -----------------------------------------------------------------------------
@@ -183,11 +145,13 @@ namespace Bdt.Shared.Logs
         /// <param name="dateFormat">le format des dates de timestamp</param>
         /// <param name="filter">le niveau de filtrage pour la sortie des logs</param>
         /// -----------------------------------------------------------------------------
-        public BaseLogger(TextWriter writer, string dateFormat, ESeverity filter)
+        protected BaseLogger(TextWriter writer, string dateFormat, ESeverity filter)
         {
-            m_writer = writer;
-            m_dateFormat = dateFormat;
-            m_filter = filter;
+	        StringFormat = ConfigTagStart + ETags.TIMESTAMP + ConfigTagEnd + " " + ConfigTagStart + ETags.SEVERITY + ConfigTagEnd + " [" + ConfigTagStart + ETags.TYPE + ConfigTagEnd + "] " + ConfigTagStart + ETags.MESSAGE + ConfigTagEnd;
+	        Enabled = true;
+	        Writer = writer;
+            DateFormat = dateFormat;
+            Filter = filter;
         }
 
         /// -----------------------------------------------------------------------------
@@ -201,16 +165,15 @@ namespace Bdt.Shared.Logs
         /// -----------------------------------------------------------------------------
         public virtual void Log(object sender, string message, ESeverity severity)
         {
-            if ((m_enabled) && (severity >= m_filter) && (m_writer != null))
+            if ((Enabled) && (severity >= Filter) && (Writer != null))
             {
                 // Remplacement des id chaines de ETags en leur équivalent integer
-                string format = m_stringFormat;
-                foreach (ETags tag in ETags.GetValues(typeof(ETags)))
-                {
-                    format = format.Replace(tag.ToString(), System.Convert.ToInt32(tag).ToString());
-                }
-                m_writer.WriteLine(string.Format(format, DateTime.Now.ToString(m_dateFormat), severity, sender.GetType().Name, message));
-                m_writer.Flush();
+                string format = StringFormat;
+                foreach (ETags tag in Enum.GetValues(typeof(ETags)))
+                    format = format.Replace(tag.ToString(), Convert.ToInt32(tag).ToString(CultureInfo.InvariantCulture));
+
+				Writer.WriteLine(format, DateTime.Now.ToString(DateFormat), severity, sender.GetType().Name, message);
+                Writer.Flush();
             }
         }
 
@@ -221,17 +184,17 @@ namespace Bdt.Shared.Logs
         /// -----------------------------------------------------------------------------
         public virtual void Close()
         {
-            if (m_writer != null)
-            {
-                try
-                {
-                    m_writer.Close();
-                }
-                catch (Exception)
-                {
-                }
-                m_writer = null;
-            }
+	        if (Writer == null) return;
+	        // ReSharper disable EmptyGeneralCatchClause
+	        try
+	        {
+		        Writer.Close();
+	        }
+	        catch
+	        {
+	        }
+	        // ReSharper restore EmptyGeneralCatchClause
+	        Writer = null;
         }
 
         /// -----------------------------------------------------------------------------

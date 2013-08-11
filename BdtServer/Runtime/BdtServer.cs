@@ -58,13 +58,11 @@ namespace Bdt.Server.Runtime
         /// </summary>
         /// <param name="name">le nom de la culture</param>
         /// -----------------------------------------------------------------------------
-        public override void SetCulture(String name)
+        protected override void SetCulture(String name)
         {
             base.SetCulture(name);
-            if ((name != null) && (name != String.Empty))
-            {
-                Bdt.Server.Resources.Strings.Culture = new CultureInfo(name);
-            }
+	        if (!string.IsNullOrEmpty(name))
+		        Strings.Culture = new CultureInfo(name);
         }
 
         /// -----------------------------------------------------------------------------
@@ -72,17 +70,17 @@ namespace Bdt.Server.Runtime
         /// Traitement principal
         /// </summary>
         /// -----------------------------------------------------------------------------
-        protected void Run(string[] args)
+        private void Run(string[] args)
         {
             try
             {
                 LoadConfiguration(args);
 
-                Log(string.Format(Strings.SERVER_TITLE, this.GetType().Assembly.GetName().Version.ToString(3)), ESeverity.INFO);
+                Log(string.Format(Strings.SERVER_TITLE, GetType().Assembly.GetName().Version.ToString(3)), ESeverity.INFO);
                 Log(FrameworkVersion(), ESeverity.INFO);
 
-                Tunnel.Configuration = m_config;
-                Tunnel.Logger = LoggedObject.GlobalLogger;
+                Tunnel.Configuration = Configuration;
+                Tunnel.Logger = GlobalLogger;
                 Protocol.ConfigureServer(typeof(Tunnel));
                 Log(Strings.SERVER_STARTED, ESeverity.INFO);
                 Console.ReadLine();
@@ -93,15 +91,13 @@ namespace Bdt.Server.Runtime
             }
             catch (Exception ex)
             {
-                if (LoggedObject.GlobalLogger != null)
-                {
-                    Log(ex.Message, ESeverity.ERROR);
-                    Log(ex.ToString(), ESeverity.DEBUG);
-                }
-                else
-                {
-                    Console.WriteLine(ex.Message);
-                }
+	            if (GlobalLogger != null)
+	            {
+		            Log(ex.Message, ESeverity.ERROR);
+		            Log(ex.ToString(), ESeverity.DEBUG);
+	            }
+	            else
+		            Console.WriteLine(ex.Message);
             }
         }
         #endregion

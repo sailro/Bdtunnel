@@ -81,10 +81,8 @@ namespace Bdt.Client.Commands
         /// -----------------------------------------------------------------------------
         public override void Execute(string[] parameters, ILogger logger, ITunnel tunnel, int sid)
         {
-            foreach (Command cmd in Command.GetCommands())
-            {
+            foreach (var cmd in GetCommands())
                 logger.Log(this, String.Format("{0}: {1}", cmd.Help, cmd.Switch + " " + string.Join(" ", cmd.ParametersName)), ESeverity.INFO);
-            }
         }
     }
 }

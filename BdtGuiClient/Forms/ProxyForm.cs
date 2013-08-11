@@ -21,11 +21,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 using Bdt.Client.Configuration;
@@ -43,7 +38,7 @@ namespace Bdt.GuiClient.Forms
     {
 
         #region " Attributs "
-        protected ClientConfig m_clientConfig;
+	    private readonly ClientConfig _clientConfig;
         #endregion
 
         #region " Methodes "
@@ -56,7 +51,7 @@ namespace Bdt.GuiClient.Forms
         public ProxyForm (ClientConfig clientConfig)
         {
             InitializeComponent();
-            m_clientConfig = clientConfig;
+            _clientConfig = clientConfig;
         }
 
         /// -----------------------------------------------------------------------------
@@ -68,9 +63,9 @@ namespace Bdt.GuiClient.Forms
         /// -----------------------------------------------------------------------------
         private void ProxyForm_Load (object sender, EventArgs e)
         {
-            UserNameEdit.Text = m_clientConfig.ProxyUserName;
-            PasswordEdit.Text = m_clientConfig.ProxyPassword;
-            DomainEdit.Text = m_clientConfig.ProxyDomain;
+            UserNameEdit.Text = _clientConfig.ProxyUserName;
+            PasswordEdit.Text = _clientConfig.ProxyPassword;
+            DomainEdit.Text = _clientConfig.ProxyDomain;
         }
 
         /// -----------------------------------------------------------------------------
@@ -82,9 +77,9 @@ namespace Bdt.GuiClient.Forms
         /// -----------------------------------------------------------------------------
         private void Apply_Click (object sender, EventArgs e)
         {
-            m_clientConfig.ProxyUserName = UserNameEdit.Text;
-            m_clientConfig.ProxyPassword = PasswordEdit.Text;
-            m_clientConfig.ProxyDomain = DomainEdit.Text;
+            _clientConfig.ProxyUserName = UserNameEdit.Text;
+            _clientConfig.ProxyPassword = PasswordEdit.Text;
+            _clientConfig.ProxyDomain = DomainEdit.Text;
         }
         #endregion
 

@@ -20,7 +20,6 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
-using System;
 using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting.Channels;
 #endregion
@@ -43,15 +42,12 @@ namespace Bdt.Shared.Protocol
         /// Le canal de communication côté client
         /// </summary>
         /// -----------------------------------------------------------------------------
-        public override HttpChannel ClientChannel
+        protected override HttpChannel ClientChannel
         {
-            get
-            {
-                if (m_clientchannel == null)
-                {
-                    m_clientchannel = new HttpChannel(CreateClientChannelProperties(), new SoapClientFormatterSinkProvider(), null);
-                }
-                return m_clientchannel;
+            get {
+	            return ClientChannelField ??
+	                   (ClientChannelField =
+	                    new HttpChannel(CreateClientChannelProperties(), new SoapClientFormatterSinkProvider(), null));
             }
         }
 
@@ -62,13 +58,11 @@ namespace Bdt.Shared.Protocol
         /// -----------------------------------------------------------------------------
         protected override HttpChannel ServerChannel
         {
-            get
-            {
-                if (m_serverchannel == null)
-                {
-                    m_serverchannel = new HttpChannel(CreateServerChannelProperties(), new SoapClientFormatterSinkProvider(), new SoapServerFormatterSinkProvider());
-                }
-                return m_serverchannel;
+            get {
+	            return ServerChannelField ??
+	                   (ServerChannelField =
+	                    new HttpChannel(CreateServerChannelProperties(), new SoapClientFormatterSinkProvider(),
+	                                    new SoapServerFormatterSinkProvider()));
             }
         }
         #endregion

@@ -21,11 +21,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Net;
 using System.Windows.Forms;
 
@@ -48,7 +44,7 @@ namespace Bdt.GuiClient.Forms
     {
 
         #region " Attributs "
-        protected ClientConfig m_clientConfig;
+	    private readonly ClientConfig _clientConfig;
         #endregion
 
         #region " Classes "
@@ -57,12 +53,12 @@ namespace Bdt.GuiClient.Forms
         /// Un item pour les combobox de selection du protocole
         /// </summary>
         /// -----------------------------------------------------------------------------
-        protected class ProtocolItem
+        private class ProtocolItem
         {
 
             #region " Attributs "
-            protected string m_caption;
-            protected Type m_protocol;
+	        private readonly string _caption;
+	        private readonly Type _protocol;
             #endregion
 
             #region " Méthodes "
@@ -75,8 +71,8 @@ namespace Bdt.GuiClient.Forms
             /// -----------------------------------------------------------------------------
             public ProtocolItem (string caption, Type protocol)
             {
-                m_caption = caption;
-                m_protocol = protocol;
+                _caption = caption;
+                _protocol = protocol;
             }
 
             /// -----------------------------------------------------------------------------
@@ -87,7 +83,7 @@ namespace Bdt.GuiClient.Forms
             /// -----------------------------------------------------------------------------
             public override string ToString ()
             {
-                return m_caption;
+                return _caption;
             }
 
             /// -----------------------------------------------------------------------------
@@ -99,7 +95,7 @@ namespace Bdt.GuiClient.Forms
             {
                 get
                 {
-                    return m_protocol;
+                    return _protocol;
                 }
             }
             #endregion
@@ -117,7 +113,7 @@ namespace Bdt.GuiClient.Forms
         public SetupForm (ClientConfig clientConfig)
         {
             InitializeComponent();
-            m_clientConfig = clientConfig;
+            _clientConfig = clientConfig;
         }
 
         /// -----------------------------------------------------------------------------
@@ -130,67 +126,64 @@ namespace Bdt.GuiClient.Forms
         private void SetupForm_Load (object sender, EventArgs e)
         {
             // Onglet Tunnel
-            ServiceNameEdit.Text = m_clientConfig.ServiceName;
+            ServiceNameEdit.Text = _clientConfig.ServiceName;
             ServiceProtocolEdit.Items.Add(new ProtocolItem(Strings.SETUPFORM_HTTP_BINARY_REMOTING, typeof(HttpBinaryRemoting)));
             ServiceProtocolEdit.Items.Add(new ProtocolItem(Strings.SETUPFORM_HTTP_SOAP_REMOTING, typeof(HttpSoapRemoting)));
             ServiceProtocolEdit.Items.Add(new ProtocolItem(Strings.SETUPFORM_HTTPS_BINARY_REMOTING, typeof(HttpSslBinaryRemoting)));
             ServiceProtocolEdit.Items.Add(new ProtocolItem(Strings.SETUPFORM_HTTPS_SOAP_REMOTING, typeof(HttpSslSoapRemoting)));
             ServiceProtocolEdit.Items.Add(new ProtocolItem(Strings.SETUPFORM_TCP_REMOTING, typeof(TcpRemoting)));
             ServiceProtocolEdit.Items.Add(new ProtocolItem(Strings.SETUPFORM_IPC_REMOTING, typeof(IpcRemoting)));
-            foreach (ProtocolItem item in ServiceProtocolEdit.Items)
-            {
-                if (item.Protocol.FullName == m_clientConfig.ServiceProtocol)
-                {
-                    ServiceProtocolEdit.SelectedItem = item;
-                }
-            }
-            ServiceAddressEdit.Text = m_clientConfig.ServiceAddress;
+
+			foreach (ProtocolItem item in ServiceProtocolEdit.Items)
+		        if (item.Protocol.FullName == _clientConfig.ServiceProtocol)
+			        ServiceProtocolEdit.SelectedItem = item;
+	        
+			ServiceAddressEdit.Text = _clientConfig.ServiceAddress;
             ServicePortEdit.Minimum = IPEndPoint.MinPort;
             ServicePortEdit.Maximum = IPEndPoint.MaxPort;
-            ServicePortEdit.Value = m_clientConfig.ServicePort;
-            ServiceUserEdit.Text = m_clientConfig.ServiceUserName;
-            ServicePasswordEdit.Text = m_clientConfig.ServicePassword;
+            ServicePortEdit.Value = _clientConfig.ServicePort;
+            ServiceUserEdit.Text = _clientConfig.ServiceUserName;
+            ServicePasswordEdit.Text = _clientConfig.ServicePassword;
 
             // Onglet Socks
-            SocksEnabledEdit.Checked = m_clientConfig.SocksEnabled;
-            SocksSharedEdit.Checked = m_clientConfig.SocksShared;
+            SocksEnabledEdit.Checked = _clientConfig.SocksEnabled;
+            SocksSharedEdit.Checked = _clientConfig.SocksShared;
             SocksPortEdit.Minimum = IPEndPoint.MinPort;
             SocksPortEdit.Maximum = IPEndPoint.MaxPort;
-            SocksPortEdit.Value = m_clientConfig.SocksPort;
+            SocksPortEdit.Value = _clientConfig.SocksPort;
 
             // Onglet Proxy
-            ProxyEnabledEdit.Checked = m_clientConfig.ProxyEnabled;
-            ProxyAuthenticationEdit.Checked = m_clientConfig.ProxyAutoAuthentication;
-            ProxyUserNameEdit.Text = m_clientConfig.ProxyUserName;
-            ProxyPasswordEdit.Text = m_clientConfig.ProxyPassword;
-            ProxyDomainEdit.Text = m_clientConfig.ProxyDomain;
-            ProxyAutoConfigurationEdit.Checked = m_clientConfig.ProxyAutoConfiguration;
-            ProxyAddressEdit.Text = m_clientConfig.ProxyAddress;
+            ProxyEnabledEdit.Checked = _clientConfig.ProxyEnabled;
+            ProxyAuthenticationEdit.Checked = _clientConfig.ProxyAutoAuthentication;
+            ProxyUserNameEdit.Text = _clientConfig.ProxyUserName;
+            ProxyPasswordEdit.Text = _clientConfig.ProxyPassword;
+            ProxyDomainEdit.Text = _clientConfig.ProxyDomain;
+            ProxyAutoConfigurationEdit.Checked = _clientConfig.ProxyAutoConfiguration;
+            ProxyAddressEdit.Text = _clientConfig.ProxyAddress;
             ProxyPortEdit.Minimum = IPEndPoint.MinPort;
             ProxyPortEdit.Maximum = IPEndPoint.MaxPort;
-            ProxyPortEdit.Value = m_clientConfig.ProxyPort;
+            ProxyPortEdit.Value = _clientConfig.ProxyPort;
 
             // Redirections
-            BindingList<PortForward> forwards = new BindingList<PortForward>();
-            foreach (PortForward forward in m_clientConfig.Forwards.Values)
-            {
-                forwards.Add(forward);
-            }
-            BindingSource.DataSource = forwards;
+            var forwards = new BindingList<PortForward>();
+	        foreach (var forward in _clientConfig.Forwards.Values)
+		        forwards.Add(forward);
+	        
+			BindingSource.DataSource = forwards;
 
             // Onglet Logs
-            ConsoleLogEnabledEdit.Checked = m_clientConfig.ConsoleLogger.Enabled;
+            ConsoleLogEnabledEdit.Checked = _clientConfig.ConsoleLogger.Enabled;
             ConsoleLogFilterEdit.DataSource = Enum.GetValues(typeof(ESeverity));
-            ConsoleLogFilterEdit.SelectedItem = m_clientConfig.ConsoleLogger.Filter;
-            ConsoleLogStringFormatEdit.Text = m_clientConfig.ConsoleLogger.StringFormat;
-            ConsoleLogDateFormatEdit.Text = m_clientConfig.ConsoleLogger.DateFormat;
-            FileLogEnabledEdit.Checked = m_clientConfig.FileLogger.Enabled;
+            ConsoleLogFilterEdit.SelectedItem = _clientConfig.ConsoleLogger.Filter;
+            ConsoleLogStringFormatEdit.Text = _clientConfig.ConsoleLogger.StringFormat;
+            ConsoleLogDateFormatEdit.Text = _clientConfig.ConsoleLogger.DateFormat;
+            FileLogEnabledEdit.Checked = _clientConfig.FileLogger.Enabled;
             FileLogFilterEdit.DataSource = Enum.GetValues(typeof(ESeverity));
-            FileLogFilterEdit.SelectedItem = m_clientConfig.FileLogger.Filter;
-            FileLogStringFormatEdit.Text = m_clientConfig.FileLogger.StringFormat;
-            FileLogDateFormatEdit.Text = m_clientConfig.FileLogger.DateFormat;
-            FileLogNameEdit.Text = m_clientConfig.FileLogger.Filename;
-            FileLogAppendEdit.Checked = m_clientConfig.FileLogger.Append;
+            FileLogFilterEdit.SelectedItem = _clientConfig.FileLogger.Filter;
+            FileLogStringFormatEdit.Text = _clientConfig.FileLogger.StringFormat;
+            FileLogDateFormatEdit.Text = _clientConfig.FileLogger.DateFormat;
+            FileLogNameEdit.Text = _clientConfig.FileLogger.Filename;
+            FileLogAppendEdit.Checked = _clientConfig.FileLogger.Append;
 
             // Maj des états
             ProxyAuthenticationEdit_CheckedChanged(this, EventArgs.Empty);
@@ -206,10 +199,8 @@ namespace Bdt.GuiClient.Forms
         /// -----------------------------------------------------------------------------
         private void FileSearch_Click (object sender, EventArgs e)
         {
-            if (SaveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                FileLogNameEdit.Text = SaveFileDialog.FileName;
-            }
+	        if (SaveFileDialog.ShowDialog() == DialogResult.OK)
+		        FileLogNameEdit.Text = SaveFileDialog.FileName;
         }
 
         /// -----------------------------------------------------------------------------
@@ -248,14 +239,13 @@ namespace Bdt.GuiClient.Forms
         /// -----------------------------------------------------------------------------
         private void PortForwardDataGridView_DataError (object sender, DataGridViewDataErrorEventArgs e)
         {
-            if (e.ColumnIndex >= 0 && e.ColumnIndex < PortForwardDataGridView.ColumnCount)
-            {
-                DataGridViewColumn col = PortForwardDataGridView.Columns[e.ColumnIndex];
-                if (col.Name == PortForwardLocalPort.Name || col.Name == PortForwardRemotePort.Name)
-                {
-                    MessageBox.Show(String.Format(Strings.SETUPFORM_INVALID_PORT, IPEndPoint.MinPort, IPEndPoint.MaxPort), Strings.SETUPFORM_INVALID_INPUT, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+	        if (e.ColumnIndex < 0 || e.ColumnIndex >= PortForwardDataGridView.ColumnCount)
+				return;
+	        
+			var col = PortForwardDataGridView.Columns[e.ColumnIndex];
+	        if (col.Name == PortForwardLocalPort.Name || col.Name == PortForwardRemotePort.Name)
+		        MessageBox.Show(String.Format(Strings.SETUPFORM_INVALID_PORT, IPEndPoint.MinPort, IPEndPoint.MaxPort),
+		                        Strings.SETUPFORM_INVALID_INPUT, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         /// -----------------------------------------------------------------------------
@@ -268,45 +258,45 @@ namespace Bdt.GuiClient.Forms
         private void Apply_Click (object sender, EventArgs e)
         {
             // Onglet Tunnel
-            m_clientConfig.ServiceName = ServiceNameEdit.Text;
-            m_clientConfig.ServiceProtocol = ((ProtocolItem)ServiceProtocolEdit.SelectedItem).Protocol.FullName;
-            m_clientConfig.ServiceAddress = ServiceAddressEdit.Text;
-            m_clientConfig.ServicePort = Convert.ToInt32(ServicePortEdit.Value);
-            m_clientConfig.ServiceUserName = ServiceUserEdit.Text;
-            m_clientConfig.ServicePassword = ServicePasswordEdit.Text;
+            _clientConfig.ServiceName = ServiceNameEdit.Text;
+            _clientConfig.ServiceProtocol = ((ProtocolItem)ServiceProtocolEdit.SelectedItem).Protocol.FullName;
+            _clientConfig.ServiceAddress = ServiceAddressEdit.Text;
+            _clientConfig.ServicePort = Convert.ToInt32(ServicePortEdit.Value);
+            _clientConfig.ServiceUserName = ServiceUserEdit.Text;
+            _clientConfig.ServicePassword = ServicePasswordEdit.Text;
 
             // Onglet Socks
-            m_clientConfig.SocksEnabled = SocksEnabledEdit.Checked;
-            m_clientConfig.SocksShared = SocksSharedEdit.Checked;
-            m_clientConfig.SocksPort = Convert.ToInt32(SocksPortEdit.Value);
+            _clientConfig.SocksEnabled = SocksEnabledEdit.Checked;
+            _clientConfig.SocksShared = SocksSharedEdit.Checked;
+            _clientConfig.SocksPort = Convert.ToInt32(SocksPortEdit.Value);
 
             // Onglet Proxy
-            m_clientConfig.ProxyEnabled = ProxyEnabledEdit.Checked;
-            m_clientConfig.ProxyAutoAuthentication = ProxyAuthenticationEdit.Checked;
-            m_clientConfig.ProxyUserName = ProxyUserNameEdit.Text;
-            m_clientConfig.ProxyPassword = ProxyPasswordEdit.Text;
-            m_clientConfig.ProxyDomain = ProxyDomainEdit.Text;
-            m_clientConfig.ProxyAutoConfiguration = ProxyAutoConfigurationEdit.Checked;
-            m_clientConfig.ProxyAddress = ProxyAddressEdit.Text;
-            m_clientConfig.ProxyPort = Convert.ToInt32(ProxyPortEdit.Value);
+            _clientConfig.ProxyEnabled = ProxyEnabledEdit.Checked;
+            _clientConfig.ProxyAutoAuthentication = ProxyAuthenticationEdit.Checked;
+            _clientConfig.ProxyUserName = ProxyUserNameEdit.Text;
+            _clientConfig.ProxyPassword = ProxyPasswordEdit.Text;
+            _clientConfig.ProxyDomain = ProxyDomainEdit.Text;
+            _clientConfig.ProxyAutoConfiguration = ProxyAutoConfigurationEdit.Checked;
+            _clientConfig.ProxyAddress = ProxyAddressEdit.Text;
+            _clientConfig.ProxyPort = Convert.ToInt32(ProxyPortEdit.Value);
 
             // Onglet Logs
-            m_clientConfig.ConsoleLogger = new NullConsoleLogger(ConsoleLogDateFormatEdit.Text, (ESeverity)ConsoleLogFilterEdit.SelectedItem);
-            m_clientConfig.ConsoleLogger.Enabled = ConsoleLogEnabledEdit.Checked;
-            m_clientConfig.ConsoleLogger.StringFormat = ConsoleLogStringFormatEdit.Text;
-            m_clientConfig.FileLogger = new NullFileLogger(FileLogNameEdit.Text, FileLogAppendEdit.Checked, FileLogDateFormatEdit.Text, (ESeverity)FileLogFilterEdit.SelectedItem);
-            m_clientConfig.FileLogger.Enabled = FileLogEnabledEdit.Checked;
-            m_clientConfig.FileLogger.StringFormat = FileLogStringFormatEdit.Text;
+            _clientConfig.ConsoleLogger = new NullConsoleLogger(ConsoleLogDateFormatEdit.Text, (ESeverity)ConsoleLogFilterEdit.SelectedItem)
+	        {
+		        Enabled = ConsoleLogEnabledEdit.Checked,
+		        StringFormat = ConsoleLogStringFormatEdit.Text
+	        };
+	        _clientConfig.FileLogger = new NullFileLogger(FileLogNameEdit.Text, FileLogAppendEdit.Checked, FileLogDateFormatEdit.Text, (ESeverity)FileLogFilterEdit.SelectedItem)
+		    {
+			    Enabled = FileLogEnabledEdit.Checked,
+			    StringFormat = FileLogStringFormatEdit.Text
+		    };
 
-            // Redirections
-            m_clientConfig.Forwards.Clear();
-            foreach (PortForward forward in (BindingList<PortForward>) BindingSource.DataSource)
-            {
-                if (!m_clientConfig.Forwards.ContainsKey(forward.LocalPort))
-                {
-                    m_clientConfig.Forwards.Add(forward.LocalPort, forward);
-                }
-            }
+	        // Redirections
+            _clientConfig.Forwards.Clear();
+	        foreach (var forward in (BindingList<PortForward>) BindingSource.DataSource)
+		        if (!_clientConfig.Forwards.ContainsKey(forward.LocalPort))
+			        _clientConfig.Forwards.Add(forward.LocalPort, forward);
         }
         #endregion
 

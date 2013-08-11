@@ -39,10 +39,10 @@ namespace Bdt.Client.Sockets
     {
 
         #region " Attributs "
-        protected ITunnel m_tunnel;
-        protected string m_address;
-        protected int m_remoteport;
-        protected int m_sid;
+	    private readonly ITunnel _tunnel;
+	    private readonly string _address;
+	    private readonly int _remoteport;
+	    private readonly int _sid;
         #endregion
 
         #region " Methodes "
@@ -62,10 +62,10 @@ namespace Bdt.Client.Sockets
         {
             Log(string.Format(Strings.FORWARDING, Ip, localport, address, remoteport), ESeverity.INFO);
 
-            m_tunnel = tunnel;
-            m_sid = sid;
-            m_address = address;
-            m_remoteport = remoteport;
+            _tunnel = tunnel;
+            _sid = sid;
+            _address = address;
+            _remoteport = remoteport;
         }
 
         /// -----------------------------------------------------------------------------
@@ -76,7 +76,9 @@ namespace Bdt.Client.Sockets
         /// -----------------------------------------------------------------------------
         protected override void OnNewConnection(TcpClient client)
         {
-            new Gateway(client, m_tunnel, m_sid, m_address, m_remoteport);
+// ReSharper disable ObjectCreationAsStatement
+            new Gateway(client, _tunnel, _sid, _address, _remoteport);
+// ReSharper restore ObjectCreationAsStatement
         }
         #endregion
 

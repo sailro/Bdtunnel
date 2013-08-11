@@ -20,10 +20,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
-using System;
 using System.Runtime.Remoting.Channels.Ipc;
-using System.Runtime.Remoting.Channels;
-using System.Collections;
 #endregion
 
 namespace Bdt.Shared.Protocol
@@ -44,15 +41,15 @@ namespace Bdt.Shared.Protocol
         /// Le canal de communication côté client
         /// </summary>
         /// -----------------------------------------------------------------------------
-        public override IpcChannel ClientChannel
+        protected override IpcChannel ClientChannel
         {
             get
             {
-                if (m_clientchannel == null)
+                if (ClientChannelField == null)
                 {
-                    m_clientchannel = new IpcChannel(CreateClientChannelProperties(), null, null);
+                    ClientChannelField = new IpcChannel(CreateClientChannelProperties(), null, null);
                 }
-                return m_clientchannel;
+                return ClientChannelField;
             }
         }
 
@@ -65,11 +62,11 @@ namespace Bdt.Shared.Protocol
         {
             get
             {
-                if (m_serverchannel == null)
+                if (ServerChannelField == null)
                 {
-                    m_serverchannel = new IpcChannel(CreateServerChannelProperties(), null, null);
+                    ServerChannelField = new IpcChannel(CreateServerChannelProperties(), null, null);
                 }
-                return m_serverchannel;
+                return ServerChannelField;
             }
         }
 

@@ -31,41 +31,25 @@ namespace Bdt.Shared.Request
     /// Une demande de suppression d'une session
     /// </summary>
     /// -----------------------------------------------------------------------------
-    [Serializable()]
+    [Serializable]
     public struct KillSessionRequest : ISessionContextRequest 
     {
 
-        #region " Attributs "
-        private int m_sid;
-        private int m_adminsid;
-        #endregion
+		#region " Proprietes "
 
-        #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le jeton de session
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public int Sid
-        {
-            get
-            {
-                return m_sid;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le jeton de session
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public int Sid { get; private set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le jeton de session admin
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public int AdminSid
-        {
-            get
-            {
-                return m_adminsid;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le jeton de session admin
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public int AdminSid { get; private set; }
         #endregion
 
         #region " Methodes "
@@ -76,10 +60,10 @@ namespace Bdt.Shared.Request
         /// <param name="sid">Le jeton de session</param>
         /// <param name="adminsid">Le jeton de session admin</param>
         /// -----------------------------------------------------------------------------
-        public KillSessionRequest(int sid, int adminsid)
+        public KillSessionRequest(int sid, int adminsid) : this()
         {
-            this.m_sid = sid;
-            this.m_adminsid = adminsid;
+            Sid = sid;
+            AdminSid = adminsid;
         }
         #endregion
 

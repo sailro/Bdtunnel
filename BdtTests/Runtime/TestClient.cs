@@ -41,7 +41,7 @@ namespace Bdt.Tests.Runtime
     {
 
         #region " Attributs "
-        private TestContext m_context;
+        private readonly TestContext _context;
         #endregion
 
         #region " Méthodes "
@@ -51,9 +51,9 @@ namespace Bdt.Tests.Runtime
         /// </summary>
         /// <returns>un MultiLogger lié à une source fichier et console</returns>
         /// -----------------------------------------------------------------------------
-        public override BaseLogger CreateLoggers()
+        protected override BaseLogger CreateLoggers()
         {
-            return new TestContextLogger(m_context); ;
+            return new TestContextLogger(_context);
         }
 
         /// -----------------------------------------------------------------------------
@@ -64,12 +64,12 @@ namespace Bdt.Tests.Runtime
         /// -----------------------------------------------------------------------------
         public override void LoadConfiguration(string[] args)
         {
-            m_args = args;
+            Args = args;
 
-            LoggedObject.GlobalLogger = CreateLoggers();
+            GlobalLogger = CreateLoggers();
             Log(Strings.LOADING_CONFIGURATION, ESeverity.DEBUG);
-            m_protocol = GenericProtocol.GetInstance(m_clientConfig);
-            SetCulture(m_clientConfig.ServiceCulture);
+			Protocol = GenericProtocol.GetInstance(ClientConfig);
+			SetCulture(ClientConfig.ServiceCulture);
         }
 
         /// -----------------------------------------------------------------------------
@@ -81,9 +81,9 @@ namespace Bdt.Tests.Runtime
         /// -----------------------------------------------------------------------------
         public TestClient(TestContext context, ConfigPackage config)
         {
-            m_context = context;
-            m_clientConfig = new ClientConfig(config, null, null);
-            m_config = config;
+            _context = context;
+			ClientConfig = new ClientConfig(config, null, null);
+            Configuration = config;
         }
         #endregion
 

@@ -38,17 +38,16 @@ namespace Bdt.Client.Socks
     {
 
         #region " Constantes "
-        public const int SOCKS4_REPLY_VERSION = 0;
-        public const int SOCKS4_OK = 90; // Requête acceptée
-        public const int SOCKS4_KO = 91; // Requête refusée
-        public const int SOCKS4_CONNECT_COMMAND = 1; // commande CONNECT
-        public const int SOCKS4_BIND_COMMAND = 2; // commande BIND (non supportée)
-        public const int REPLY_SIZE = 8; // octets de réponse
+	    protected const int Socks4ReplyVersion = 0;
+	    protected const int Socks4Ok = 90; // Requête acceptée
+	    protected const int Socks4Ko = 91; // Requête refusée
+	    protected const int Socks4BindCommand = 2; // commande BIND (non supportée)
+	    private const int ReplySize = 8; // octets de réponse
         #endregion
 
         #region " Attributs "
-        protected byte[] m_reply = new byte[REPLY_SIZE];
-        #endregion
+
+	    #endregion
 
         #region " Proprietes "
         /// -----------------------------------------------------------------------------
@@ -56,14 +55,14 @@ namespace Bdt.Client.Socks
         /// Le handler est-il adapté à la requête?
         /// </summary>
         /// -----------------------------------------------------------------------------
-        public override bool IsHandled
+        protected override bool IsHandled
         {
             get
             {
                 // Préparation pessimiste de la réponse
-                m_reply[0] = SOCKS4_REPLY_VERSION;
-                m_reply[1] = SOCKS4_KO;
-                Array.Clear(m_reply, 2, 6);
+                Reply[0] = Socks4ReplyVersion;
+                Reply[1] = Socks4Ko;
+                Array.Clear(Reply, 2, 6);
 
                 if (Version != 4)
                 {
@@ -73,39 +72,32 @@ namespace Bdt.Client.Socks
                 // Teste pour basic Socks4 (pas Socks4a)
                 if ((Buffer[4] != 0) || (Buffer[5] != 0) || (Buffer[6] != 0))
                 {
-                    if (Command != SOCKS4_BIND_COMMAND)
+                    if (Command != Socks4BindCommand)
                     {
                         RemotePort = 256 * Convert.ToInt32(Buffer[2]) + Convert.ToInt32(Buffer[3]);
                         Address = Buffer[4] + "." + Buffer[5] + "." + Buffer[6] + "." + Buffer[7];
                         // Préparation de la réponse
-                        m_reply[1] = SOCKS4_OK;
-                        Array.Copy(Buffer, 2, m_reply, 2, 6);
+                        Reply[1] = Socks4Ok;
+                        Array.Copy(Buffer, 2, Reply, 2, 6);
                         Log(Strings.SOCKS4_REQUEST_HANDLED, ESeverity.DEBUG);
                         return true;
                     }
-                    else
-                    {
-                        // Socks4 BIND
-                        Log(Strings.SOCKS_BIND_UNSUPPORTED, ESeverity.WARN);
-                    }
+	                
+					// Socks4 BIND
+	                Log(Strings.SOCKS_BIND_UNSUPPORTED, ESeverity.WARN);
                 }
                 return false;
             }
         }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Les données de réponse
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public override byte[] Reply
-        {
-            get
-            {
-                return m_reply;
-            }
-        }
-        #endregion
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Les données de réponse
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+		protected override sealed byte[] Reply { get; set; }
+
+	    #endregion
 
         #region " Méthodes "
         /// -----------------------------------------------------------------------------
@@ -117,7 +109,8 @@ namespace Bdt.Client.Socks
         public Socks4Handler(byte[] buffer)
             : base(buffer)
         {
-            Version = buffer[0];
+	        Reply = new byte[ReplySize];
+	        Version = buffer[0];
             Command = buffer[1];
         }
         #endregion

@@ -31,41 +31,25 @@ namespace Bdt.Shared.Request
     /// Une demande générique dans le cadre d'une connexion
     /// </summary>
     /// -----------------------------------------------------------------------------
-    [Serializable()]
+    [Serializable]
     public struct ConnectionContextRequest : IConnectionContextRequest
     {
 
-        #region " Attributs "
-        private int m_cid;
-        private int m_sid;
-        #endregion
-
-        #region " Proprietes "
+         #region " Proprietes "
         /// -----------------------------------------------------------------------------
         /// <summary>
         /// Le jeton de connexion
         /// </summary>
         /// -----------------------------------------------------------------------------
-        public int Cid
-        {
-            get
-            {
-                return m_cid;
-            }
-        }
+		public int Cid { get; private set; }
 
         /// -----------------------------------------------------------------------------
         /// <summary>
         /// Le jeton de session
         /// </summary>
         /// -----------------------------------------------------------------------------
-        public int Sid
-        {
-            get
-            {
-                return m_sid;
-            }
-        }
+		public int Sid { get; private set; }
+ 
         #endregion
 
         #region " Methodes "
@@ -76,10 +60,10 @@ namespace Bdt.Shared.Request
         /// <param name="sid">Le jeton de session</param>
         /// <param name="cid">Le jeton de connexion</param>
         /// -----------------------------------------------------------------------------
-        public ConnectionContextRequest (int sid, int cid)
+        public ConnectionContextRequest (int sid, int cid) : this()
         {
-            this.m_sid = sid;
-            this.m_cid = cid;
+            Sid = sid;
+            Cid = cid;
         }
         #endregion
 

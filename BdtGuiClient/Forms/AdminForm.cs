@@ -21,19 +21,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Net;
 using System.Windows.Forms;
-
-using Bdt.Client.Configuration;
-using Bdt.GuiClient.Logs;
 using Bdt.GuiClient.Resources;
-using Bdt.Shared.Logs;
-using Bdt.Shared.Protocol;
 using Bdt.Shared.Service;
 using Bdt.Shared.Request;
 using Bdt.Shared.Response;
@@ -51,10 +42,10 @@ namespace Bdt.GuiClient.Forms
     {
 
         #region " Attributs "
-        protected ITunnel m_tunnel;
-        protected int m_sid;
-        protected string m_sidhex;
-        protected Session m_currentsession;
+	    private readonly ITunnel _tunnel;
+	    private readonly int _sid;
+	    private readonly string _sidhex;
+	    private Session _currentsession;
         #endregion
 
         #region " Méthodes "
@@ -68,9 +59,9 @@ namespace Bdt.GuiClient.Forms
         public AdminForm (ITunnel tunnel, int sid)
         {
             InitializeComponent();
-            m_tunnel = tunnel;
-            m_sid = sid;
-            m_sidhex = m_sid.ToString("x");
+            _tunnel = tunnel;
+            _sid = sid;
+            _sidhex = _sid.ToString("x");
         }
 
         /// -----------------------------------------------------------------------------
@@ -94,9 +85,7 @@ namespace Bdt.GuiClient.Forms
         private void HandleResponse(IMinimalResponse response)
         {
             if (!response.Success)
-            {
                 MessageBox.Show(response.Message, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         /// -----------------------------------------------------------------------------
@@ -109,35 +98,31 @@ namespace Bdt.GuiClient.Forms
             try
             {
                 BtRefresh.Enabled = BtClose.Enabled = false;
-                this.UseWaitCursor = true;
+                UseWaitCursor = true;
 
                 Application.DoEvents();
-                MonitorResponse response = m_tunnel.Monitor(new SessionContextRequest(m_sid));
-                if (response.Success)
-                {
-                    m_currentsession = default(Session);
-                    SessionsBindingSource.DataSource = response.Sessions;
-                    SessionsBindingSource.ResetBindings(false);
+                var response = _tunnel.Monitor(new SessionContextRequest(_sid));
+	            if (response.Success)
+	            {
+		            _currentsession = default(Session);
+		            SessionsBindingSource.DataSource = response.Sessions;
+		            SessionsBindingSource.ResetBindings(false);
 
-                    if (Sessions.SelectedRows.Count > 0)
-                    {
-                        m_currentsession = (Session)Sessions.SelectedRows[0].DataBoundItem;
-                        ConnectionsBindingSource.DataSource = m_currentsession.Connections;
-                    }
-                    else
-                    {
-                        ConnectionsBindingSource.DataSource = null;
-                    }
-                }
-                else
-                {
-                    HandleResponse(response);
-                }
+		            if (Sessions.SelectedRows.Count > 0)
+		            {
+			            _currentsession = (Session) Sessions.SelectedRows[0].DataBoundItem;
+			            ConnectionsBindingSource.DataSource = _currentsession.Connections;
+		            }
+		            else
+			            ConnectionsBindingSource.DataSource = null;
+	            }
+	            else
+		            HandleResponse(response);
             }
             finally
             {
                 BtRefresh.Enabled = BtClose.Enabled = true;
-                this.UseWaitCursor = false;
+                UseWaitCursor = false;
             }
 
         }
@@ -151,11 +136,11 @@ namespace Bdt.GuiClient.Forms
         /// -----------------------------------------------------------------------------
         private void Sessions_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0 && e.RowIndex < Sessions.Rows.Count)
-            {
-                m_currentsession = (Session)Sessions.Rows[e.RowIndex].DataBoundItem;
-                ConnectionsBindingSource.DataSource = m_currentsession.Connections;
-            }
+	        if (e.RowIndex < 0 || e.RowIndex >= Sessions.Rows.Count) 
+				return;
+	        
+			_currentsession = (Session)Sessions.Rows[e.RowIndex].DataBoundItem;
+	        ConnectionsBindingSource.DataSource = _currentsession.Connections;
         }
 
         /// -----------------------------------------------------------------------------
@@ -169,24 +154,21 @@ namespace Bdt.GuiClient.Forms
         {
             foreach (DataGridViewRow row in Sessions.SelectedRows)
             {
-                Session session = (Session)row.DataBoundItem;
-                int targetsid = 0;
+                var session = (Session)row.DataBoundItem;
+                int targetsid;
 
-                if (int.TryParse(session.Sid, System.Globalization.NumberStyles.HexNumber, null, out targetsid))
-                {
-                    if (targetsid == m_sid)
-                    {
-                        MessageBox.Show(Strings.ADMINFORM_KILL_OWN_SESSION, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else
-                    {
-                        IMinimalResponse response = m_tunnel.KillSession(new KillSessionRequest(targetsid, m_sid));
-                        if (!response.Success)
-                        {
-                            HandleResponse(response);
-                        }
-                    }
-                }
+	            if (!int.TryParse(session.Sid, System.Globalization.NumberStyles.HexNumber, null, out targetsid)) 
+					continue;
+
+	            if (targetsid == _sid)
+		            MessageBox.Show(Strings.ADMINFORM_KILL_OWN_SESSION, string.Empty, MessageBoxButtons.OK,
+		                            MessageBoxIcon.Warning);
+	            else
+	            {
+		            IMinimalResponse response = _tunnel.KillSession(new KillSessionRequest(targetsid, _sid));
+		            if (!response.Success)
+			            HandleResponse(response);
+	            }
             }
             RefreshSessions();
         }
@@ -202,18 +184,16 @@ namespace Bdt.GuiClient.Forms
         {
             foreach (DataGridViewRow row in Connections.SelectedRows)
             {
-                Connection connection = (Connection)row.DataBoundItem;
-                int targetsid = 0;
-                int targetcid = 0;
+                var connection = (Connection)row.DataBoundItem;
+                int targetsid;
+                int targetcid;
 
-                if (int.TryParse(m_currentsession.Sid, System.Globalization.NumberStyles.HexNumber, null, out targetsid)
+                if (int.TryParse(_currentsession.Sid, System.Globalization.NumberStyles.HexNumber, null, out targetsid)
                     && int.TryParse(connection.Cid, System.Globalization.NumberStyles.HexNumber, null, out targetcid))
                 {
-                    IMinimalResponse response = m_tunnel.KillConnection(new KillConnectionRequest(targetsid, m_sid, targetcid));
-                    if (!response.Success)
-                    {
-                        HandleResponse(response);
-                    }
+                    IMinimalResponse response = _tunnel.KillConnection(new KillConnectionRequest(targetsid, _sid, targetcid));
+	                if (!response.Success)
+		                HandleResponse(response);
                 }
             }
             RefreshSessions();
@@ -264,11 +244,9 @@ namespace Bdt.GuiClient.Forms
         /// -----------------------------------------------------------------------------
         private void Sessions_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            Session session = (Session)Sessions.Rows[e.RowIndex].DataBoundItem;
-            if (session.Sid == m_sidhex)
-            {
-                e.CellStyle.Font = new Font(e.CellStyle.Font, FontStyle.Bold);
-            }
+            var session = (Session)Sessions.Rows[e.RowIndex].DataBoundItem;
+	        if (session.Sid == _sidhex)
+		        e.CellStyle.Font = new Font(e.CellStyle.Font, FontStyle.Bold);
         }
         #endregion
     }

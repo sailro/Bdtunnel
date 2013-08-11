@@ -40,7 +40,7 @@ namespace Bdt.Tests.UnitTests
     public class BaseTest
     {
         #region " Attributs "
-        private TestContext testContextInstance;
+        private TestContext _testContextInstance;
         #endregion
 
         #region " Proprietes "
@@ -50,15 +50,21 @@ namespace Bdt.Tests.UnitTests
         ///information about and functionality for the current test run.
         ///</summary>
         /// -----------------------------------------------------------------------------
+// ReSharper disable MemberCanBeProtected.Global
+// ReSharper disable ConvertToAutoProperty
         public TestContext TestContext
+// ReSharper restore ConvertToAutoProperty
+// ReSharper restore MemberCanBeProtected.Global
         {
             get
             {
-                return testContextInstance;
+                return _testContextInstance;
             }
+// ReSharper disable UnusedMember.Global
             set
+// ReSharper restore UnusedMember.Global
             {
-                testContextInstance = value;
+                _testContextInstance = value;
             }
         }
 
@@ -67,11 +73,11 @@ namespace Bdt.Tests.UnitTests
         /// La liste de tous les projets
         /// </summary>
         /// -----------------------------------------------------------------------------
-        public IEnumerable<Project> AllProjects
+        private IEnumerable<Project> AllProjects
         {
             get
             {
-                return System.Enum.GetValues(typeof(Project)).OfType<Project>(); 
+                return Enum.GetValues(typeof(Project)).OfType<Project>(); 
             }
         }
 
@@ -80,7 +86,7 @@ namespace Bdt.Tests.UnitTests
         /// La liste de tous les projets traduits
         /// </summary>
         /// -----------------------------------------------------------------------------
-        public IEnumerable<Project> AllTranslatedProjects
+        protected IEnumerable<Project> AllTranslatedProjects
         {
             get
             {
@@ -88,29 +94,16 @@ namespace Bdt.Tests.UnitTests
             }
         }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// La liste des traductions
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public IEnumerable<Translation> AllTranslations
-        {
-            get
-            {
-                return System.Enum.GetValues(typeof(Translation)).OfType<Translation>();
-            }
-        }
-
-        /// -----------------------------------------------------------------------------
+	    /// -----------------------------------------------------------------------------
         /// <summary>
         /// La liste des traductions, sauf celle(s) par défaut
         /// </summary>
         /// -----------------------------------------------------------------------------
-        public IEnumerable<Translation> AllTranslationsExceptDefault
+	    protected IEnumerable<Translation> AllTranslationsExceptDefault
         {
             get
             {
-                return System.Enum.GetValues(typeof(Translation)).OfType<Translation>().Where(t => ((int)t)!= (int)Translation.Default);
+                return Enum.GetValues(typeof(Translation)).OfType<Translation>().Where(t => ((int)t)!= (int)Translation.Default);
             }
         }
         #endregion
@@ -123,7 +116,7 @@ namespace Bdt.Tests.UnitTests
         /// <param name="project">Le projet actif</param>
         /// <returns>le répertoire</returns>
         /// -----------------------------------------------------------------------------
-        public string GetProjectDirectory(Project project)
+        private string GetProjectDirectory(Project project)
         {
             return Path.GetFullPath(Path.Combine(Path.Combine(Path.Combine(TestContext.TestDir, ".."), ".."), project.ToString()));
         }
@@ -137,7 +130,7 @@ namespace Bdt.Tests.UnitTests
         /// <param name="directory">le sous répertoire</param>
         /// <returns>le répertoire</returns>
         /// -----------------------------------------------------------------------------
-        public string GetProjectTargetDirectory(Project project, string directory)
+        private string GetProjectTargetDirectory(Project project, string directory)
         {
 #if DEBUG
             return Path.Combine(Path.Combine(GetProjectDirectory(project), directory), "Debug");
@@ -153,24 +146,12 @@ namespace Bdt.Tests.UnitTests
         /// <param name="project">Le projet actif</param>
         /// <returns>le répertoire</returns>
         /// -----------------------------------------------------------------------------
-        public string GetProjectObjDirectory(Project project)
+        private string GetProjectObjDirectory(Project project)
         {
             return GetProjectTargetDirectory(project, "obj");
         }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Retrouve le répertoire 'bin' du projet actif, suivant la cible courante (debug,
-        /// </summary>
-        /// <param name="project">Le projet actif</param>
-        /// <returns>le répertoire</returns>
-        /// -----------------------------------------------------------------------------
-        public string GetProjectBinDirectory(Project project)
-        {
-            return GetProjectTargetDirectory(project, "bin");
-        }
-
-        /// -----------------------------------------------------------------------------
+	    /// -----------------------------------------------------------------------------
         /// <summary>
         /// Remplissage d'une table de hash depuis un ensemble de keypairs
         /// </summary>
@@ -179,7 +160,9 @@ namespace Bdt.Tests.UnitTests
         /// <param name="dic">le conteneur cible</param>
         /// <param name="enumerator">le conteneur source</param>
         /// -----------------------------------------------------------------------------
-        public void FillDictionary<K, V>(Dictionary<K, V> dic, IDictionaryEnumerator enumerator)
+// ReSharper disable InconsistentNaming
+	    private void FillDictionary<K, V>(Dictionary<K, V> dic, IDictionaryEnumerator enumerator)
+// ReSharper restore InconsistentNaming
         {
             dic.Clear();
             while (enumerator.MoveNext())
@@ -196,36 +179,24 @@ namespace Bdt.Tests.UnitTests
         /// <param name="translation">La traduction</param>
         /// <returns>Une table de hash des clefs/valeurs de ressources</returns>
         /// -----------------------------------------------------------------------------
-        public Dictionary<string, string> ReadResources(Project project, Translation translation)
+        protected Dictionary<string, string> ReadResources(Project project, Translation translation = Translation.Default)
         {
-            Dictionary<string, string> result = new Dictionary<String, String>();
-            string resourceTemplate = Path.Combine(GetProjectObjDirectory(project), "Bdt.{0}.Resources.Strings{1}.resources");
+            var result = new Dictionary<String, String>();
+            var resourceTemplate = Path.Combine(GetProjectObjDirectory(project), "Bdt.{0}.Resources.Strings{1}.resources");
 
-            string suffix = (translation == Translation.Default) ? string.Empty : "." + translation.ToString().ToLower();
-            string filename = String.Format(resourceTemplate, project.ToString().Replace("Bdt", ""), suffix);
+            var suffix = (translation == Translation.Default) ? string.Empty : "." + translation.ToString().ToLower();
+            var filename = String.Format(resourceTemplate, project.ToString().Replace("Bdt", ""), suffix);
 
             TestContext.WriteLine("Reading resource: {0}", filename);
-            using (ResourceReader defReader = new ResourceReader(filename))
-            {
+            using (var defReader = new ResourceReader(filename))
                 FillDictionary(result, defReader.GetEnumerator());
-            }
-            TestContext.WriteLine("Key count: {0}", result.Count);
+
+			TestContext.WriteLine("Key count: {0}", result.Count);
 
             return result;
         }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Lecture des clefs de ressources de la langue par défaut
-        /// </summary>
-        /// <param name="project">Le nom du projet</param>
-        /// <returns>Une table de hash des clefs/valeurs de ressources</returns>
-        /// -----------------------------------------------------------------------------
-        public Dictionary<String, String> ReadResources(Project project)
-        {
-            return ReadResources(project, Translation.Default);
-        }
-        #endregion
+	    #endregion
 
     }
 }

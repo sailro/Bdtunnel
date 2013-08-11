@@ -21,7 +21,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
@@ -47,11 +46,7 @@ namespace Bdt.GuiClient.Runtime
     public class BdtGuiClient : BdtClient
     {
 
-        #region " Attributs "
-        protected MainComponent m_mainComponent;
-        #endregion
-
-        #region " Proprietes "
+		#region " Proprietes "
         /// -----------------------------------------------------------------------------
         /// <summary>
         /// Le fichier de configuration
@@ -65,19 +60,14 @@ namespace Bdt.GuiClient.Runtime
             }
         }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// La fenetre principale
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public MainComponent MainComponent
-        {
-            get
-            {
-                return m_mainComponent;
-            }
-        }
-        #endregion
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// La fenetre principale
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public MainComponent MainComponent { get; private set; }
+
+	    #endregion
 
         #region " Methodes "
         /// -----------------------------------------------------------------------------
@@ -86,22 +76,22 @@ namespace Bdt.GuiClient.Runtime
         /// </summary>
         /// <returns>un MultiLogger lié à une source fichier et console</returns>
         /// -----------------------------------------------------------------------------
-        public override BaseLogger CreateLoggers ()
+        protected override BaseLogger CreateLoggers ()
         {
-            StringConfig ldcConfig = new StringConfig(m_args, 0);
-            XMLConfig xmlConfig = new XMLConfig(ConfigFile, 1);
-            m_config = new ConfigPackage();
-            m_config.AddSource(ldcConfig);
-            m_config.AddSource(xmlConfig);
+            var ldcConfig = new StringConfig(Args, 0);
+            var xmlConfig = new XMLConfig(ConfigFile, 1);
+            Configuration = new ConfigPackage();
+            Configuration.AddSource(ldcConfig);
+            Configuration.AddSource(xmlConfig);
 
-            MultiLogger log = new MultiLogger();
+            var log = new MultiLogger();
             // on utilise le référence d'un BdtGuiClient au lieu de passer directement un NotifyIcon car à ce stade
             // on ne peut pas créer de formulaire, car la Culture serait incorrecte, le fichier de configuration
             // n'étant pas déjà parsé
-            m_consoleLogger = new NotifyIconLogger(CFG_CONSOLE, m_config, this, this.GetType().Assembly.GetName().Name, 1);
-            m_fileLogger = new Bdt.Shared.Logs.FileLogger(CFG_FILE, m_config);
-            log.AddLogger(m_consoleLogger);
-            log.AddLogger(m_fileLogger);
+            ConsoleLogger = new NotifyIconLogger(CfgConsole, Configuration, this, GetType().Assembly.GetName().Name, 1);
+            FileLogger = new FileLogger(CfgFile, Configuration);
+            log.AddLogger(ConsoleLogger);
+            log.AddLogger(FileLogger);
 
             return log;
         }
@@ -115,7 +105,7 @@ namespace Bdt.GuiClient.Runtime
         /// -----------------------------------------------------------------------------
         protected override void InputProxyCredentials (IProxyCompatible proxyProtocol, ref bool retry)
         {
-            m_mainComponent.InputProxyCredentials(proxyProtocol, ref retry);
+            MainComponent.InputProxyCredentials(proxyProtocol, ref retry);
         }
 
         /// -----------------------------------------------------------------------------
@@ -124,13 +114,11 @@ namespace Bdt.GuiClient.Runtime
         /// </summary>
         /// <param name="name">le nom de la culture</param>
         /// -----------------------------------------------------------------------------
-        public override void SetCulture(String name)
+        protected override void SetCulture(String name)
         {
             base.SetCulture(name);
-            if ((name != null) && (name != String.Empty))
-            {
-                Bdt.GuiClient.Resources.Strings.Culture = new CultureInfo(name);
-            }
+	        if (!string.IsNullOrEmpty(name))
+		        Resources.Strings.Culture = new CultureInfo(name);
         }
 
         /// -----------------------------------------------------------------------------
@@ -142,25 +130,21 @@ namespace Bdt.GuiClient.Runtime
         [STAThread]
         static new void Main(string[] args)
         {
-            BdtGuiClient guiclient = new BdtGuiClient();
+            var guiclient = new BdtGuiClient();
             try
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                Application.ThreadException += new ThreadExceptionEventHandler(guiclient.HandleError);
-                AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(guiclient.HandleError);
+                Application.ThreadException += guiclient.HandleError;
+                AppDomain.CurrentDomain.UnhandledException += guiclient.HandleError;
 
                 guiclient.Run(args);
             }
             catch (Exception e)
             {
-                if (guiclient != null)
-                {
-                    guiclient.HandleError(e);
-                }
+	            guiclient.HandleError(e);
             }
-
         }
 
         /// -----------------------------------------------------------------------------
@@ -170,7 +154,7 @@ namespace Bdt.GuiClient.Runtime
         /// <param name="e">les parametres</param>
         /// </summary>
         /// -----------------------------------------------------------------------------
-        protected void HandleError(Object sender, UnhandledExceptionEventArgs e)
+        private void HandleError(Object sender, UnhandledExceptionEventArgs e)
         {
             HandleError((Exception) e.ExceptionObject);
         }
@@ -182,7 +166,7 @@ namespace Bdt.GuiClient.Runtime
         /// <param name="e">les parametres</param>
         /// </summary>
         /// -----------------------------------------------------------------------------
-        protected void HandleError(Object sender, ThreadExceptionEventArgs e)
+        private void HandleError(Object sender, ThreadExceptionEventArgs e)
         {
             HandleError(e.Exception);
         }
@@ -193,17 +177,15 @@ namespace Bdt.GuiClient.Runtime
         /// </summary>
         /// <param name="e">l'erreur à traiter</param>
         /// -----------------------------------------------------------------------------
-        protected void HandleError(Exception e)
+        private void HandleError(Exception e)
         {
-                if (LoggedObject.GlobalLogger != null)
-                {
-                    this.Log(e.Message, ESeverity.ERROR);
-                    this.Log(e.ToString(), ESeverity.DEBUG);
-                }
-                else
-                {
-                    MessageBox.Show(e.Message, String.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+	        if (GlobalLogger != null)
+	        {
+		        Log(e.Message, ESeverity.ERROR);
+		        Log(e.ToString(), ESeverity.DEBUG);
+	        }
+	        else
+		        MessageBox.Show(e.Message, String.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         /// -----------------------------------------------------------------------------
@@ -213,12 +195,12 @@ namespace Bdt.GuiClient.Runtime
         /// -----------------------------------------------------------------------------
         protected override void Run (string[] args)
         {
-#pragma warning disable
+#pragma warning disable 612,618
             ServicePointManager.CertificatePolicy = new TrustAllCertificatePolicy();
-#pragma warning restore
+#pragma warning restore 612,618
 
             LoadConfiguration(args);
-            m_mainComponent = new MainComponent(this);
+            MainComponent = new MainComponent(this);
             Application.Run();
             UnLoadConfiguration();
         }

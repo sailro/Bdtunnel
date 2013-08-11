@@ -20,8 +20,6 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
-using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 #endregion
@@ -38,11 +36,7 @@ namespace Bdt.Client.Configuration
     {
 
         #region " Methodes "
-        public TrustAllCertificatePolicy()
-        { }
-
-        public bool CheckValidationResult(ServicePoint sp,
-         X509Certificate cert, WebRequest req, int problem)
+	    public bool CheckValidationResult(ServicePoint sp, X509Certificate cert, WebRequest req, int problem)
         {
             return true;
         }

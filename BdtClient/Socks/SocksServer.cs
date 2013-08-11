@@ -21,10 +21,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
 using System;
-using System.Net;
 using System.Net.Sockets;
-using System.Threading;
-
 using Bdt.Client.Sockets;
 using Bdt.Client.Resources;
 using Bdt.Shared.Logs;
@@ -39,12 +36,12 @@ namespace Bdt.Client.Socks
     /// Serveur Socks avec gestion v4, v4A, v5
     /// </summary>
     /// -----------------------------------------------------------------------------
-    public class SocksServer : Client.Sockets.TcpServer
+    public class SocksServer : TcpServer
     {
 
         #region " Attributs "
-        protected ITunnel m_tunnel;
-        protected int m_sid;
+	    private readonly ITunnel _tunnel;
+	    private readonly int _sid;
         #endregion
 
         #region " Méthodes "
@@ -62,8 +59,8 @@ namespace Bdt.Client.Socks
         {
             Log(string.Format(Strings.SOCKS_SERVER_STARTED, Ip, port), ESeverity.INFO);
 
-            m_tunnel = tunnel;
-            m_sid = sid;
+            _tunnel = tunnel;
+            _sid = sid;
         }
 
         /// -----------------------------------------------------------------------------
@@ -86,7 +83,9 @@ namespace Bdt.Client.Socks
             }
             if (handler != null)
             {
-                new Gateway(client, m_tunnel, m_sid, handler.Address, handler.RemotePort);
+// ReSharper disable ObjectCreationAsStatement
+                new Gateway(client, _tunnel, _sid, handler.Address, handler.RemotePort);
+// ReSharper restore ObjectCreationAsStatement
             }
         }
 

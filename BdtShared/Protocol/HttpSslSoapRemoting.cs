@@ -19,11 +19,6 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
-using System;
-using System.Runtime.Remoting.Channels.Http;
-#endregion
-
 namespace Bdt.Shared.Protocol
 {
 

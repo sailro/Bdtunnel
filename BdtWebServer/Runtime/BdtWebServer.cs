@@ -44,7 +44,7 @@ namespace Bdt.WebServer.Runtime
     {
 
         #region " Attributs "
-        HttpServerUtility m_server;
+	    readonly HttpServerUtility _server;
         #endregion
 
         #region " Proprietes "
@@ -52,7 +52,7 @@ namespace Bdt.WebServer.Runtime
         {
             get
             {
-                return m_server.MapPath(string.Format("App_Data" + Path.DirectorySeparatorChar + "{0}Cfg.xml", typeof(BdtServer).Assembly.GetName().Name));
+                return _server.MapPath(string.Format("App_Data" + Path.DirectorySeparatorChar + "{0}Cfg.xml", typeof(BdtServer).Assembly.GetName().Name));
             }
         }
         #endregion
@@ -65,9 +65,8 @@ namespace Bdt.WebServer.Runtime
         /// <param name="server">l'utilitaire serveur (mappage)</param>
         /// -----------------------------------------------------------------------------
         public BdtWebServer(HttpServerUtility server)
-            : base()
         {
-            m_server = server;
+            _server = server;
         }
 
         /// -----------------------------------------------------------------------------
@@ -76,13 +75,11 @@ namespace Bdt.WebServer.Runtime
         /// </summary>
         /// <param name="name">le nom de la culture</param>
         /// -----------------------------------------------------------------------------
-        public override void SetCulture(String name)
+        protected override void SetCulture(String name)
         {
             base.SetCulture(name);
-            if ((name != null) && (name != String.Empty))
-            {
-                Bdt.Server.Resources.Strings.Culture = new CultureInfo(name);
-            }
+	        if (!string.IsNullOrEmpty(name))
+		        Server.Resources.Strings.Culture = new CultureInfo(name);
         }
 
         /// -----------------------------------------------------------------------------
@@ -93,11 +90,11 @@ namespace Bdt.WebServer.Runtime
         /// -----------------------------------------------------------------------------
         public override void LoadConfiguration(string[] args)
         {
-            m_args = args;
+            Args = args;
 
-            LoggedObject.GlobalLogger = CreateLoggers();
-            Log(Bdt.Shared.Resources.Strings.LOADING_CONFIGURATION, ESeverity.DEBUG);
-            SharedConfig cfg = new SharedConfig(m_config);
+            GlobalLogger = CreateLoggers();
+            Log(Shared.Resources.Strings.LOADING_CONFIGURATION, ESeverity.DEBUG);
+            var cfg = new SharedConfig(Configuration);
             // unneeded in IIs web hosting model, see web.config
             // m_protocol = GenericProtocol.GetInstance(cfg);
             SetCulture(cfg.ServiceCulture);
@@ -112,15 +109,15 @@ namespace Bdt.WebServer.Runtime
         {
             LoadConfiguration(new String[] { });
 
-            Log(string.Format(Bdt.Server.Resources.Strings.SERVER_TITLE, this.GetType().Assembly.GetName().Version.ToString(3)), ESeverity.INFO);
-            Log(Program.FrameworkVersion(), ESeverity.INFO);
+            Log(string.Format(Server.Resources.Strings.SERVER_TITLE, GetType().Assembly.GetName().Version.ToString(3)), ESeverity.INFO);
+            Log(FrameworkVersion(), ESeverity.INFO);
 
-            Tunnel.Configuration = m_config;
-            Tunnel.Logger = LoggedObject.GlobalLogger;
+            Tunnel.Configuration = Configuration;
+            Tunnel.Logger = GlobalLogger;
 
             // unneeded in IIs web hosting model, see web.config
             // server.Protocol.ConfigureServer(typeof(Tunnel));
-            Log(Bdt.Server.Resources.Strings.SERVER_STARTED, ESeverity.INFO);
+            Log(Server.Resources.Strings.SERVER_STARTED, ESeverity.INFO);
         }
 
         /// -----------------------------------------------------------------------------
@@ -129,24 +126,23 @@ namespace Bdt.WebServer.Runtime
         /// </summary>
         /// <returns>un MultiLogger lié à une source fichier et console</returns>
         /// -----------------------------------------------------------------------------
-        public override BaseLogger CreateLoggers()
+        protected override BaseLogger CreateLoggers()
         {
-            XMLConfig xmlConfig = new XMLConfig(ConfigFile, 1);
-            m_config = new ConfigPackage();
-            m_config.AddSource(xmlConfig);
+            var xmlConfig = new XMLConfig(ConfigFile, 1);
+            Configuration = new ConfigPackage();
+            Configuration.AddSource(xmlConfig);
 
             // Map the path to the current Web Application
-            String key = CFG_FILE + Bdt.Shared.Configuration.BaseConfig.SOURCE_ITEM_ATTRIBUTE + FileLogger.CONFIG_FILENAME;
-            String filename = xmlConfig.Value(key, null);
-            if ((filename != null) && (!Path.IsPathRooted(filename))) {
-                xmlConfig.SetValue(key, m_server.MapPath("App_Data" + Path.DirectorySeparatorChar + filename)); 
-            }
+            const string key = CfgFile + Shared.Configuration.BaseConfig.SourceItemAttribute + FileLogger.ConfigFilename;
+            var filename = xmlConfig.Value(key, null);
+	        if ((filename != null) && (!Path.IsPathRooted(filename)))
+		        xmlConfig.SetValue(key, _server.MapPath("App_Data" + Path.DirectorySeparatorChar + filename));
 
-            MultiLogger log = new MultiLogger();
-            m_consoleLogger = new ConsoleLogger(CFG_CONSOLE, m_config);
-            m_fileLogger = new FileLogger(CFG_FILE, m_config);
-            log.AddLogger(m_consoleLogger);
-            log.AddLogger(m_fileLogger);
+	        var log = new MultiLogger();
+            ConsoleLogger = new ConsoleLogger(CfgConsole, Configuration);
+            FileLogger = new FileLogger(CfgFile, Configuration);
+            log.AddLogger(ConsoleLogger);
+            log.AddLogger(FileLogger);
 
             return log;
         }

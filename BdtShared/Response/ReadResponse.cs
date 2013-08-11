@@ -31,104 +31,48 @@ namespace Bdt.Shared.Response
     /// Une réponse de lecture
     /// </summary>
     /// -----------------------------------------------------------------------------
-    [Serializable()]
+    [Serializable]
     public struct ReadResponse : IConnectionContextResponse
     {
 
-        #region " Attributs "
-        private bool m_success;
-        private string m_message;
-        private bool m_dataAvailable;
-        private bool m_connected;
-        private byte[] m_data;
-        #endregion
-
         #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Des données sont-elles disponibles?
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public bool DataAvailable
-        {
-            get
-            {
-                return m_dataAvailable;
-            }
-            set
-            {
-                m_dataAvailable = value;
-            }
-        }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// La connexion est-elle effective?
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public bool Connected
-        {
-            get
-            {
-                return m_connected;
-            }
-            set
-            {
-                m_connected = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Des données sont-elles disponibles?
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public bool DataAvailable { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// La requête a aboutie/échoué ?
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public bool Success
-        {
-            get
-            {
-                return m_success;
-            }
-            set
-            {
-                m_success = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// La connexion est-elle effective?
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public bool Connected { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le message d'information
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public string Message
-        {
-            get
-            {
-                return m_message;
-            }
-            set
-            {
-                m_message = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// La requête a aboutie/échoué ?
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public bool Success { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Les données lues
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public byte[] Data
-        {
-            get
-            {
-                return m_data;
-            }
-            set
-            {
-                m_data = value;
-            }
-        }
-        #endregion
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le message d'information
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public string Message { get; set; }
+
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Les données lues
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public byte[] Data { get; set; }
+
+	    #endregion
 
     }
 

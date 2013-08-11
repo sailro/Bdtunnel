@@ -43,82 +43,52 @@ namespace Bdt.Server.Service
     /// Le tunnel, assure les services de l'interface ITunnel
     /// </summary>
     /// -----------------------------------------------------------------------------
-    public class Tunnel : MarshalByRefObject, ITunnel, ILogger
+    public sealed class Tunnel : MarshalByRefObject, ITunnel, ILogger
     {
 
         #region " Constantes "
-        public const int BUFFER_SIZE = 32768;
-        public const int POLLING_TIME = 1000 * 60; // msec -> 1m
+	    private const int BufferSize = 32768;
+	    private const int PollingTime = 1000 * 60; // msec -> 1m
 
-        protected const string CONFIG_USER_TEMPLATE = "users/{0}@";
-        protected const string CONFIG_USER_ENABLED = "enabled";
-        protected const string CONFIG_USER_PASSWORD = "password";
-        protected const string CONFIG_USER_ADMIN = "admin";
-        protected const string CONFIG_SESSION_TIMEOUT = "stimeout";
-        protected const string CONFIG_CONNECTION_TIMEOUT = "ctimeout";
+	    private const string ConfigUserTemplate = "users/{0}@";
+	    private const string ConfigUserEnabled = "enabled";
+	    private const string ConfigUserPassword = "password";
+	    private const string ConfigUserAdmin = "admin";
+	    private const string ConfigSessionTimeout = "stimeout";
+	    private const string ConfigConnectionTimeout = "ctimeout";
 
-        protected const int DEFAULT_CONNECTION_TIMEOUT_DELAY = 1; // heures
-        protected const int DEFAULT_SESSION_TIMEOUT_DELAY = 12; // heures
+	    private const int DefaultConnectionTimeoutDelay = 1; // heures
+	    private const int DefaultSessionTimeoutDelay = 12; // heures
         #endregion
 
         #region " Attributs "
-        protected Dictionary<int, TunnelSession> m_sessions = new Dictionary<int, TunnelSession>();
-        protected static ManualResetEvent m_mre = new ManualResetEvent(false);
-        protected static ConfigPackage m_configuration;
-        protected static ILogger m_logger = null;
-        #endregion
+	    private static readonly ManualResetEvent Mre = new ManualResetEvent(false);
+	    #endregion
 
         #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Les sessions
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected virtual Dictionary<int, TunnelSession> Sessions
-        {
-            get
-            {
-                return m_sessions;
-            }
-            set
-            {
-                m_sessions = value;
-            }
-        }
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// La configuration serveur (d'après le fichier xml + ligne de commande)
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public static ConfigPackage Configuration
-        {
-            get
-            {
-                return m_configuration;
-            }
-            set
-            {
-                m_configuration = value;
-            }
-        }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le loggeur
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public static ILogger Logger
-        {
-            get
-            {
-                return m_logger;
-            }
-            set
-            {
-                m_logger = value;
-            }
-        }
-        #endregion
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Les sessions
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    private Dictionary<int, TunnelSession> Sessions { get; set; }
+
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// La configuration serveur (d'après le fichier xml + ligne de commande)
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public static ConfigPackage Configuration { private get; set; }
+
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le loggeur
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public static ILogger Logger { private get; set; }
+
+	    #endregion
 
         #region " Méthodes "
         /// -----------------------------------------------------------------------------
@@ -128,11 +98,17 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         public Tunnel()
         {
-            Thread thr = new Thread(new System.Threading.ThreadStart(CheckerThread));
+	        Sessions = new Dictionary<int, TunnelSession>();
+	        var thr = new Thread(CheckerThread);
             thr.Start();
         }
 
-        /// -----------------------------------------------------------------------------
+	    static Tunnel()
+	    {
+		    Logger = null;
+	    }
+
+	    /// -----------------------------------------------------------------------------
         /// <summary>
         /// Generation d'id non encore présent dans une table de hash
         /// </summary>
@@ -141,13 +117,13 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         internal static int GetNewId(System.Collections.IDictionary hash)
         {
-            Random rnd = new Random();
-            int key = rnd.Next(0, int.MaxValue);
-            while (hash.Contains(key))
-            {
-                key += 1;
-            }
-            return key;
+            var rnd = new Random();
+            var key = rnd.Next(0, int.MaxValue);
+		    
+			while (hash.Contains(key))
+			    key += 1;
+		    
+			return key;
         }
 
         /// -----------------------------------------------------------------------------
@@ -156,7 +132,7 @@ namespace Bdt.Server.Service
         /// </summary>
         /// <returns>un entier unique</returns>
         /// -----------------------------------------------------------------------------
-        protected int GetNewSid()
+        private int GetNewSid()
         {
             return GetNewId(Sessions);
         }
@@ -178,7 +154,7 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         public static void DisableChecking()
         {
-            m_mre.Set();
+            Mre.Set();
         }
 
         /// -----------------------------------------------------------------------------
@@ -196,12 +172,10 @@ namespace Bdt.Server.Service
         /// Traitement principal de thread de vérification des connexions et sessions
         /// </summary>
         /// -----------------------------------------------------------------------------
-        protected void CheckerThread()
+        private void CheckerThread()
         {
-            while (!m_mre.WaitOne(POLLING_TIME, false))
-            {
-                TimeoutObject.CheckTimeout(this, Sessions);
-            }
+	        while (!Mre.WaitOne(PollingTime, false))
+		        TimeoutObject.CheckTimeout(this, Sessions);
         }
 
         /// -----------------------------------------------------------------------------
@@ -212,7 +186,9 @@ namespace Bdt.Server.Service
         /// <param name="response">la réponse à préparer</param>
         /// <returns>La session si l'utilisateur est authentifié</returns>
         /// -----------------------------------------------------------------------------
-        public TunnelSession CheckSession<I, O> (ref I request, ref O response)
+// ReSharper disable InconsistentNaming
+        private TunnelSession CheckSession<I, O> (ref I request, ref O response)
+// ReSharper restore InconsistentNaming
             where I : ISessionContextRequest
             where O : IMinimalResponse
         {
@@ -223,13 +199,11 @@ namespace Bdt.Server.Service
                 response.Message = Strings.SERVER_SIDE + Strings.SID_NOT_FOUND;
                 return null;
             }
-            else
-            {
-                session.LastAccess = DateTime.Now;
-                response.Success = true;
-                response.Message = string.Empty;
-                return session;
-            }
+	        
+			session.LastAccess = DateTime.Now;
+	        response.Success = true;
+	        response.Message = string.Empty;
+	        return session;
         }
 
         /// -----------------------------------------------------------------------------
@@ -241,53 +215,48 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         public LoginResponse Login(LoginRequest request)
         {
-            bool enabled = Configuration.ValueBool(string.Format(CONFIG_USER_TEMPLATE, request.Username) + CONFIG_USER_ENABLED, false);
-            string password = Configuration.Value(string.Format(CONFIG_USER_TEMPLATE, request.Username) + CONFIG_USER_PASSWORD, String.Empty);
-            bool admin = Configuration.ValueBool(string.Format(CONFIG_USER_TEMPLATE, request.Username) + CONFIG_USER_ADMIN, false);
-            int stimeout = Configuration.ValueInt(string.Format(CONFIG_USER_TEMPLATE, request.Username) + CONFIG_SESSION_TIMEOUT, int.MinValue);
-            int ctimeout = Configuration.ValueInt(string.Format(CONFIG_USER_TEMPLATE, request.Username) + CONFIG_CONNECTION_TIMEOUT, int.MinValue);
+            var enabled = Configuration.ValueBool(string.Format(ConfigUserTemplate, request.Username) + ConfigUserEnabled, false);
+            var password = Configuration.Value(string.Format(ConfigUserTemplate, request.Username) + ConfigUserPassword, String.Empty);
+            var admin = Configuration.ValueBool(string.Format(ConfigUserTemplate, request.Username) + ConfigUserAdmin, false);
+            var stimeout = Configuration.ValueInt(string.Format(ConfigUserTemplate, request.Username) + ConfigSessionTimeout, int.MinValue);
+            var ctimeout = Configuration.ValueInt(string.Format(ConfigUserTemplate, request.Username) + ConfigConnectionTimeout, int.MinValue);
 
-            string message = String.Empty;
-            bool success = false;
-            int sid = -1;
+            string message;
+            var success = false;
+            var sid = -1;
 
-            if (!enabled)
-            {
-                message = Strings.SERVER_SIDE + String.Format(Strings.ACCESS_DENIED,request.Username);
-            }
-            else
-            {
-                if (password == request.Password)
-                {
-                    // Vérifications des timeouts
-                    if (stimeout == int.MinValue)
-                    {
-                        stimeout = DEFAULT_SESSION_TIMEOUT_DELAY;
-                        Log(String.Format(Strings.DEFAULT_SESSION_TIMEOUT, request.Username, stimeout), ESeverity.WARN);
-                    }
-                    if (ctimeout == int.MinValue)
-                    {
-                        ctimeout = DEFAULT_CONNECTION_TIMEOUT_DELAY;
-                        Log(String.Format(Strings.DEFAULT_CONNECTION_TIMEOUT, request.Username, ctimeout), ESeverity.WARN);
-                    }
+	        if (!enabled)
+		        message = Strings.SERVER_SIDE + String.Format(Strings.ACCESS_DENIED, request.Username);
+	        else
+	        {
+		        if (password == request.Password)
+		        {
+			        // Vérifications des timeouts
+			        if (stimeout == int.MinValue)
+			        {
+				        stimeout = DefaultSessionTimeoutDelay;
+				        Log(String.Format(Strings.DEFAULT_SESSION_TIMEOUT, request.Username, stimeout), ESeverity.WARN);
+			        }
+			        if (ctimeout == int.MinValue)
+			        {
+				        ctimeout = DefaultConnectionTimeoutDelay;
+				        Log(String.Format(Strings.DEFAULT_CONNECTION_TIMEOUT, request.Username, ctimeout), ESeverity.WARN);
+			        }
 
-                    TunnelSession session = new TunnelSession(stimeout, ctimeout);
-                    session.Logon = DateTime.Now;
-                    sid = GetNewSid();
-                    session.Username = request.Username;
-                    session.LastAccess = DateTime.Now;
-                    session.Admin = admin;
-                    Sessions.Add(sid, session);
-                    message = Strings.SERVER_SIDE + string.Format(Strings.ACCESS_GRANTED, request.Username);
-                    success = true;
-                }
-                else
-                {
-                    message = Strings.SERVER_SIDE + string.Format(Strings.ACCESS_DENIED_BAD_PASSWORD, request.Username);
-                }
-            }
+			        var session = new TunnelSession(stimeout, ctimeout) {Logon = DateTime.Now};
+			        sid = GetNewSid();
+			        session.Username = request.Username;
+			        session.LastAccess = DateTime.Now;
+			        session.Admin = admin;
+			        Sessions.Add(sid, session);
+			        message = Strings.SERVER_SIDE + string.Format(Strings.ACCESS_GRANTED, request.Username);
+			        success = true;
+		        }
+		        else
+			        message = Strings.SERVER_SIDE + string.Format(Strings.ACCESS_DENIED_BAD_PASSWORD, request.Username);
+	        }
 
-            Log(message, ESeverity.INFO);
+	        Log(message, ESeverity.INFO);
             return new LoginResponse(success, message, sid);
         }
 
@@ -300,8 +269,8 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         public MinimalResponse Logout(SessionContextRequest request)
         {
-            MinimalResponse response = new MinimalResponse();
-            TunnelSession session = CheckSession(ref request, ref response);
+            var response = new MinimalResponse();
+            var session = CheckSession(ref request, ref response);
 
             if (session != null)
             {
@@ -342,8 +311,8 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         public MinimalResponse Version()
         {
-            System.Reflection.AssemblyName name = this.GetType().Assembly.GetName();
-            return new MinimalResponse(true, Strings.SERVER_SIDE + string.Format("{0} v{1}, {2}", name.Name, name.Version.ToString(3), Bdt.Shared.Runtime.Program.FrameworkVersion()));
+            var name = GetType().Assembly.GetName();
+            return new MinimalResponse(true, Strings.SERVER_SIDE + string.Format("{0} v{1}, {2}", name.Name, name.Version.ToString(3), Program.FrameworkVersion()));
         }
 
         /// -----------------------------------------------------------------------------
@@ -355,25 +324,25 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         public ConnectResponse Connect(ConnectRequest request)
         {
-            ConnectResponse response = new ConnectResponse();
-            TunnelSession session = CheckSession(ref request, ref response);
+            var response = new ConnectResponse();
+            var session = CheckSession(ref request, ref response);
 
             if ( session != null )
             {
-                TunnelConnection connection = session.CreateConnection();
+                var connection = session.CreateConnection();
                 try
                 {
                     connection.TcpClient = new TcpClient(request.Address, request.Port);
                     connection.Stream = connection.TcpClient.GetStream();
 
-                    IPEndPoint endpoint = (IPEndPoint)connection.TcpClient.Client.RemoteEndPoint;
+                    var endpoint = (IPEndPoint)connection.TcpClient.Client.RemoteEndPoint;
                     connection.Address = endpoint.Address.ToString();
                     connection.Port = endpoint.Port;
                     connection.LastAccess = DateTime.Now;
                     connection.ReadCount = 0;
                     connection.WriteCount = 0;
 
-                    IPEndPoint enpoint = (IPEndPoint) connection.TcpClient.Client.RemoteEndPoint;
+                    var enpoint = (IPEndPoint) connection.TcpClient.Client.RemoteEndPoint;
                     connection.Address = enpoint.Address.ToString();
                     connection.Port = enpoint.Port;
 
@@ -389,7 +358,7 @@ namespace Bdt.Server.Service
                     response.Connected = true;
                     response.DataAvailable = connection.Stream.DataAvailable;
 
-                    int cid = session.AddConnection(connection);
+                    var cid = session.AddConnection(connection);
                     response.Success = true;
                     response.Message = Strings.SERVER_SIDE + string.Format(Strings.CONNECTED, connection.TcpClient.Client.RemoteEndPoint, request.Address);
                     response.Cid = cid;
@@ -415,17 +384,17 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         public ConnectionContextResponse Disconnect(ConnectionContextRequest request)
         {
-            ConnectionContextResponse response = new ConnectionContextResponse();
-            TunnelSession session = CheckSession(ref request, ref response);
+            var response = new ConnectionContextResponse();
+            var session = CheckSession(ref request, ref response);
 
             if ( session != null )
             {
-                TunnelConnection connection = session.CheckConnection(ref request, ref response);
+                var connection = session.CheckConnection(ref request, ref response);
                 if (connection != null)
                 {
                     try
                     {
-                        response.Message = Strings.SERVER_SIDE + string.Format(Strings.DISCONNECTED, connection.TcpClient.Client.RemoteEndPoint.ToString());
+                        response.Message = Strings.SERVER_SIDE + string.Format(Strings.DISCONNECTED, connection.TcpClient.Client.RemoteEndPoint);
 
                         connection.SafeDisconnect();
                         response.Connected = false;
@@ -454,12 +423,12 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         public ReadResponse Read(ConnectionContextRequest request)
         {
-            ReadResponse response = new ReadResponse();
-            TunnelSession session = CheckSession(ref request, ref response);
+            var response = new ReadResponse();
+            var session = CheckSession(ref request, ref response);
 
             if ( session != null )
             {
-                TunnelConnection connection = session.CheckConnection(ref request, ref response);
+                var connection = session.CheckConnection(ref request, ref response);
                 if (connection != null)
                 {
                     if (response.Connected && response.DataAvailable)
@@ -467,8 +436,8 @@ namespace Bdt.Server.Service
                         // Données disponibles
                         try
                         {
-                            byte[] buffer = new byte[BUFFER_SIZE];
-                            int count = connection.Stream.Read(buffer, 0, BUFFER_SIZE);
+                            var buffer = new byte[BufferSize];
+                            var count = connection.Stream.Read(buffer, 0, BufferSize);
                             if (count > 0)
                             {
                                 Array.Resize(ref buffer, count);
@@ -514,17 +483,17 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         public ConnectionContextResponse Write(WriteRequest request)
         {
-            ConnectionContextResponse response = new ConnectionContextResponse();
-            TunnelSession session = CheckSession(ref request, ref response);
+            var response = new ConnectionContextResponse();
+            var session = CheckSession(ref request, ref response);
 
             if ( session != null )
             {
-                TunnelConnection connection = session.CheckConnection(ref request, ref response);
+                var connection = session.CheckConnection(ref request, ref response);
                 if (connection != null)
                 {
                     try
                     {
-                        byte[] result = request.Data;
+                        var result = request.Data;
                         Program.StaticXorEncoder(ref result, request.Cid);
                         connection.Stream.Write(result, 0, result.Length);
                         response.Success = true;
@@ -552,8 +521,8 @@ namespace Bdt.Server.Service
         public MonitorResponse Monitor(SessionContextRequest request)
         {
 
-            MonitorResponse response = new MonitorResponse();
-            TunnelSession session = CheckSession(ref request, ref response);
+            var response = new MonitorResponse();
+            var session = CheckSession(ref request, ref response);
 
             if (session != null)
             {
@@ -561,19 +530,21 @@ namespace Bdt.Server.Service
                 {
                     if (session.Admin)
                     {
-                        List<Session> exportsessions = new List<Session>();
+                        var exportsessions = new List<Session>();
 
                         foreach (int sid in Sessions.Keys)
                         {
-                            TunnelSession cursession = Sessions[sid];
-                            Session export = new Session();
-                            export.Sid = sid.ToString("x");
-                            export.Admin = cursession.Admin;
-                            export.Connections = cursession.GetConnectionsStruct();
-                            export.LastAccess = cursession.LastAccess;
-                            export.Logon = cursession.Logon;
-                            export.Username = cursession.Username;
-                            exportsessions.Add(export);
+                            var cursession = Sessions[sid];
+                            var export = new Session
+	                        {
+		                        Sid = sid.ToString("x"),
+		                        Admin = cursession.Admin,
+		                        Connections = cursession.GetConnectionsStruct(),
+		                        LastAccess = cursession.LastAccess,
+		                        Logon = cursession.Logon,
+		                        Username = cursession.Username
+	                        };
+	                        exportsessions.Add(export);
                         }
 
                         response.Sessions = exportsessions.ToArray();
@@ -607,13 +578,13 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         public MinimalResponse KillSession(KillSessionRequest request)
         {
-            MinimalResponse response = new MinimalResponse();
-            TunnelSession targetsession = CheckSession(ref request, ref response);
+            var response = new MinimalResponse();
+            var targetsession = CheckSession(ref request, ref response);
 
             if (targetsession != null)
             {
-                SessionContextRequest fake = new SessionContextRequest(request.AdminSid);
-                TunnelSession adminsession = CheckSession(ref fake, ref response);
+                var fake = new SessionContextRequest(request.AdminSid);
+                var adminsession = CheckSession(ref fake, ref response);
                 if (adminsession != null)
                 {
                     if (adminsession.Admin)
@@ -625,7 +596,6 @@ namespace Bdt.Server.Service
 
                             response.Success = true;
                             response.Message = Strings.SERVER_SIDE + String.Format(Strings.SESSION_KILLED, targetsession.Username, adminsession.Username);
-
                         }
                         catch (Exception ex)
                         {
@@ -654,16 +624,16 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         public ConnectionContextResponse KillConnection(KillConnectionRequest request)
         {
-            ConnectionContextResponse response = new ConnectionContextResponse();
-            TunnelSession targetsession = CheckSession(ref request, ref response);
+            var response = new ConnectionContextResponse();
+            var targetsession = CheckSession(ref request, ref response);
 
             if (targetsession != null)
             {
-                TunnelConnection targetconnection = targetsession.CheckConnection(ref request, ref response);
+                var targetconnection = targetsession.CheckConnection(ref request, ref response);
                 if (targetconnection != null)
                 {
-                    SessionContextRequest fake = new SessionContextRequest(request.AdminSid);
-                    TunnelSession adminsession = CheckSession(ref fake, ref response);
+                    var fake = new SessionContextRequest(request.AdminSid);
+                    var adminsession = CheckSession(ref fake, ref response);
                     if (adminsession != null)
                     {
                         if (adminsession.Admin)
@@ -708,10 +678,8 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         public void Log(object sender, string message, ESeverity severity)
         {
-            if (m_logger != null)
-            {
-                m_logger.Log(sender, message, severity);
-            }
+	        if (Logger != null)
+		        Logger.Log(sender, message, severity);
         }
 
         /// -----------------------------------------------------------------------------
@@ -722,7 +690,7 @@ namespace Bdt.Server.Service
         /// <param name="message">le message à logger</param>
         /// <param name="severity">la sévérité</param>
         /// -----------------------------------------------------------------------------
-        public void Log(string message, ESeverity severity)
+        private void Log(string message, ESeverity severity)
         {
             Log(this, message, severity);
         }
@@ -734,10 +702,8 @@ namespace Bdt.Server.Service
         /// -----------------------------------------------------------------------------
         public void Close()
         {
-            if (m_logger != null)
-            {
-                m_logger.Close();
-            }
+	        if (Logger != null)
+		        Logger.Close();
         }
         #endregion
 

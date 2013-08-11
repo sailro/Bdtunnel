@@ -31,42 +31,27 @@ namespace Bdt.Shared.Request
     /// Une demande de login
     /// </summary>
     /// -----------------------------------------------------------------------------
-    [Serializable()]
+    [Serializable]
     public struct LoginRequest 
     {
 
-        #region " Attributs "
-        private string m_username;
-        private string m_password;
-        #endregion
-
         #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le nom de l'utilisateur
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public string Username
-        {
-            get
-            {
-                return m_username;
-            }
-        }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le mot de passe de l'utilisateur
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public string Password
-        {
-            get
-            {
-                return m_password;
-            }
-        }
-        #endregion
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le nom de l'utilisateur
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public string Username { get; private set; }
+
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le mot de passe de l'utilisateur
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public string Password { get; private set; }
+
+	    #endregion
 
         #region " Methodes "
         /// -----------------------------------------------------------------------------
@@ -76,10 +61,10 @@ namespace Bdt.Shared.Request
         /// <param name="username">Le nom de l'utilisateur</param>
         /// <param name="password">Le mot de passe de l'utilisateur</param>
         /// -----------------------------------------------------------------------------
-        public LoginRequest(string username, string password)
+        public LoginRequest(string username, string password) : this()
         {
-            this.m_username = username;
-            this.m_password = password;
+            Username = username;
+            Password = password;
         }
         #endregion
 

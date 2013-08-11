@@ -21,6 +21,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
 using System;
+using System.Globalization;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 
@@ -42,14 +43,14 @@ namespace Bdt.Shared.Protocol
     {
 
         #region " Constantes "
-        public const string CFG_NAME = "name";
-        public const string CFG_PORT_NAME = "portName";
-        public const string CFG_PORT = "port";
+	    private const string CfgName = "name";
+	    private const string CfgPortName = "portName";
+	    private const string CfgPort = "port";
         #endregion
 
         #region " Attributs "
-        protected T m_clientchannel;
-        protected T m_serverchannel;
+        protected T ClientChannelField;
+        protected T ServerChannelField;
         #endregion
 
         #region " Proprietes "
@@ -68,7 +69,7 @@ namespace Bdt.Shared.Protocol
         /// Le canal de communication côté client
         /// </summary>
         /// -----------------------------------------------------------------------------
-        public abstract T ClientChannel
+        protected abstract T ClientChannel
         {
             get;
         }
@@ -105,7 +106,7 @@ namespace Bdt.Shared.Protocol
         /// -----------------------------------------------------------------------------
         public override void ConfigureClient()
         {
-            Log(string.Format(Strings.CONFIGURING_CLIENT, this.GetType().Name, ServerURL), ESeverity.DEBUG);
+            Log(string.Format(Strings.CONFIGURING_CLIENT, GetType().Name, ServerURL), ESeverity.DEBUG);
             ChannelServices.RegisterChannel(ClientChannel, IsSecured);
         }
 
@@ -116,7 +117,7 @@ namespace Bdt.Shared.Protocol
         /// -----------------------------------------------------------------------------
         public override void UnConfigureClient()
         {
-            Log(string.Format(Strings.UNCONFIGURING_CLIENT, this.GetType().Name), ESeverity.DEBUG);
+            Log(string.Format(Strings.UNCONFIGURING_CLIENT, GetType().Name), ESeverity.DEBUG);
             ChannelServices.UnregisterChannel(ClientChannel);
         }
 
@@ -128,9 +129,9 @@ namespace Bdt.Shared.Protocol
         /// -----------------------------------------------------------------------------
         public override void ConfigureServer(Type type)
         {
-            Log(string.Format(Strings.CONFIGURING_SERVER, this.GetType().Name, Port), ESeverity.INFO);
+            Log(string.Format(Strings.CONFIGURING_SERVER, GetType().Name, Port), ESeverity.INFO);
             ChannelServices.RegisterChannel(ServerChannel, IsSecured);
-            WellKnownServiceTypeEntry wks = new WellKnownServiceTypeEntry(type, Name, WellKnownObjectMode.Singleton);
+            var wks = new WellKnownServiceTypeEntry(type, Name, WellKnownObjectMode.Singleton);
             RemotingConfiguration.RegisterWellKnownServiceType(wks);
         }
 
@@ -141,12 +142,11 @@ namespace Bdt.Shared.Protocol
         /// -----------------------------------------------------------------------------
         public override void UnConfigureServer()
         {
-            Log(string.Format(Strings.UNCONFIGURING_SERVER, this.GetType().Name, Port), ESeverity.INFO);
+            Log(string.Format(Strings.UNCONFIGURING_SERVER, GetType().Name, Port), ESeverity.INFO);
             ChannelServices.UnregisterChannel(ServerChannel);
-            if (ServerChannel is IChannelReceiver)
-            {
-                ((IChannelReceiver)ServerChannel).StopListening(null);
-            }
+	        var channel = ServerChannel as IChannelReceiver;
+	        if (channel != null)
+                channel.StopListening(null);
         }
 
         /// -----------------------------------------------------------------------------
@@ -155,25 +155,22 @@ namespace Bdt.Shared.Protocol
         /// </summary>
         /// <returns>une instance de tunnel</returns>
         /// -----------------------------------------------------------------------------
-        public override Service.ITunnel GetTunnel()
+        public override ITunnel GetTunnel()
         {
             return ((ITunnel)Activator.GetObject(typeof(ITunnel), ServerURL));
         }
 
-        public virtual Hashtable CreateClientChannelProperties()
+	    protected Hashtable CreateClientChannelProperties()
         {
-            Hashtable properties = new Hashtable();
-            properties.Add(CFG_NAME, string.Format("{0}.Client", Name));
-            properties.Add(CFG_PORT_NAME, properties[CFG_NAME]);
+            var properties = new Hashtable {{CfgName, string.Format("{0}.Client", Name)}};
+		    properties.Add(CfgPortName, properties[CfgName]);
             return properties;
         }
 
-        public virtual Hashtable CreateServerChannelProperties()
+	    protected Hashtable CreateServerChannelProperties()
         {
-            Hashtable properties = new Hashtable();
-            properties.Add(CFG_NAME, Name);
-            properties.Add(CFG_PORT, Port.ToString());
-            properties.Add(CFG_PORT_NAME, properties[CFG_NAME]);
+            var properties = new Hashtable {{CfgName, Name}, {CfgPort, Port.ToString(CultureInfo.InvariantCulture)}};
+		    properties.Add(CfgPortName, properties[CfgName]);
             return properties;
         }
 

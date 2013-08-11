@@ -25,9 +25,6 @@ using System.Net.Sockets;
 using System.Threading;
 
 using Bdt.Shared.Logs;
-using Bdt.Shared.Service;
-using Bdt.Shared.Request;
-using Bdt.Shared.Response;
 #endregion
 
 namespace Bdt.Tests.Sockets
@@ -43,21 +40,21 @@ namespace Bdt.Tests.Sockets
 
         #region " Constantes "
         // La taille du buffer d'IO
-        public const int BUFFER_SIZE = 65536;
+	    private const int BufferSize = 65536;
         // La durée minimale entre deux tests de l'état de connexion
-        public const int STATE_POLLING_MIN_TIME = 10;
+	    private const int StatePollingMinTime = 10;
         // La durée maximale entre deux tests de l'état de connexion
-        public const int STATE_POLLING_MAX_TIME = 5000;
+	    private const int StatePollingMaxTime = 5000;
         // Le coefficient de décélération,
-        public const double STATE_POLLING_FACTOR = 1.1;
+	    private const double StatePollingFactor = 1.1;
         // Le test de la connexion effective
-        public const int SOCKET_TEST_POLLING_TIME = 100;
+	    private const int SocketTestPollingTime = 100;
         #endregion
 
         #region " Attributs "
-        protected TcpClient m_client;
-        protected NetworkStream m_stream;
-        protected ManualResetEvent m_mre = new ManualResetEvent(false);
+	    private TcpClient _client;
+	    private NetworkStream _stream;
+	    private readonly ManualResetEvent _mre = new ManualResetEvent(false);
         #endregion
 
         #region " Méthodes "
@@ -69,12 +66,11 @@ namespace Bdt.Tests.Sockets
         /// -----------------------------------------------------------------------------
         public EchoSession(TcpClient client)
         {
-            m_client = client;
-            m_stream = client.GetStream();
+            _client = client;
+            _stream = client.GetStream();
 
-            Thread thr = new Thread(new System.Threading.ThreadStart(CommunicationThread));
-            thr.IsBackground = true;
-            thr.Start();
+            var thr = new Thread(CommunicationThread) {IsBackground = true};
+	        thr.Start();
         }
 
         /// -----------------------------------------------------------------------------
@@ -84,7 +80,7 @@ namespace Bdt.Tests.Sockets
         /// <param name="ex">l'exception à gérer</param>
         /// <param name="show">affichage du message d'erreur</param>
         /// -----------------------------------------------------------------------------
-        protected void HandleError(Exception ex, bool show)
+        private void HandleError(Exception ex, bool show)
         {
             HandleError(ex.Message, show);
         }
@@ -96,13 +92,12 @@ namespace Bdt.Tests.Sockets
         /// <param name="message">le message à gérer</param>
         /// <param name="show">affichage du message d'erreur</param>
         /// -----------------------------------------------------------------------------
-        protected void HandleError(string message, bool show)
+        private void HandleError(string message, bool show)
         {
-            if (show)
-            {
-                Log(message, ESeverity.ERROR);
-            }
-            m_mre.Set();
+	        if (show)
+		        Log(message, ESeverity.ERROR);
+	        
+			_mre.Set();
         }
 
         /// -----------------------------------------------------------------------------
@@ -113,42 +108,35 @@ namespace Bdt.Tests.Sockets
         /// <param name="adjpolltime">ajustement (durée du dernier aller-retour</param>
         /// <returns></returns>
         /// -----------------------------------------------------------------------------
-        protected int WaitTime(int polltime, int adjpolltime)
+        private static int WaitTime(int polltime, int adjpolltime)
         {
-            if (adjpolltime > polltime)
-            {
-                return 0;
-            }
-            else
-            {
-                return Math.Max(polltime - adjpolltime, STATE_POLLING_MIN_TIME);
-            }
+	        return adjpolltime > polltime ? 0 : Math.Max(polltime - adjpolltime, StatePollingMinTime);
         }
 
 
-        /// -----------------------------------------------------------------------------
+	    /// -----------------------------------------------------------------------------
         /// <summary>
         /// Traitement principal du thread
         /// </summary>
         /// -----------------------------------------------------------------------------
-        protected void CommunicationThread()
+	    private void CommunicationThread()
         {
-            byte[] buffer = new byte[BUFFER_SIZE];
-            int polltime = STATE_POLLING_MIN_TIME;
-            int adjpolltime = 0;
+            var buffer = new byte[BufferSize];
+            var polltime = StatePollingMinTime;
+            var adjpolltime = 0;
 
-            while (!m_mre.WaitOne(WaitTime(polltime, adjpolltime), false))
+            while (!_mre.WaitOne(WaitTime(polltime, adjpolltime), false))
             {
-                DateTime startmarker = DateTime.Now;
+                var startmarker = DateTime.Now;
 
                 // Si des données sont présentes sur le socket, renvoi
-                bool isConnected = false;
-                bool isDataAvailAble = false;
+                var isConnected = false;
+                var isDataAvailAble = false;
 
                 try
                 {
-                    isConnected = (!(m_client.Client.Poll(SOCKET_TEST_POLLING_TIME, System.Net.Sockets.SelectMode.SelectRead) && m_client.Client.Available == 0));
-                    isDataAvailAble = m_stream.DataAvailable;
+                    isConnected = (!(_client.Client.Poll(SocketTestPollingTime, SelectMode.SelectRead) && _client.Client.Available == 0));
+                    isDataAvailAble = _stream.DataAvailable;
                 }
                 catch (Exception ex)
                 {
@@ -159,10 +147,10 @@ namespace Bdt.Tests.Sockets
                 {
                     if (isDataAvailAble)
                     {
-                        int count = 0;
+                        var count = 0;
                         try
                         {
-                            count = m_stream.Read(buffer, 0, BUFFER_SIZE);
+                            count = _stream.Read(buffer, 0, BufferSize);
                         }
                         catch (Exception ex)
                         {
@@ -172,28 +160,28 @@ namespace Bdt.Tests.Sockets
                         {
                             try
                             {
-                                m_stream.Write(buffer, 0, count);
-                                m_stream.Flush();
+                                _stream.Write(buffer, 0, count);
+                                _stream.Flush();
                             }
                             catch (Exception ex)
                             {
                                 HandleError(ex, true);
                             }
                             // Si des données sont présentes, on repasse en mode 'actif'
-                            polltime = STATE_POLLING_MIN_TIME;
+                            polltime = StatePollingMinTime;
                         }
                     }
                     else
                     {
                         // Sinon on augmente le temps de latence
-                        polltime = Convert.ToInt32(Math.Round(STATE_POLLING_FACTOR * polltime));
-                        polltime = Math.Min(polltime, STATE_POLLING_MAX_TIME);
+                        polltime = Convert.ToInt32(Math.Round(StatePollingFactor * polltime));
+                        polltime = Math.Min(polltime, StatePollingMaxTime);
                     }
                 }
                 else
                 {
                     // Deconnexion
-                    m_mre.Set();
+                    _mre.Set();
                 }
                 adjpolltime = Convert.ToInt32(DateTime.Now.Subtract(startmarker).TotalMilliseconds);
             }
@@ -206,14 +194,14 @@ namespace Bdt.Tests.Sockets
         /// Deconnexion
         /// </summary>
         /// -----------------------------------------------------------------------------
-        protected void Disconnect()
+        private void Disconnect()
         {
-            if (m_client != null)
+            if (_client != null)
             {
-                m_stream.Close();
-                m_client.Close();
-                m_stream = null;
-                m_client = null;
+                _stream.Close();
+                _client.Close();
+                _stream = null;
+                _client = null;
             }
         }
         #endregion

@@ -23,8 +23,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 using System.Net.Sockets;
 
 using Bdt.Shared.Logs;
-using Bdt.Shared.Service;
-using Bdt.Client.Resources;
 using Bdt.Client.Sockets;
 #endregion
 
@@ -61,7 +59,9 @@ namespace Bdt.Tests.Sockets
         /// -----------------------------------------------------------------------------
         protected override void OnNewConnection(TcpClient client)
         {
+// ReSharper disable ObjectCreationAsStatement
             new EchoSession(client);
+// ReSharper restore ObjectCreationAsStatement
         }
         #endregion
 

@@ -28,10 +28,12 @@ namespace Bdt.Tests.Model
     /// -----------------------------------------------------------------------------
     public enum Project
     {
+		// ReSharper disable UnusedMember.Global
         BdtClient,
         BdtGuiClient,
         BdtServer,
         BdtShared,
         BdtWebServer,
-    }
+		// ReSharper restore UnusedMember.Global
+	}
 }

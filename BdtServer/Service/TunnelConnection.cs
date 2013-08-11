@@ -37,136 +37,59 @@ namespace Bdt.Server.Service
     /// -----------------------------------------------------------------------------
     internal class TunnelConnection : TimeoutObject 
     {
-        #region " Attributs "
-        protected TcpClient m_tcpClient;
-        protected NetworkStream m_stream;
-        protected int m_readcount;
-        protected int m_writecount;
-        protected string m_host;
-        protected string m_address;
-        protected int m_port;
-        #endregion
 
-        #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// L'adresse distant
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public string Address
-        {
-            get
-            {
-                return m_address;
-            }
-            set
-            {
-                m_address = value;
-            }
-        }
+		#region " Proprietes "
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le port distant
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public int Port
-        {
-            get
-            {
-                return m_port;
-            }
-            set
-            {
-                m_port = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// L'adresse distant
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public string Address { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// L'hôte distant
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public string Host
-        {
-            get
-            {
-                return m_host;
-            }
-            set
-            {
-                m_host = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le port distant
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public int Port { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le client TCP associé
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public TcpClient TcpClient
-        {
-            get
-            {
-                return m_tcpClient;
-            }
-            set
-            {
-                m_tcpClient = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// L'hôte distant
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public string Host { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le flux associé
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public NetworkStream Stream
-        {
-            get
-            {
-                return m_stream;
-            }
-            set
-            {
-                m_stream = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le client TCP associé
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public TcpClient TcpClient { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le nombre d'octets lus
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public int ReadCount
-        {
-            get
-            {
-                return m_readcount;
-            }
-            set
-            {
-                m_readcount = value;
-            }
-        }
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le flux associé
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public NetworkStream Stream { get; set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le nombre d'octets écrits
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public int WriteCount
-        {
-            get
-            {
-                return m_writecount;
-            }
-            set
-            {
-                m_writecount = value;
-            }
-        }
-        #endregion
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le nombre d'octets lus
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public int ReadCount { get; set; }
+
+	    /// -----------------------------------------------------------------------------
+	    /// <summary>
+	    /// Le nombre d'octets écrits
+	    /// </summary>
+	    /// -----------------------------------------------------------------------------
+	    public int WriteCount { get; set; }
+
+	    #endregion
 
         #region " Methodes "
         /// -----------------------------------------------------------------------------
@@ -205,16 +128,18 @@ namespace Bdt.Server.Service
                     Stream.Close();
                 }
             }
+// ReSharper disable EmptyGeneralCatchClause
             catch (Exception) { }
+// ReSharper restore EmptyGeneralCatchClause
 
             try
             {
-                if (TcpClient != null)
-                {
-                    TcpClient.Close();
-                }
+	            if (TcpClient != null)
+		            TcpClient.Close();
             }
+// ReSharper disable EmptyGeneralCatchClause
             catch (Exception) { }
+// ReSharper restore EmptyGeneralCatchClause
 
             Stream = null;
             TcpClient = null;

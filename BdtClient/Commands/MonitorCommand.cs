@@ -39,7 +39,7 @@ namespace Bdt.Client.Commands
         {
             int IComparer<PropertyInfo>.Compare(PropertyInfo a, PropertyInfo b)
             {
-                return a.Name.CompareTo(b.Name);
+                return String.Compare(a.Name, b.Name, StringComparison.Ordinal);
             }
         }
 
@@ -97,10 +97,10 @@ namespace Bdt.Client.Commands
 
             if (obj is Array)
             {
-                Array objarray = obj as Array;
+                var objarray = obj as Array;
                 logger.Log(this, indentstr + "{", ESeverity.INFO);
-                int index = 0;
-                foreach (object item in objarray)
+                var index = 0;
+                foreach (var item in objarray)
                 {
                     if (index > 0) logger.Log(this, indentstr + ",", ESeverity.INFO);
                     LogObject(logger, indent + 2, item);
@@ -111,11 +111,11 @@ namespace Bdt.Client.Commands
             else
             {
                 PropertyInfo[] properties = obj.GetType().GetProperties();
-                Array.Sort<PropertyInfo>(properties, new PropertyInfoComparer()); 
+                Array.Sort(properties, new PropertyInfoComparer()); 
                 
-                foreach (PropertyInfo prop in properties)
+                foreach (var prop in properties)
                 {
-                    object value = prop.GetValue(obj, null);
+                    var value = prop.GetValue(obj, null);
                     if (value is Array)
                     {
                         logger.Log(this, indentstr + string.Format("{0}=", prop.Name), ESeverity.INFO);

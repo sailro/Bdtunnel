@@ -29,7 +29,9 @@ namespace Bdt.Tests.Model
     public enum Translation
     {
         Default=0,
-        EN=0,
-        FR=1,
-    }
+		// ReSharper disable UnusedMember.Global
+        En=0,
+        Fr=1,
+		// ReSharper restore UnusedMember.Global
+	}
 }

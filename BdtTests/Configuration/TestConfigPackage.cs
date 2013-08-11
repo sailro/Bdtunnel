@@ -20,12 +20,13 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
+
 using System;
-using System.Collections.Generic;
-using Bdt.Tests.Model;
+using System.Globalization;
+using Bdt.Shared.Configuration;
 #endregion
 
-namespace Bdt.Shared.Configuration
+namespace Bdt.Tests.Configuration
 {
 
     /// -----------------------------------------------------------------------------
@@ -39,17 +40,17 @@ namespace Bdt.Shared.Configuration
     public sealed class TestConfigPackage : ConfigPackage
     {
         #region " Constantes "
-        public const string USER_LOGIN = "usertest";
-        public const string USER_PASSWORD = "userpassword";
-        public const string USER_DISABLED_LOGIN = "userdisabled";
-        public const string USER_DISABLED_PASSWORD = "userdisabledpassword";
-        public const string USER_LAMBDA_LOGIN = "userlambda";
-        public const string USER_LAMBDA_PASSWORD = "userlambdapassword";
+	    private const string UserLogin = "usertest";
+	    private const string UserPassword = "userpassword";
+        public const string UserDisabledLogin = "userdisabled";
+        public const string UserDisabledPassword = "userdisabledpassword";
+        public const string UserLambdaLogin = "userlambda";
+        public const string UserLambdaPassword = "userlambdapassword";
         #endregion
 
         #region " Attributs "
-        private string m_protocol = "";
-        private string m_port = "";
+        private readonly string _protocol = "";
+        private readonly string _port = "";
         #endregion
 
         #region " Propriétés "
@@ -65,19 +66,18 @@ namespace Bdt.Shared.Configuration
         {
             if (code.StartsWith("forward/")) {
                 if (code.EndsWith("@enabled") || code.EndsWith("@shared"))
-                {
-                    return "false";
-                }
+                     return "false";
+
                 return "0";
             }
 
             switch (code)
             {
-                case "service@username": return USER_LOGIN;
-                case "service@password": return USER_PASSWORD;
-                case "service@protocol": return m_protocol;
+                case "service@username": return UserLogin;
+                case "service@password": return UserPassword;
+                case "service@protocol": return _protocol;
                 case "service@name": return "BdtTestService";
-                case "service@port": return m_port;
+                case "service@port": return _port;
                 case "service@address": return "localhost";
                 case "service@culture": return string.Empty;
 
@@ -85,10 +85,10 @@ namespace Bdt.Shared.Configuration
                 case "users/usertest@enabled": return "true";
                 case "users/usertest@admin": return "true";
 
-                case "users/userdisabled@password": return USER_DISABLED_PASSWORD;
+                case "users/userdisabled@password": return UserDisabledPassword;
                 case "users/userdisabled@enabled": return "false";
 
-                case "users/userlambda@password": return USER_LAMBDA_PASSWORD;
+                case "users/userlambda@password": return UserLambdaPassword;
                 case "users/userlambda@enabled": return "true";
                 case "users/userlambda@admin": return "false";
                 
@@ -118,8 +118,8 @@ namespace Bdt.Shared.Configuration
         /// -----------------------------------------------------------------------------
         public TestConfigPackage(String protocol, int port)
         {
-            m_protocol = protocol;
-            m_port = port.ToString();
+            _protocol = protocol;
+            _port = port.ToString(CultureInfo.InvariantCulture);
         }
         #endregion
 

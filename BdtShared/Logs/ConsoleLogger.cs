@@ -20,8 +20,6 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 #region " Inclusions "
-using System;
-
 using Bdt.Shared.Configuration;
 #endregion
 
@@ -58,19 +56,7 @@ namespace Bdt.Shared.Logs
         {
         }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur pour un log
-        /// </summary>
-        /// <param name="dateFormat">le format des dates de timestamp</param>
-        /// <param name="filter">le niveau de filtrage pour la sortie des logs</param>
-        /// -----------------------------------------------------------------------------
-        public ConsoleLogger(string dateFormat, ESeverity filter)
-            : base(System.Console.Out, dateFormat, filter)
-        {
-        }
-
-        /// -----------------------------------------------------------------------------
+	    /// -----------------------------------------------------------------------------
         /// <summary>
         /// Fermeture du logger
         /// </summary>
