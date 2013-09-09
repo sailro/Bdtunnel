@@ -1,0 +1,617 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BdtServer</name>
+    </assembly>
+    <members>
+        <member name="T:Bdt.Server.Resources.Strings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.ACCESS_DENIED">
+            <summary>
+              Looks up a localized string similar to Access denied for {0}: inactive or nonexistent account.
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.ACCESS_DENIED_BAD_PASSWORD">
+            <summary>
+              Looks up a localized string similar to Access denied for {0}: bad password.
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.ACCESS_GRANTED">
+            <summary>
+              Looks up a localized string similar to Access granted to {0}.
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.ADMIN_REQUIRED">
+            <summary>
+              Looks up a localized string similar to Administrator privileges are required.
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.CID_NOT_FOUND">
+            <summary>
+              Looks up a localized string similar to Cid not found.
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.CONNECTED">
+            <summary>
+              Looks up a localized string similar to Connected to {0} ({1}).
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.CONNECTION_KILLED">
+            <summary>
+              Looks up a localized string similar to Connection {0} from {1} session was killed by {2}.
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.CONNECTION_REFUSED">
+            <summary>
+              Looks up a localized string similar to Connection refused to {0}:{1} {2}.
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.CONNECTION_TIMEOUT">
+            <summary>
+              Looks up a localized string similar to Connection timeout: {0}.
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.DEFAULT_CONNECTION_TIMEOUT">
+            <summary>
+              Looks up a localized string similar to Connection idle timeout is not set for {0}, using default: {1} hour(s).
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.DEFAULT_SESSION_TIMEOUT">
+            <summary>
+              Looks up a localized string similar to Session idle timeout is not set for {0}, using default: {1} hour(s).
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.DISCONNECTED">
+            <summary>
+              Looks up a localized string similar to Disconnected from {0}.
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.DISCONNECTION_DETECTED">
+            <summary>
+              Looks up a localized string similar to Disconnection detected.
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.SERVER_SIDE">
+            <summary>
+              Looks up a localized string similar to [server] .
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.SERVER_STARTED">
+            <summary>
+              Looks up a localized string similar to Server started, press enter key to exit....
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.SERVER_TITLE">
+            <summary>
+              Looks up a localized string similar to -=[ BoutDuTunnel Server v{0} - Sebastien LEBRETON ]=-.
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.SESSION_KILLED">
+            <summary>
+              Looks up a localized string similar to {0} session was killed by {1}.
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.SESSION_LOGOUT">
+            <summary>
+              Looks up a localized string similar to Session closed for {0}.
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.SESSION_TIMEOUT">
+            <summary>
+              Looks up a localized string similar to Session timeout: {0}.
+            </summary>
+        </member>
+        <member name="P:Bdt.Server.Resources.Strings.SID_NOT_FOUND">
+            <summary>
+              Looks up a localized string similar to Sid not found.
+            </summary>
+        </member>
+        <member name="T:Bdt.Server.Runtime.BdtServer">
+            -----------------------------------------------------------------------------
+            <summary>
+            Programme côté serveur du tunnel de communication
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Runtime.BdtServer.Main(System.String[])">
+            -----------------------------------------------------------------------------
+            <summary>
+            Point d'entrée du programme BdtClient
+            </summary>
+            <param name="args">les arguments de la ligne de commande</param>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Runtime.BdtServer.SetCulture(System.String)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Fixe la culture courante
+            </summary>
+            <param name="name">le nom de la culture</param>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Runtime.BdtServer.Run(System.String[])">
+            -----------------------------------------------------------------------------
+            <summary>
+            Traitement principal
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="T:Bdt.Server.Service.TimeoutObject">
+            -----------------------------------------------------------------------------
+            <summary>
+            Un objet soumis au timeout
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TimeoutObject.#ctor(System.Int32)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Constructeur
+            </summary>
+            <param name="timeoutdelay">valeur de timeout</param>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TimeoutObject.Timeout(Bdt.Shared.Logs.ILogger)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Timeout de l'objet
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TimeoutObject.CheckTimeout(Bdt.Shared.Logs.ILogger)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Vérification de timeout de l'objet
+            </summary>
+            <returns>true en cas de timeout</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TimeoutObject.CheckTimeout``1(Bdt.Shared.Logs.ILogger,System.Collections.Generic.Dictionary{System.Int32,``0})">
+            -----------------------------------------------------------------------------
+            <summary>
+            Vérification de timeout dans une collection
+            </summary>
+            <typeparam name="T">un type TimeoutObject</typeparam>
+            <param name="logger">un logger</param>
+            <param name="collection">les elements à vérifier</param>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TimeoutObject.TimeoutDelay">
+            -----------------------------------------------------------------------------
+            <summary>
+            Delai de Timeout
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TimeoutObject.LastAccess">
+            -----------------------------------------------------------------------------
+            <summary>
+            La date de dernière opération I/O
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="T:Bdt.Server.Service.TunnelSession">
+            -----------------------------------------------------------------------------
+            <summary>
+            Une session utilisateur au sein du tunnel
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TunnelSession.#ctor(System.Int32,System.Int32)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Constructeur
+            </summary>
+            <param name="timeoutdelay">valeur du timeout de session</param>
+            <param name="connectiontimeoutdelay">valeur du timeout de connexion</param>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TunnelSession.Timeout(Bdt.Shared.Logs.ILogger)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Timeout de l'objet
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TunnelSession.CheckTimeout(Bdt.Shared.Logs.ILogger)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Vérification de timeout de l'objet
+            </summary>
+            <returns>true en cas de timeout</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TunnelSession.CheckConnection``2(``0@,``1@)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Vérification de la connexion associée à une requête
+            </summary>
+            <param name="request">la requête</param>
+            <param name="response">la réponse à préparer</param>
+            <returns>La connexion si la connexion est valide</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TunnelSession.GetNewCid">
+            -----------------------------------------------------------------------------
+            <summary>
+            Generation d'un identifiant de connexion unique
+            </summary>
+            <returns>un entier unique</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TunnelSession.AddConnection(Bdt.Server.Service.TunnelConnection)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Ajoute une nouvelle connexion à la table des connexions
+            </summary>
+            <param name="connection">la connexion à ajouter</param>
+            <returns>le jeton de connexion</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TunnelSession.CreateConnection">
+            -----------------------------------------------------------------------------
+            <summary>
+            Création d'une nouvelle connexion
+            </summary>
+            <returns>la connexion</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TunnelSession.RemoveConnection(System.Int32)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Supprime une connexion de table des connexions
+            </summary>
+            <param name="cid">le jeton de connexion à supprimer</param>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TunnelSession.DisconnectAndRemoveAllConnections">
+            -----------------------------------------------------------------------------
+            <summary>
+            Deconnexion de toutes les connexions sous cette session
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TunnelSession.GetConnectionsStruct">
+            -----------------------------------------------------------------------------
+            <summary>
+            Retourne toutes les connexions sous forme "structure" pour l'export par ex
+            </summary>
+            <returns></returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TunnelSession.Connections">
+            -----------------------------------------------------------------------------
+            <summary>
+            Les connexions
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TunnelSession.Username">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le nom associé
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TunnelSession.Admin">
+            -----------------------------------------------------------------------------
+            <summary>
+            Utilisateur en mode admin
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TunnelSession.Logon">
+            -----------------------------------------------------------------------------
+            <summary>
+            La date de login
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="T:Bdt.Server.Service.Tunnel">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le tunnel, assure les services de l'interface ITunnel
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.#ctor">
+            -----------------------------------------------------------------------------
+            <summary>
+            Constructeur
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.GetNewId(System.Collections.IDictionary)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Generation d'id non encore présent dans une table de hash
+            </summary>
+            <param name="hash">la table à analyser</param>
+            <returns>un entier unique</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.GetNewSid">
+            -----------------------------------------------------------------------------
+            <summary>
+            Generation d'un identifiant session unique
+            </summary>
+            <returns>un entier unique</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.Finalize">
+            -----------------------------------------------------------------------------
+            <summary>
+            Destructeur
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.DisableChecking">
+            -----------------------------------------------------------------------------
+            <summary>
+            Annule la vérification
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.InitializeLifetimeService">
+            -----------------------------------------------------------------------------
+            <summary>
+            Fixe une durée de vie au tunnel
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.CheckerThread">
+            -----------------------------------------------------------------------------
+            <summary>
+            Traitement principal de thread de vérification des connexions et sessions
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.CheckSession``2(``0@,``1@)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Vérification de l'authentification d'un utilisateur associé à une requête
+            </summary>
+            <param name="request">la requête</param>
+            <param name="response">la réponse à préparer</param>
+            <returns>La session si l'utilisateur est authentifié</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.Login(Bdt.Shared.Request.LoginRequest)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Login d'un utilisateur
+            </summary>
+            <param name="request">la requête</param>
+            <returns>une réponse LoginResponse avec un sid</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.Logout(Bdt.Shared.Request.SessionContextRequest)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Logout d'un utilisateur
+            </summary>
+            <param name="request">la requête</param>
+            <returns>une réponse générique</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.Ping">
+            -----------------------------------------------------------------------------
+            <summary>
+            Ping du serveur
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.Version">
+            -----------------------------------------------------------------------------
+            <summary>
+            La version du serveur
+            </summary>
+            <returns>La version de l'assembly</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.Connect(Bdt.Shared.Request.ConnectRequest)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Etablissement d'une nouvelle connexion
+            </summary>
+            <param name="request">la requête</param>
+            <returns>le cid de connexion</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.Disconnect(Bdt.Shared.Request.ConnectionContextRequest)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Déconnexion
+            </summary>
+            <param name="request">la requête</param>
+            <returns>une reponse générique</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.Read(Bdt.Shared.Request.ConnectionContextRequest)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Lecture de données
+            </summary>
+            <param name="request">la requête</param>
+            <returns>les données lues dans response.Data</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.Write(Bdt.Shared.Request.WriteRequest)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Ecriture de données
+            </summary>
+            <param name="request">la requête</param>
+            <returns>une réponse générique</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.Monitor(Bdt.Shared.Request.SessionContextRequest)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Enumeration des session
+            </summary>
+            <param name="request">la requête</param>
+            <returns>les sessions dans response.Sessions</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.KillSession(Bdt.Shared.Request.KillSessionRequest)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Demande de suppression d'une session
+            </summary>
+            <param name="request">la requête</param>
+            <returns>une réponse générique</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.KillConnection(Bdt.Shared.Request.KillConnectionRequest)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Demande de suppression d'une connexion
+            </summary>
+            <param name="request">la requête</param>
+            <returns>une réponse générique</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.Log(System.Object,System.String,Bdt.Shared.Logs.ESeverity)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Ecriture d'une entrée de log. Ne sera pas prise en compte si le log est inactif
+            ou si le filtre l'impose
+            </summary>
+            <param name="sender">l'emetteur</param>
+            <param name="message">le message à logger</param>
+            <param name="severity">la sévérité</param>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.Log(System.String,Bdt.Shared.Logs.ESeverity)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Ecriture d'une entrée de log. Ne sera pas prise en compte si le log est inactif
+            ou si le filtre l'impose
+            </summary>
+            <param name="message">le message à logger</param>
+            <param name="severity">la sévérité</param>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.Tunnel.Close">
+            -----------------------------------------------------------------------------
+            <summary>
+            Fermeture du logger
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.Tunnel.Sessions">
+            -----------------------------------------------------------------------------
+            <summary>
+            Les sessions
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.Tunnel.Configuration">
+            -----------------------------------------------------------------------------
+            <summary>
+            La configuration serveur (d'après le fichier xml + ligne de commande)
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.Tunnel.Logger">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le loggeur
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="T:Bdt.Server.Service.TunnelConnection">
+            -----------------------------------------------------------------------------
+            <summary>
+            Une connexion au sein du tunnel
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TunnelConnection.#ctor(System.Int32)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Constructeur
+            </summary>
+            <param name="timeoutdelay">valeur du timeout</param>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TunnelConnection.Timeout(Bdt.Shared.Logs.ILogger)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Timeout de l'objet
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TunnelConnection.SafeDisconnect">
+            -----------------------------------------------------------------------------
+            <summary>
+            Fermeture de la connexion
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TunnelConnection.Address">
+            -----------------------------------------------------------------------------
+            <summary>
+            L'adresse distant
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TunnelConnection.Port">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le port distant
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TunnelConnection.Host">
+            -----------------------------------------------------------------------------
+            <summary>
+            L'hôte distant
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TunnelConnection.TcpClient">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le client TCP associé
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TunnelConnection.Stream">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le flux associé
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TunnelConnection.ReadCount">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le nombre d'octets lus
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TunnelConnection.WriteCount">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le nombre d'octets écrits
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+    </members>
+</doc>
