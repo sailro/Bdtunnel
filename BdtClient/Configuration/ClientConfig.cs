@@ -54,9 +54,11 @@ namespace Bdt.Client.Configuration
 	    private const string WordConfiguration = "configuration";
 	    private const string WordAuto = "auto";
 	    private const string WordDomain = "domain";
+		private const string WordExpect100 = "expect100";
 
         // Les constantes du fichier de configuration liées au proxy
 	    private const string CfgProxyEnabled = WordProxy + TagAttribute + WordEnabled;
+		private const string CfgProxyExpect100 = WordProxy + TagAttribute + WordExpect100;
 
         // Configuration du proxy
 		private const string CfgProxyConfigAuto = WordProxy + TagElement + WordConfiguration + TagAttribute + WordAuto;
@@ -76,6 +78,13 @@ namespace Bdt.Client.Configuration
         #endregion
 
 		#region " Proprietes "
+
+		/// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Expect 100-Continue behavior 
+		/// </summary>
+		/// -----------------------------------------------------------------------------
+		public bool Expect100Continue { get; set; }
 
 	    /// -----------------------------------------------------------------------------
 	    /// <summary>
@@ -193,6 +202,7 @@ namespace Bdt.Client.Configuration
             if (config != null)
             {
                 ProxyEnabled = config.ValueBool(CfgProxyEnabled, false);
+				Expect100Continue = config.ValueBool(CfgProxyExpect100, true);
                 ProxyAutoConfiguration = config.ValueBool(CfgProxyConfigAuto, false);
                 ProxyAddress = config.Value(CfgProxyAddress, string.Empty);
                 ProxyAutoAuthentication = config.ValueBool(CfgProxyAuthAuto, false);
@@ -277,7 +287,8 @@ namespace Bdt.Client.Configuration
             socks.Attributes.Append(CreateAttribute(doc, WordPort, SocksPort));
 
             proxy.Attributes.Append(CreateAttribute(doc, WordEnabled, ProxyEnabled));
-            proxy.AppendChild(proxyAuth);
+			proxy.Attributes.Append(CreateAttribute(doc, WordExpect100, Expect100Continue));
+			proxy.AppendChild(proxyAuth);
             proxy.AppendChild(proxyConfig);
 
             proxyAuth.Attributes.Append(CreateAttribute(doc, WordAuto, ProxyAutoAuthentication));

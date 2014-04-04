@@ -378,4 +378,7 @@
   <data name="MAINFORM_ADMIN_SERVER" xml:space="preserve">
     <value>Remote admin server...</value>
   </data>
+  <data name="SETUPFORM_EXPECT100" xml:space="preserve">
+    <value>Use 100-Continue behavior (restart needed)</value>
+  </data>
 </root>

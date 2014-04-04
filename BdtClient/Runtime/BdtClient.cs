@@ -162,6 +162,8 @@ namespace Bdt.Client.Runtime
         /// -----------------------------------------------------------------------------
         private void ConfigureProxy (GenericProtocol protocol)
         {
+	        ServicePointManager.Expect100Continue = ClientConfig.Expect100Continue;
+
 	        if (!((protocol) is IProxyCompatible)) 
 				return;
 	        

@@ -235,6 +235,13 @@
             <param name="filename">le nom du fichier destination</param>
             -----------------------------------------------------------------------------
         </member>
+        <member name="P:Bdt.Client.Configuration.ClientConfig.Expect100Continue">
+            -----------------------------------------------------------------------------
+            <summary>
+            Expect 100-Continue behavior 
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
         <member name="P:Bdt.Client.Configuration.ClientConfig.ProxyEnabled">
             -----------------------------------------------------------------------------
             <summary>

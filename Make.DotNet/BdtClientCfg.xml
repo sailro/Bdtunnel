@@ -53,6 +53,7 @@
     Bdt.Shared.Protocol.Http*Remoting protocols!
   
     enabled                   = true|false enable/disable
+    expect100                 = true|false use 100-Continue behavior
 
     authentification/auto     = true|false if true, using current user
                                 credentials.
@@ -68,7 +69,8 @@
     ***************************************************************************
   -->
   <proxy
-    enabled  = "true">
+    enabled    = "true"
+    expect100  = "true">
     <authentification
       auto     = "true"
       username = "set.my.username.if.auto.is.false"

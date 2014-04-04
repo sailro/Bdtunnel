@@ -154,7 +154,8 @@ namespace Bdt.GuiClient.Forms
 
             // Onglet Proxy
             ProxyEnabledEdit.Checked = _clientConfig.ProxyEnabled;
-            ProxyAuthenticationEdit.Checked = _clientConfig.ProxyAutoAuthentication;
+			Proxy100Continue.Checked = _clientConfig.Expect100Continue;
+			ProxyAuthenticationEdit.Checked = _clientConfig.ProxyAutoAuthentication;
             ProxyUserNameEdit.Text = _clientConfig.ProxyUserName;
             ProxyPasswordEdit.Text = _clientConfig.ProxyPassword;
             ProxyDomainEdit.Text = _clientConfig.ProxyDomain;
@@ -272,6 +273,7 @@ namespace Bdt.GuiClient.Forms
 
             // Onglet Proxy
             _clientConfig.ProxyEnabled = ProxyEnabledEdit.Checked;
+	        _clientConfig.Expect100Continue = Proxy100Continue.Checked;
             _clientConfig.ProxyAutoAuthentication = ProxyAuthenticationEdit.Checked;
             _clientConfig.ProxyUserName = ProxyUserNameEdit.Text;
             _clientConfig.ProxyPassword = ProxyPasswordEdit.Text;
