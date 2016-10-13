@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,133 +19,62 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
 using System.Net.Sockets;
-
 using Bdt.Server.Resources;
 using Bdt.Shared.Logs;
-#endregion
 
 namespace Bdt.Server.Service
 {
+	internal class TunnelConnection : TimeoutObject
+	{
+		public string Address { get; set; }
+		public int Port { get; set; }
+		public string Host { get; set; }
+		public TcpClient TcpClient { get; set; }
+		public NetworkStream Stream { get; set; }
+		public int ReadCount { get; set; }
+		public int WriteCount { get; set; }
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Une connexion au sein du tunnel
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    internal class TunnelConnection : TimeoutObject 
-    {
+		public TunnelConnection(int timeoutdelay) : base(timeoutdelay)
+		{
+		}
 
-		#region " Proprietes "
+		protected override void Timeout(ILogger logger)
+		{
+			logger.Log(this, String.Format(Strings.CONNECTION_TIMEOUT, TcpClient.Client.RemoteEndPoint), ESeverity.INFO);
+			SafeDisconnect();
+		}
 
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// L'adresse distant
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public string Address { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le port distant
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public int Port { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// L'hôte distant
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public string Host { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le client TCP associé
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public TcpClient TcpClient { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le flux associé
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public NetworkStream Stream { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le nombre d'octets lus
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public int ReadCount { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le nombre d'octets écrits
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public int WriteCount { get; set; }
-
-	    #endregion
-
-        #region " Methodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur
-        /// </summary>
-        /// <param name="timeoutdelay">valeur du timeout</param>
-        /// -----------------------------------------------------------------------------
-        public TunnelConnection(int timeoutdelay) : base(timeoutdelay)
-        {
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Timeout de l'objet
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected override void Timeout(ILogger logger)
-        {
-            logger.Log(this, String.Format(Strings.CONNECTION_TIMEOUT, TcpClient.Client.RemoteEndPoint), ESeverity.INFO);
-            SafeDisconnect();
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Fermeture de la connexion
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public void SafeDisconnect()
-        {
-            try
-            {
-                if (Stream != null)
-                {
-                    Stream.Flush();
-                    Stream.Close();
-                }
-            }
+		public void SafeDisconnect()
+		{
+			try
+			{
+				if (Stream != null)
+				{
+					Stream.Flush();
+					Stream.Close();
+				}
+			}
 // ReSharper disable EmptyGeneralCatchClause
-            catch (Exception) { }
+			catch (Exception)
+			{
+			}
 // ReSharper restore EmptyGeneralCatchClause
 
-            try
-            {
-	            if (TcpClient != null)
-		            TcpClient.Close();
-            }
+			try
+			{
+				if (TcpClient != null)
+					TcpClient.Close();
+			}
 // ReSharper disable EmptyGeneralCatchClause
-            catch (Exception) { }
+			catch (Exception)
+			{
+			}
 // ReSharper restore EmptyGeneralCatchClause
 
-            Stream = null;
-            TcpClient = null;
-        }
-        #endregion
-
-    }
-
+			Stream = null;
+			TcpClient = null;
+		}
+	}
 }
