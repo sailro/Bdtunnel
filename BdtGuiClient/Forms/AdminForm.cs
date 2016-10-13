@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,7 +19,6 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -28,226 +27,140 @@ using Bdt.GuiClient.Resources;
 using Bdt.Shared.Service;
 using Bdt.Shared.Request;
 using Bdt.Shared.Response;
-#endregion
 
 namespace Bdt.GuiClient.Forms
 {
+	public partial class AdminForm : Form
+	{
+		private readonly ITunnel _tunnel;
+		private readonly int _sid;
+		private readonly string _sidhex;
+		private Session _currentsession;
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Fenêtre de configuration du client
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public partial class AdminForm : Form
-    {
+		public AdminForm(ITunnel tunnel, int sid)
+		{
+			InitializeComponent();
+			_tunnel = tunnel;
+			_sid = sid;
+			_sidhex = _sid.ToString("x");
+		}
 
-        #region " Attributs "
-	    private readonly ITunnel _tunnel;
-	    private readonly int _sid;
-	    private readonly string _sidhex;
-	    private Session _currentsession;
-        #endregion
+		private void AdminForm_Load(object sender, EventArgs e)
+		{
+			RefreshSessions();
+		}
 
-        #region " Méthodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur
-        /// </summary>
-        /// <param name="tunnel">le tunnel</param>
-        /// <param name="sid">le jeton de session</param>
-        /// -----------------------------------------------------------------------------
-        public AdminForm (ITunnel tunnel, int sid)
-        {
-            InitializeComponent();
-            _tunnel = tunnel;
-            _sid = sid;
-            _sidhex = _sid.ToString("x");
-        }
+		private static void HandleResponse(IMinimalResponse response)
+		{
+			if (!response.Success)
+				MessageBox.Show(response.Message, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error);
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Chargement de la page
-        /// </summary>
-        /// <param name="sender">l'appelant</param>
-        /// <param name="e">les parametres</param>
-        /// -----------------------------------------------------------------------------
-        private void AdminForm_Load (object sender, EventArgs e)
-        {
-            RefreshSessions();
-        }
+		private void RefreshSessions()
+		{
+			try
+			{
+				BtRefresh.Enabled = BtClose.Enabled = false;
+				UseWaitCursor = true;
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Traite une réponse du serveur
-        /// </summary>
-        /// <param name="response">la réponse</param>
-        /// -----------------------------------------------------------------------------
-        private void HandleResponse(IMinimalResponse response)
-        {
-            if (!response.Success)
-                MessageBox.Show(response.Message, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+				Application.DoEvents();
+				var response = _tunnel.Monitor(new SessionContextRequest(_sid));
+				if (response.Success)
+				{
+					_currentsession = default(Session);
+					SessionsBindingSource.DataSource = response.Sessions;
+					SessionsBindingSource.ResetBindings(false);
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Actualise la liste des sessions et connexions
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        private void RefreshSessions()
-        {
-            try
-            {
-                BtRefresh.Enabled = BtClose.Enabled = false;
-                UseWaitCursor = true;
+					if (Sessions.SelectedRows.Count > 0)
+					{
+						_currentsession = (Session) Sessions.SelectedRows[0].DataBoundItem;
+						ConnectionsBindingSource.DataSource = _currentsession.Connections;
+					}
+					else
+						ConnectionsBindingSource.DataSource = null;
+				}
+				else
+					HandleResponse(response);
+			}
+			finally
+			{
+				BtRefresh.Enabled = BtClose.Enabled = true;
+				UseWaitCursor = false;
+			}
 
-                Application.DoEvents();
-                var response = _tunnel.Monitor(new SessionContextRequest(_sid));
-	            if (response.Success)
-	            {
-		            _currentsession = default(Session);
-		            SessionsBindingSource.DataSource = response.Sessions;
-		            SessionsBindingSource.ResetBindings(false);
+		}
 
-		            if (Sessions.SelectedRows.Count > 0)
-		            {
-			            _currentsession = (Session) Sessions.SelectedRows[0].DataBoundItem;
-			            ConnectionsBindingSource.DataSource = _currentsession.Connections;
-		            }
-		            else
-			            ConnectionsBindingSource.DataSource = null;
-	            }
-	            else
-		            HandleResponse(response);
-            }
-            finally
-            {
-                BtRefresh.Enabled = BtClose.Enabled = true;
-                UseWaitCursor = false;
-            }
-
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Clic sur un item de la liste des sessions
-        /// </summary>
-        /// <param name="sender">l'appelant</param>
-        /// <param name="e">les parametres</param>
-        /// -----------------------------------------------------------------------------
-        private void Sessions_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-	        if (e.RowIndex < 0 || e.RowIndex >= Sessions.Rows.Count) 
+		private void Sessions_CellClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.RowIndex < 0 || e.RowIndex >= Sessions.Rows.Count)
 				return;
-	        
-			_currentsession = (Session)Sessions.Rows[e.RowIndex].DataBoundItem;
-	        ConnectionsBindingSource.DataSource = _currentsession.Connections;
-        }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Termine une session
-        /// </summary>
-        /// <param name="sender">l'appelant</param>
-        /// <param name="e">les parametres</param>
-        /// -----------------------------------------------------------------------------
-        private void KillSessionItem_Click(object sender, EventArgs e)
-        {
-            foreach (DataGridViewRow row in Sessions.SelectedRows)
-            {
-                var session = (Session)row.DataBoundItem;
-                int targetsid;
+			_currentsession = (Session) Sessions.Rows[e.RowIndex].DataBoundItem;
+			ConnectionsBindingSource.DataSource = _currentsession.Connections;
+		}
 
-	            if (!int.TryParse(session.Sid, System.Globalization.NumberStyles.HexNumber, null, out targetsid)) 
+		private void KillSessionItem_Click(object sender, EventArgs e)
+		{
+			foreach (DataGridViewRow row in Sessions.SelectedRows)
+			{
+				var session = (Session) row.DataBoundItem;
+				int targetsid;
+
+				if (!int.TryParse(session.Sid, System.Globalization.NumberStyles.HexNumber, null, out targetsid))
 					continue;
 
-	            if (targetsid == _sid)
-		            MessageBox.Show(Strings.ADMINFORM_KILL_OWN_SESSION, string.Empty, MessageBoxButtons.OK,
-		                            MessageBoxIcon.Warning);
-	            else
-	            {
-		            IMinimalResponse response = _tunnel.KillSession(new KillSessionRequest(targetsid, _sid));
-		            if (!response.Success)
-			            HandleResponse(response);
-	            }
-            }
-            RefreshSessions();
-        }
+				if (targetsid == _sid)
+					MessageBox.Show(Strings.ADMINFORM_KILL_OWN_SESSION, string.Empty, MessageBoxButtons.OK,
+						MessageBoxIcon.Warning);
+				else
+				{
+					IMinimalResponse response = _tunnel.KillSession(new KillSessionRequest(targetsid, _sid));
+					if (!response.Success)
+						HandleResponse(response);
+				}
+			}
+			RefreshSessions();
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Termine une connexion
-        /// </summary>
-        /// <param name="sender">l'appelant</param>
-        /// <param name="e">les parametres</param>
-        /// -----------------------------------------------------------------------------
-        private void KillConnectionItem_Click(object sender, EventArgs e)
-        {
-            foreach (DataGridViewRow row in Connections.SelectedRows)
-            {
-                var connection = (Connection)row.DataBoundItem;
-                int targetsid;
-                int targetcid;
+		private void KillConnectionItem_Click(object sender, EventArgs e)
+		{
+			foreach (DataGridViewRow row in Connections.SelectedRows)
+			{
+				var connection = (Connection) row.DataBoundItem;
+				int targetsid;
+				int targetcid;
 
-                if (int.TryParse(_currentsession.Sid, System.Globalization.NumberStyles.HexNumber, null, out targetsid)
-                    && int.TryParse(connection.Cid, System.Globalization.NumberStyles.HexNumber, null, out targetcid))
-                {
-                    IMinimalResponse response = _tunnel.KillConnection(new KillConnectionRequest(targetsid, _sid, targetcid));
-	                if (!response.Success)
-		                HandleResponse(response);
-                }
-            }
-            RefreshSessions();
-        }
+				if (int.TryParse(_currentsession.Sid, System.Globalization.NumberStyles.HexNumber, null, out targetsid)
+				    && int.TryParse(connection.Cid, System.Globalization.NumberStyles.HexNumber, null, out targetcid))
+				{
+					IMinimalResponse response = _tunnel.KillConnection(new KillConnectionRequest(targetsid, _sid, targetcid));
+					if (!response.Success)
+						HandleResponse(response);
+				}
+			}
+			RefreshSessions();
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Actualise la liste des sessions et connexions
-        /// </summary>
-        /// <param name="sender">l'appelant</param>
-        /// <param name="e">les parametres</param>
-        /// -----------------------------------------------------------------------------
-        private void Refresh_Click(object sender, EventArgs e)
-        {
-            RefreshSessions();
-        }
+		private void Refresh_Click(object sender, EventArgs e)
+		{
+			RefreshSessions();
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Détermine si le popup doit s'ouvrir pour la liste des sessions
-        /// </summary>
-        /// <param name="sender">l'appelant</param>
-        /// <param name="e">les parametres</param>
-        /// -----------------------------------------------------------------------------
-        private void SessionsMenu_Opening(object sender, CancelEventArgs e)
-        {
-            e.Cancel = Sessions.SelectedRows.Count == 0;
-        }
+		private void SessionsMenu_Opening(object sender, CancelEventArgs e)
+		{
+			e.Cancel = Sessions.SelectedRows.Count == 0;
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Détermine si le popup doit s'ouvrir pour la liste des connexions
-        /// </summary>
-        /// <param name="sender">l'appelant</param>
-        /// <param name="e">les parametres</param>
-        /// -----------------------------------------------------------------------------
-        private void ConnectionsMenu_Opening(object sender, CancelEventArgs e)
-        {
-            e.Cancel = Connections.SelectedRows.Count == 0;
-        }
+		private void ConnectionsMenu_Opening(object sender, CancelEventArgs e)
+		{
+			e.Cancel = Connections.SelectedRows.Count == 0;
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Format des lignes de sessions (pour mettre en gras la session active)
-        /// </summary>
-        /// <param name="sender">l'appelant</param>
-        /// <param name="e">les parametres</param>
-        /// -----------------------------------------------------------------------------
-        private void Sessions_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            var session = (Session)Sessions.Rows[e.RowIndex].DataBoundItem;
-	        if (session.Sid == _sidhex)
-		        e.CellStyle.Font = new Font(e.CellStyle.Font, FontStyle.Bold);
-        }
-        #endregion
-    }
+		private void Sessions_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+		{
+			var session = (Session) Sessions.Rows[e.RowIndex].DataBoundItem;
+			if (session.Sid == _sidhex)
+				e.CellStyle.Font = new Font(e.CellStyle.Font, FontStyle.Bold);
+		}
+	}
 }

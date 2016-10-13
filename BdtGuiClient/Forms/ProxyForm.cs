@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,69 +19,34 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
 using System.Windows.Forms;
-
 using Bdt.Client.Configuration;
-#endregion
 
 namespace Bdt.GuiClient.Forms
 {
+	public partial class ProxyForm : Form
+	{
+		private readonly ClientConfig _clientConfig;
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Fenêtre d'authentification sur le proxy HTTP
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public partial class ProxyForm : Form
-    {
+		public ProxyForm(ClientConfig clientConfig)
+		{
+			InitializeComponent();
+			_clientConfig = clientConfig;
+		}
 
-        #region " Attributs "
-	    private readonly ClientConfig _clientConfig;
-        #endregion
+		private void ProxyForm_Load(object sender, EventArgs e)
+		{
+			UserNameEdit.Text = _clientConfig.ProxyUserName;
+			PasswordEdit.Text = _clientConfig.ProxyPassword;
+			DomainEdit.Text = _clientConfig.ProxyDomain;
+		}
 
-        #region " Methodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur
-        /// </summary>
-        /// <param name="clientConfig">la configuration du client</param>
-        /// -----------------------------------------------------------------------------
-        public ProxyForm (ClientConfig clientConfig)
-        {
-            InitializeComponent();
-            _clientConfig = clientConfig;
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Chargement de la page
-        /// </summary>
-        /// <param name="sender">l'appelant</param>
-        /// <param name="e">les parametres</param>
-        /// -----------------------------------------------------------------------------
-        private void ProxyForm_Load (object sender, EventArgs e)
-        {
-            UserNameEdit.Text = _clientConfig.ProxyUserName;
-            PasswordEdit.Text = _clientConfig.ProxyPassword;
-            DomainEdit.Text = _clientConfig.ProxyDomain;
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// On applique les nouvelles informations d'authentification
-        /// </summary>
-        /// <param name="sender">l'appelant</param>
-        /// <param name="e">les parametres</param>
-        /// -----------------------------------------------------------------------------
-        private void Apply_Click (object sender, EventArgs e)
-        {
-            _clientConfig.ProxyUserName = UserNameEdit.Text;
-            _clientConfig.ProxyPassword = PasswordEdit.Text;
-            _clientConfig.ProxyDomain = DomainEdit.Text;
-        }
-        #endregion
-
-    }
+		private void Apply_Click(object sender, EventArgs e)
+		{
+			_clientConfig.ProxyUserName = UserNameEdit.Text;
+			_clientConfig.ProxyPassword = PasswordEdit.Text;
+			_clientConfig.ProxyDomain = DomainEdit.Text;
+		}
+	}
 }
