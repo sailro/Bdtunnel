@@ -157,6 +157,20 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
+        <member name="P:Bdt.Server.Service.TimeoutObject.TimeoutDelay">
+            -----------------------------------------------------------------------------
+            <summary>
+            Delai de Timeout
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TimeoutObject.LastAccess">
+            -----------------------------------------------------------------------------
+            <summary>
+            La date de dernière opération I/O
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
         <member name="M:Bdt.Server.Service.TimeoutObject.#ctor(System.Int32)">
             -----------------------------------------------------------------------------
             <summary>
@@ -190,24 +204,38 @@
             <param name="collection">les elements à vérifier</param>
             -----------------------------------------------------------------------------
         </member>
-        <member name="P:Bdt.Server.Service.TimeoutObject.TimeoutDelay">
-            -----------------------------------------------------------------------------
-            <summary>
-            Delai de Timeout
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Server.Service.TimeoutObject.LastAccess">
-            -----------------------------------------------------------------------------
-            <summary>
-            La date de dernière opération I/O
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
         <member name="T:Bdt.Server.Service.TunnelSession">
             -----------------------------------------------------------------------------
             <summary>
             Une session utilisateur au sein du tunnel
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TunnelSession.Connections">
+            -----------------------------------------------------------------------------
+            <summary>
+            Les connexions
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TunnelSession.Username">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le nom associé
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TunnelSession.Admin">
+            -----------------------------------------------------------------------------
+            <summary>
+            Utilisateur en mode admin
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.TunnelSession.Logon">
+            -----------------------------------------------------------------------------
+            <summary>
+            La date de login
             </summary>
             -----------------------------------------------------------------------------
         </member>
@@ -293,38 +321,31 @@
             <returns></returns>
             -----------------------------------------------------------------------------
         </member>
-        <member name="P:Bdt.Server.Service.TunnelSession.Connections">
-            -----------------------------------------------------------------------------
-            <summary>
-            Les connexions
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Server.Service.TunnelSession.Username">
-            -----------------------------------------------------------------------------
-            <summary>
-            Le nom associé
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Server.Service.TunnelSession.Admin">
-            -----------------------------------------------------------------------------
-            <summary>
-            Utilisateur en mode admin
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Server.Service.TunnelSession.Logon">
-            -----------------------------------------------------------------------------
-            <summary>
-            La date de login
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
         <member name="T:Bdt.Server.Service.Tunnel">
             -----------------------------------------------------------------------------
             <summary>
             Le tunnel, assure les services de l'interface ITunnel
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.Tunnel.Sessions">
+            -----------------------------------------------------------------------------
+            <summary>
+            Les sessions
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.Tunnel.Configuration">
+            -----------------------------------------------------------------------------
+            <summary>
+            La configuration serveur (d'après le fichier xml + ligne de commande)
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Server.Service.Tunnel.Logger">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le loggeur
             </summary>
             -----------------------------------------------------------------------------
         </member>
@@ -514,53 +535,10 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="P:Bdt.Server.Service.Tunnel.Sessions">
-            -----------------------------------------------------------------------------
-            <summary>
-            Les sessions
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Server.Service.Tunnel.Configuration">
-            -----------------------------------------------------------------------------
-            <summary>
-            La configuration serveur (d'après le fichier xml + ligne de commande)
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Server.Service.Tunnel.Logger">
-            -----------------------------------------------------------------------------
-            <summary>
-            Le loggeur
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
         <member name="T:Bdt.Server.Service.TunnelConnection">
             -----------------------------------------------------------------------------
             <summary>
             Une connexion au sein du tunnel
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="M:Bdt.Server.Service.TunnelConnection.#ctor(System.Int32)">
-            -----------------------------------------------------------------------------
-            <summary>
-            Constructeur
-            </summary>
-            <param name="timeoutdelay">valeur du timeout</param>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="M:Bdt.Server.Service.TunnelConnection.Timeout(Bdt.Shared.Logs.ILogger)">
-            -----------------------------------------------------------------------------
-            <summary>
-            Timeout de l'objet
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="M:Bdt.Server.Service.TunnelConnection.SafeDisconnect">
-            -----------------------------------------------------------------------------
-            <summary>
-            Fermeture de la connexion
             </summary>
             -----------------------------------------------------------------------------
         </member>
@@ -610,6 +588,28 @@
             -----------------------------------------------------------------------------
             <summary>
             Le nombre d'octets écrits
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TunnelConnection.#ctor(System.Int32)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Constructeur
+            </summary>
+            <param name="timeoutdelay">valeur du timeout</param>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TunnelConnection.Timeout(Bdt.Shared.Logs.ILogger)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Timeout de l'objet
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Server.Service.TunnelConnection.SafeDisconnect">
+            -----------------------------------------------------------------------------
+            <summary>
+            Fermeture de la connexion
             </summary>
             -----------------------------------------------------------------------------
         </member>

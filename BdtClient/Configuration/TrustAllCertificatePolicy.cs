@@ -1,4 +1,4 @@
-﻿/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+﻿/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,29 +19,16 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
-#endregion
 
 namespace Bdt.Client.Configuration
 {
-
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Permet d'établir une relation de confiance systèmatique
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public class TrustAllCertificatePolicy : ICertificatePolicy
-    {
-
-        #region " Methodes "
-	    public bool CheckValidationResult(ServicePoint sp, X509Certificate cert, WebRequest req, int problem)
-        {
-            return true;
-        }
-        #endregion
-
-    }
-
+	public class TrustAllCertificatePolicy : ICertificatePolicy
+	{
+		public bool CheckValidationResult(ServicePoint sp, X509Certificate cert, WebRequest req, int problem)
+		{
+			return true;
+		}
+	}
 }

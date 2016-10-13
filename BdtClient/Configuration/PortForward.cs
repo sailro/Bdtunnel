@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,92 +19,34 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
 using Bdt.Shared.Configuration;
-#endregion
 
 namespace Bdt.Client.Configuration
 {
+	[Serializable]
+	public class PortForward
+	{
+		private const string CfgForwardTemplate = ClientConfig.WordForward + SharedConfig.TagElement + SharedConfig.WordPort + "{0}" + SharedConfig.TagAttribute;
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Configuration de port forwarding pour un port local donné
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    [Serializable]
-    public class PortForward 
-    {
+		public bool Enabled { get; private set; }
+		public bool Shared { get; private set; }
+		public int LocalPort { get; private set; }
+		public int RemotePort { get; private set; }
+		public string Address { get; private set; }
 
-        #region " Constantes "
-        // Les constantes du fichier de configuration liées aux forwards
-	    private const string CfgForwardTemplate = ClientConfig.WordForward + SharedConfig.TagElement + SharedConfig.WordPort + "{0}" + SharedConfig.TagAttribute;
-        #endregion
+		public PortForward(ConfigPackage config, int localPort)
+		{
+			LocalPort = localPort;
+			var prefix = string.Format(CfgForwardTemplate, localPort);
 
-        #region " Attributs "
-
-	    #endregion
-
-        #region " Proprietes "
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le forward est-il actif?
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public bool Enabled { get; private set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le forward est-il partagé? (bind sur toutes les ips)
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public bool Shared { get; private set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Port local
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public int LocalPort { get; private set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Port destination
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public int RemotePort { get; private set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Adresse destination (FQDN ou IP)
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public string Address { get; private set; }
-
-	    #endregion
-
-        #region " Methodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur
-        /// </summary>
-        /// <param name="config">la configuration</param>
-        /// <param name="localPort">le port local</param>
-        /// -----------------------------------------------------------------------------
-        public PortForward (ConfigPackage config, int localPort)
-        {
-            LocalPort = localPort;
-            var prefix = string.Format(CfgForwardTemplate, localPort);
-
-	        if (config == null)
+			if (config == null)
 				return;
-	        
+
 			Enabled = config.ValueBool(prefix + ClientConfig.WordEnabled, false);
-	        Shared = config.ValueBool(prefix + ClientConfig.WordShared, false);
-	        RemotePort = config.ValueInt(prefix + SharedConfig.WordPort, 0);
-	        Address = config.Value(prefix + SharedConfig.WordAddress, string.Empty);
-        }
-        #endregion
-    }
+			Shared = config.ValueBool(prefix + ClientConfig.WordShared, false);
+			RemotePort = config.ValueInt(prefix + SharedConfig.WordPort, 0);
+			Address = config.Value(prefix + SharedConfig.WordAddress, string.Empty);
+		}
+	}
 }

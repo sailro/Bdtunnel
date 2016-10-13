@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,139 +19,59 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
 using System.Net.Sockets;
-
 using Bdt.Shared.Logs;
 using Bdt.Client.Resources;
-#endregion
 
 namespace Bdt.Client.Socks
 {
+	public abstract class GenericSocksHandler : LoggedObject
+	{
+		protected const int BufferSize = 32768;
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Gestionnaire générique Socks
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public abstract class GenericSocksHandler : LoggedObject
-    {
+		protected abstract bool IsHandled { get; }
 
-        #region " Constantes "
-        // La taille du buffer d'IO
-	    protected const int BufferSize = 32768;
-        #endregion
+		protected abstract byte[] Reply { get; set; }
 
-        #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le handler est-il adapté à la requête?
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected abstract bool IsHandled
-        {
-            get;
-        }
+		protected int Version { get; set; }
+		protected int Command { get; set; }
+		public int RemotePort { get; protected set; }
+		public string Address { get; protected set; }
+		protected byte[] Buffer { get; private set; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Les données de réponse
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-		protected abstract byte[] Reply
+		protected GenericSocksHandler(byte[] buffer)
 		{
-			get; set;
+			Buffer = buffer;
 		}
 
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// La version de la requête socks
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    protected int Version { get; set; }
+		public static GenericSocksHandler GetInstance(TcpClient client)
+		{
+			var buffer = new byte[BufferSize];
 
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// La commande de la requête socks
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    protected int Command { get; set; }
+			var stream = client.GetStream();
+			var size = stream.Read(buffer, 0, BufferSize);
+			Array.Resize(ref buffer, size);
 
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le port distant
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public int RemotePort { get; protected set; }
+			if (size < 3)
+				throw new ArgumentException(Strings.INVALID_SOCKS_HANDSHAKE);
 
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// L'adresse distante
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public string Address { get; protected set; }
+			GenericSocksHandler result = new Socks4Handler(buffer);
+			if (!result.IsHandled)
+			{
+				result = new Socks4AHandler(buffer);
+				if (!result.IsHandled)
+				{
+					result = new Socks5Handler(client, buffer);
+					if (!result.IsHandled)
+						throw (new ArgumentException(Strings.NO_VALID_SOCKS_HANDLER));
+				}
+			}
 
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le buffer de la requête
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    protected byte[] Buffer { get; private set; }
+			var reply = result.Reply;
+			client.GetStream().Write(reply, 0, reply.Length);
 
-	    #endregion
-
-        #region " Méthodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur
-        /// </summary>
-        /// <param name="buffer"></param>
-        /// -----------------------------------------------------------------------------
-        protected GenericSocksHandler(byte[] buffer)
-        {
-            Buffer = buffer;
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Retourne un gestionnaire adapté à la requête
-        /// </summary>
-        /// <param name="client">le client TCP</param>
-        /// <returns>un gestionnaire adapté</returns>
-        /// -----------------------------------------------------------------------------
-        public static GenericSocksHandler GetInstance(TcpClient client)
-        {
-            var buffer = new byte[BufferSize];
-
-            var stream = client.GetStream();
-            var size = stream.Read(buffer, 0, BufferSize);
-            Array.Resize(ref buffer, size);
-
-            if (size < 3)
-                throw (new ArgumentException(Strings.INVALID_SOCKS_HANDSHAKE));
-
-	        GenericSocksHandler result = new Socks4Handler(buffer);
-            if (!result.IsHandled)
-            {
-                result = new Socks4AHandler(buffer);
-                if (!result.IsHandled)
-                {
-                    result = new Socks5Handler(client, buffer);
-                    if (!result.IsHandled)
-                        throw (new ArgumentException(Strings.NO_VALID_SOCKS_HANDLER));
-                }
-            }
-
-            var reply = result.Reply;
-            client.GetStream().Write(reply, 0, reply.Length);
-
-            return result;
-        }
-        #endregion
-
-    }
-
+			return result;
+		}
+	}
 }
-
-

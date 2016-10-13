@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,46 +19,21 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System.Net.Sockets;
-
 using Bdt.Shared.Logs;
 using Bdt.Shared.Service;
 using Bdt.Client.Resources;
-#endregion
 
 namespace Bdt.Client.Sockets
 {
-
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Serveur pour les forwards
-    /// </summary>
-    /// -----------------------------------------------------------------------------
     public class GatewayServer : TcpServer
     {
-
-        #region " Attributs "
 	    private readonly ITunnel _tunnel;
 	    private readonly string _address;
 	    private readonly int _remoteport;
 	    private readonly int _sid;
-        #endregion
 
-        #region " Methodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur
-        /// </summary>
-        /// <param name="localport">port local côté client</param>
-        /// <param name="shared">bind sur toutes les ip/ip locale</param>
-        /// <param name="remoteport">port distant côté serveur</param>
-        /// <param name="address">adresse côté serveur</param>
-        /// <param name="tunnel">tunnel de communication</param>
-        /// <param name="sid">session-id</param>
-        /// -----------------------------------------------------------------------------
-        public GatewayServer(int localport, bool shared, int remoteport, string address, ITunnel tunnel, int sid)
-            : base(localport, shared)
+        public GatewayServer(int localport, bool shared, int remoteport, string address, ITunnel tunnel, int sid) : base(localport, shared)
         {
             Log(string.Format(Strings.FORWARDING, Ip, localport, address, remoteport), ESeverity.INFO);
 
@@ -68,21 +43,11 @@ namespace Bdt.Client.Sockets
             _remoteport = remoteport;
         }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Callback en cas de nouvelle connexion
-        /// </summary>
-        /// <param name="client">le socket client</param>
-        /// -----------------------------------------------------------------------------
         protected override void OnNewConnection(TcpClient client)
         {
 // ReSharper disable ObjectCreationAsStatement
             new Gateway(client, _tunnel, _sid, _address, _remoteport);
 // ReSharper restore ObjectCreationAsStatement
         }
-        #endregion
-
     }
-
 }
-

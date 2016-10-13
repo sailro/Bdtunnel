@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,190 +19,140 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
 using System.Net.Sockets;
-
 using Bdt.Shared.Logs;
 using Bdt.Client.Resources;
-#endregion
 
 namespace Bdt.Client.Socks
 {
+	public class Socks5Handler : GenericSocksHandler
+	{
+		private const int Socks5NoAuthenticationRequired = 0;
+		private const int Socks5NoAcceptableMethods = 255;
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Gestionnaire Socks v5
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public class Socks5Handler : GenericSocksHandler
-    {
+		private const int Socks5ConnectCommand = 1;
+		private const int Socks5BindCommand = 2;
+		private const int Socks5UdpAssociateCommand = 3;
 
-        #region " Constantes "
-        // Méthodes d'authentication
-	    private const int Socks5NoAuthenticationRequired = 0;
-	    private const int Socks5NoAcceptableMethods = 255;
+		private const int Socks5Ipv4 = 1;
+		private const int Socks5Domain = 3;
+		private const int Socks5Ipv6 = 4;
 
-        // Commandes
-	    private const int Socks5ConnectCommand = 1;
-	    private const int Socks5BindCommand = 2;
-	    private const int Socks5UdpAssociateCommand = 3;
+		private const int Socks5Ok = 0;
+		private const int Socks5Ko = 1;
+		private const int Socks5ReplyVersion = 5;
 
-        // Types d'adresses
-	    private const int Socks5Ipv4 = 1;
-	    private const int Socks5Domain = 3;
-	    private const int Socks5Ipv6 = 4;
+		private const int ReplySize = 10;
 
-        // Responses
-	    private const int Socks5Ok = 0;
-	    private const int Socks5Ko = 1;
-	    private const int Socks5ReplyVersion = 5;
+		private readonly NetworkStream _stream;
 
-	    private const int ReplySize = 10; // octets de réponse
-        #endregion
+		protected override bool IsHandled
+		{
+			get
+			{
+				Reply[0] = Socks5ReplyVersion;
+				Reply[1] = Socks5Ko;
+				Reply[2] = 0;
+				Reply[3] = Socks5Ipv4;
+				Array.Clear(Reply, 4, 6);
 
-        #region " Attributs "
-	    private readonly NetworkStream _stream;
-        #endregion
+				if (Version != 5)
+					return false;
 
-        #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le handler est-il adapté à la requête?
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected override bool IsHandled
-        {
-            get
-            {
-                // Préparation pessimiste de la réponse
-                Reply[0] = Socks5ReplyVersion;
-                Reply[1] = Socks5Ko;
-                Reply[2] = 0;
-                Reply[3] = Socks5Ipv4;
-                Array.Clear(Reply, 4, 6);
+				int numMethods = Buffer[1];
+				var methodAccepted = false;
 
-                if (Version != 5)
-                    return false;
+				if ((numMethods <= 0) || (numMethods != Buffer.Length - 2))
+				{
+					Log(Strings.SOCKS5_MALFORMED_METHOD_ENUM, ESeverity.WARN);
+					return false;
+				}
 
-                int numMethods = Buffer[1];
-                var methodAccepted = false;
+				var handshake = new byte[2];
+				var i = 0;
+				while ((i < numMethods) && (!methodAccepted))
+				{
+					methodAccepted = (Buffer[i + 2] == Socks5NoAuthenticationRequired);
+					i += 1;
+				}
+				handshake[0] = 5; // version
 
-                if ((numMethods <= 0) || (numMethods != Buffer.Length - 2))
-                {
-                    Log(Strings.SOCKS5_MALFORMED_METHOD_ENUM, ESeverity.WARN);
-                    return false;
-                }
+				if (!methodAccepted)
+				{
+					Log(Strings.SOCKS5_NO_AUTHENTICATION_SUPPORTED, ESeverity.WARN);
+					handshake[1] = Socks5NoAcceptableMethods;
+					_stream.Write(handshake, 0, handshake.Length);
+					return false;
+				}
 
-                var handshake = new byte[2];
-                var i = 0;
-                while ((i < numMethods) && (!methodAccepted))
-                {
-                    methodAccepted = (Buffer[i + 2] == Socks5NoAuthenticationRequired);
-                    i += 1;
-                }
-                handshake[0] = 5; // version
+				handshake[1] = Socks5NoAuthenticationRequired;
+				_stream.Write(handshake, 0, handshake.Length);
 
-                if (!methodAccepted)
-                {
-                    // Ecriture du handshake
-                    Log(Strings.SOCKS5_NO_AUTHENTICATION_SUPPORTED, ESeverity.WARN);
-                    handshake[1] = Socks5NoAcceptableMethods;
-                    _stream.Write(handshake, 0, handshake.Length);
-                    return false;
-                }
+				var request = new byte[BufferSize];
+				_stream.Read(request, 0, request.Length);
 
-                // Ecriture du handshake
-                handshake[1] = Socks5NoAuthenticationRequired;
-                _stream.Write(handshake, 0, handshake.Length);
+				Version = request[0];
+				Command = request[1];
+				int addressType = request[3];
 
-                // Lecture de la requete de connexion
-                var request = new byte[BufferSize];
-                _stream.Read(request, 0, request.Length);
+				if (Version != 5)
+				{
+					Log(Strings.SOCKS5_BAD_VERSION, ESeverity.WARN);
+					return false;
+				}
 
-                Version = request[0];
-                Command = request[1];
-                int addressType = request[3];
+				switch (Command)
+				{
+					case Socks5ConnectCommand:
+						switch (addressType)
+						{
+							case Socks5Ipv4:
+								RemotePort = 256*Convert.ToInt32(request[8]) + Convert.ToInt32(request[9]);
+								Address = request[4] + "." + request[5] + "." + request[6] + "." + request[7];
+								Reply[1] = Socks5Ok;
+								Array.Copy(request, 4, Reply, 4, 6);
+								Log(Strings.SOCKS5_REQUEST_HANDLED, ESeverity.DEBUG);
+								return true;
+							case Socks5Domain:
+								int length = request[4];
+								Address = new string(System.Text.Encoding.ASCII.GetChars(request), 5, length);
+								RemotePort = 256*Convert.ToInt32(request[length + 5]) + Convert.ToInt32(request[length + 6]);
+								Reply[1] = Socks5Ok;
+								Array.Clear(Reply, 4, 6);
+								Log(Strings.SOCKS5_REQUEST_HANDLED, ESeverity.DEBUG);
+								return true;
+							case Socks5Ipv6:
+								Log(Strings.SOCKS5_IPV6_UNSUPPORTED, ESeverity.WARN);
+								break;
+							default:
+								Log(Strings.SOCKS5_ADDRESS_TYPE_UNKNOWN, ESeverity.WARN);
+								break;
+						}
+						break;
+					case Socks5BindCommand:
+						Log(Strings.SOCKS_BIND_UNSUPPORTED, ESeverity.WARN);
+						break;
+					case Socks5UdpAssociateCommand:
+						Log(Strings.SOCKS5_UDP_UNSUPPORTED, ESeverity.WARN);
+						break;
+					default:
+						Log(Strings.SOCKS5_UNKNOWN_COMMAND, ESeverity.WARN);
+						break;
+				}
 
-                if (Version != 5)
-                {
-                    Log(Strings.SOCKS5_BAD_VERSION, ESeverity.WARN);
-                    return false;
-                }
+				return false;
+			}
+		}
 
-                switch (Command)
-                {
-                    case Socks5ConnectCommand:
-                        switch (addressType)
-                        {
-                            case Socks5Ipv4:
-                                RemotePort = 256 * Convert.ToInt32(request[8]) + Convert.ToInt32(request[9]);
-                                Address = request[4] + "." + request[5] + "." + request[6] + "." + request[7];
-                                // Préparation de la réponse
-                                Reply[1] = Socks5Ok;
-                                Array.Copy(request, 4, Reply, 4, 6);
-                                Log(Strings.SOCKS5_REQUEST_HANDLED, ESeverity.DEBUG);
-                                return true;
-                            //break;
-                            case Socks5Domain:
-                                int length = request[4];
-                                Address = new string(System.Text.Encoding.ASCII.GetChars(request), 5, length);
-                                RemotePort = 256 * Convert.ToInt32(request[length + 5]) + Convert.ToInt32(request[length + 6]);
-                                // Préparation de la réponse
-                                Reply[1] = Socks5Ok;
-                                Array.Clear(Reply, 4, 6);
-                                Log(Strings.SOCKS5_REQUEST_HANDLED, ESeverity.DEBUG);
-                                return true;
-                            //break;
-                            case Socks5Ipv6:
-                                Log(Strings.SOCKS5_IPV6_UNSUPPORTED, ESeverity.WARN);
-                                break;
-                            default:
-                                Log(Strings.SOCKS5_ADDRESS_TYPE_UNKNOWN, ESeverity.WARN);
-                                break;
-                        }
-                        break;
-                    case Socks5BindCommand:
-                        Log(Strings.SOCKS_BIND_UNSUPPORTED, ESeverity.WARN);
-                        break;
-                    case Socks5UdpAssociateCommand:
-                        Log(Strings.SOCKS5_UDP_UNSUPPORTED, ESeverity.WARN);
-                        break;
-                    default:
-                        Log(Strings.SOCKS5_UNKNOWN_COMMAND, ESeverity.WARN);
-                        break;
-                }
+		protected sealed override byte[] Reply { get; set; }
 
-                return false;
-            }
-        }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Les données de réponse
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    protected override sealed byte[] Reply { get; set; }
-
-	    #endregion
-
-        #region " Methodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur
-        /// </summary>
-        /// <param name="client">Le client TCP</param>
-        /// <param name="buffer">Les données de la requête</param>
-        /// -----------------------------------------------------------------------------
-        public Socks5Handler(TcpClient client, byte[] buffer)
-            : base(buffer)
-        {
-	        Reply = new byte[ReplySize];
-	        Version = buffer[0];
-            Command = buffer[1];
-            _stream = client.GetStream();
-        }
-        #endregion
-
-    }
+		public Socks5Handler(TcpClient client, byte[] buffer) : base(buffer)
+		{
+			Reply = new byte[ReplySize];
+			Version = buffer[0];
+			Command = buffer[1];
+			_stream = client.GetStream();
+		}
+	}
 }

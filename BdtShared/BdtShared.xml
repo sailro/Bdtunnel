@@ -11,14 +11,6 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="M:Bdt.Shared.Configuration.SharedConfig.#ctor(Bdt.Shared.Configuration.ConfigPackage)">
-            -----------------------------------------------------------------------------
-            <summary>
-            Constructeur
-            </summary>
-            <param name="config">la configuration</param>
-            -----------------------------------------------------------------------------
-        </member>
         <member name="P:Bdt.Shared.Configuration.SharedConfig.ServiceUserName">
             -----------------------------------------------------------------------------
             <summary>
@@ -68,12 +60,28 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
+        <member name="M:Bdt.Shared.Configuration.SharedConfig.#ctor(Bdt.Shared.Configuration.ConfigPackage)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Constructeur
+            </summary>
+            <param name="config">la configuration</param>
+            -----------------------------------------------------------------------------
+        </member>
         <member name="T:Bdt.Shared.Configuration.BaseConfig">
             -----------------------------------------------------------------------------
             <summary>
             Représente une source de configuration générique. Permet de servir de base pour l'élaboration
             d'autres sources.
             </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Configuration.BaseConfig.Priority">
+            -----------------------------------------------------------------------------
+            <summary>
+            Retourne/Fixe la priorité de la source
+            </summary>
+            <returns>la priorité de la source</returns>
             -----------------------------------------------------------------------------
         </member>
         <member name="M:Bdt.Shared.Configuration.BaseConfig.Value(System.String,System.String)">
@@ -115,14 +123,6 @@
             </summary>
             <param name="obj">la config à comparer</param>
             <returns>voir IComparable.CompareTo</returns>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Configuration.BaseConfig.Priority">
-            -----------------------------------------------------------------------------
-            <summary>
-            Retourne/Fixe la priorité de la source
-            </summary>
-            <returns>la priorité de la source</returns>
             -----------------------------------------------------------------------------
         </member>
         <member name="T:Bdt.Shared.Configuration.ConfigPackage">
@@ -188,6 +188,14 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
+        <member name="P:Bdt.Shared.Configuration.StringConfig.Args">
+            -----------------------------------------------------------------------------
+            <summary>
+            Retourne/Fixe les arguments de la ligne de commande
+            </summary>
+            <returns>les arguments de la ligne de commande</returns>
+            -----------------------------------------------------------------------------
+        </member>
         <member name="M:Bdt.Shared.Configuration.StringConfig.#ctor(System.String[],System.Int32)">
             -----------------------------------------------------------------------------
             <summary>
@@ -204,19 +212,19 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="P:Bdt.Shared.Configuration.StringConfig.Args">
-            -----------------------------------------------------------------------------
-            <summary>
-            Retourne/Fixe les arguments de la ligne de commande
-            </summary>
-            <returns>les arguments de la ligne de commande</returns>
-            -----------------------------------------------------------------------------
-        </member>
         <member name="T:Bdt.Shared.Configuration.XMLConfig">
             -----------------------------------------------------------------------------
             <summary>
             Représente une source de configuration basée sur un fichier XML
             </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Configuration.XMLConfig.FileName">
+            -----------------------------------------------------------------------------
+            <summary>
+            Retourne/Fixe le nom du fichier XML associé à la source
+            </summary>
+            <returns>le nom du fichier XML associé à la source</returns>
             -----------------------------------------------------------------------------
         </member>
         <member name="M:Bdt.Shared.Configuration.XMLConfig.#ctor(System.String,System.Int32)">
@@ -244,14 +252,6 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="P:Bdt.Shared.Configuration.XMLConfig.FileName">
-            -----------------------------------------------------------------------------
-            <summary>
-            Retourne/Fixe le nom du fichier XML associé à la source
-            </summary>
-            <returns>le nom du fichier XML associé à la source</returns>
-            -----------------------------------------------------------------------------
-        </member>
         <member name="T:Bdt.Shared.Logs.BaseLogger">
             -----------------------------------------------------------------------------
             <summary>
@@ -259,29 +259,44 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="T:Bdt.Shared.Logs.ILogger">
+        <member name="T:Bdt.Shared.Logs.BaseLogger.ETags">
             -----------------------------------------------------------------------------
             <summary>
-            Interface minimale pour la génération d'un log
+            Ces tags permettent de construire une chaine de sortie personnalisée
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="M:Bdt.Shared.Logs.ILogger.Log(System.Object,System.String,Bdt.Shared.Logs.ESeverity)">
+        <member name="P:Bdt.Shared.Logs.BaseLogger.Enabled">
             -----------------------------------------------------------------------------
             <summary>
-            Ecriture d'une entrée de log. Ne sera pas prise en compte si le log est inactif
-            ou si le filtre l'impose
+            Fixe/retourne l'état d'activation du log
             </summary>
-            <param name="sender">l'emetteur</param>
-            <param name="message">le message à logger</param>
-            <param name="severity">la sévérité</param>
+            <returns>l'état d'activation du log</returns>
             -----------------------------------------------------------------------------
         </member>
-        <member name="M:Bdt.Shared.Logs.ILogger.Close">
+        <member name="P:Bdt.Shared.Logs.BaseLogger.StringFormat">
             -----------------------------------------------------------------------------
             <summary>
-            Fermeture du logger
+            Fixe/retourne la chaine personnalisée pour la sortie des logs.
+            Utiliser les constantes ETags entre accolades {}
             </summary>
+            <returns>la chaine personnalisée pour la sortie des logs</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Logs.BaseLogger.DateFormat">
+            -----------------------------------------------------------------------------
+            <summary>
+            Retourne/Fixe le format des dates de timestamp
+            </summary>
+            <returns>le format des dates de timestamp</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Logs.BaseLogger.Filter">
+            -----------------------------------------------------------------------------
+            <summary>
+            Retourne/fixe le niveau de filtrage pour la sortie des logs
+            </summary>
+            <returns>le niveau de filtrage pour la sortie des logs</returns>
             -----------------------------------------------------------------------------
         </member>
         <member name="M:Bdt.Shared.Logs.BaseLogger.#ctor">
@@ -336,46 +351,6 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="P:Bdt.Shared.Logs.BaseLogger.Enabled">
-            -----------------------------------------------------------------------------
-            <summary>
-            Fixe/retourne l'état d'activation du log
-            </summary>
-            <returns>l'état d'activation du log</returns>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Logs.BaseLogger.StringFormat">
-            -----------------------------------------------------------------------------
-            <summary>
-            Fixe/retourne la chaine personnalisée pour la sortie des logs.
-            Utiliser les constantes ETags entre accolades {}
-            </summary>
-            <returns>la chaine personnalisée pour la sortie des logs</returns>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Logs.BaseLogger.DateFormat">
-            -----------------------------------------------------------------------------
-            <summary>
-            Retourne/Fixe le format des dates de timestamp
-            </summary>
-            <returns>le format des dates de timestamp</returns>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Logs.BaseLogger.Filter">
-            -----------------------------------------------------------------------------
-            <summary>
-            Retourne/fixe le niveau de filtrage pour la sortie des logs
-            </summary>
-            <returns>le niveau de filtrage pour la sortie des logs</returns>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="T:Bdt.Shared.Logs.BaseLogger.ETags">
-            -----------------------------------------------------------------------------
-            <summary>
-            Ces tags permettent de construire une chaine de sortie personnalisée
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
         <member name="T:Bdt.Shared.Logs.ConsoleLogger">
             -----------------------------------------------------------------------------
             <summary>
@@ -413,22 +388,6 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="M:Bdt.Shared.Logs.FileLogger.#ctor">
-            -----------------------------------------------------------------------------
-            <summary>
-            Constructeur pour un log vierge
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="M:Bdt.Shared.Logs.FileLogger.#ctor(System.String,Bdt.Shared.Configuration.ConfigPackage)">
-            -----------------------------------------------------------------------------
-            <summary>
-            Constructeur pour un log à partir des données fournies dans une configuration
-            </summary>
-            <param name="prefix">le prefixe dans la configuration ex: application/log</param>
-            <param name="config">la configuration pour la lecture des parametres</param>
-            -----------------------------------------------------------------------------
-        </member>
         <member name="P:Bdt.Shared.Logs.FileLogger.Filename">
             -----------------------------------------------------------------------------
             <summary>
@@ -445,10 +404,51 @@
             <returns>l'état indiquant si les données doivent être ajoutées au fichier</returns>
             -----------------------------------------------------------------------------
         </member>
+        <member name="M:Bdt.Shared.Logs.FileLogger.#ctor">
+            -----------------------------------------------------------------------------
+            <summary>
+            Constructeur pour un log vierge
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Shared.Logs.FileLogger.#ctor(System.String,Bdt.Shared.Configuration.ConfigPackage)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Constructeur pour un log à partir des données fournies dans une configuration
+            </summary>
+            <param name="prefix">le prefixe dans la configuration ex: application/log</param>
+            <param name="config">la configuration pour la lecture des parametres</param>
+            -----------------------------------------------------------------------------
+        </member>
         <member name="T:Bdt.Shared.Logs.ESeverity">
             -----------------------------------------------------------------------------
             <summary>
             Severité d'une entrée de log, Filter permet de donner un niveau minimum
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="T:Bdt.Shared.Logs.ILogger">
+            -----------------------------------------------------------------------------
+            <summary>
+            Interface minimale pour la génération d'un log
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Shared.Logs.ILogger.Log(System.Object,System.String,Bdt.Shared.Logs.ESeverity)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Ecriture d'une entrée de log. Ne sera pas prise en compte si le log est inactif
+            ou si le filtre l'impose
+            </summary>
+            <param name="sender">l'emetteur</param>
+            <param name="message">le message à logger</param>
+            <param name="severity">la sévérité</param>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Shared.Logs.ILogger.Close">
+            -----------------------------------------------------------------------------
+            <summary>
+            Fermeture du logger
             </summary>
             -----------------------------------------------------------------------------
         </member>
@@ -457,6 +457,22 @@
             <summary>
             Classe de base pour un objet utilisant un flux de log
             </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Logs.LoggedObject.Logger">
+            -----------------------------------------------------------------------------
+            <summary>
+            Fixe/retourne le loggueur assocé à cet objet
+            </summary>
+            <returns>le loggueur assocé à cet objet</returns>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Logs.LoggedObject.GlobalLogger">
+            -----------------------------------------------------------------------------
+            <summary>
+            Fixe/retourne le loggueur assocé à tous les objets dérivés.
+            </summary>
+            <returns>le loggueur assocé à tous les objets dérivés</returns>
             -----------------------------------------------------------------------------
         </member>
         <member name="M:Bdt.Shared.Logs.LoggedObject.Log(System.String,Bdt.Shared.Logs.ESeverity)">
@@ -484,22 +500,6 @@
             <summary>
             Fermeture du logger
             </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Logs.LoggedObject.Logger">
-            -----------------------------------------------------------------------------
-            <summary>
-            Fixe/retourne le loggueur assocé à cet objet
-            </summary>
-            <returns>le loggueur assocé à cet objet</returns>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Logs.LoggedObject.GlobalLogger">
-            -----------------------------------------------------------------------------
-            <summary>
-            Fixe/retourne le loggueur assocé à tous les objets dérivés.
-            </summary>
-            <returns>le loggueur assocé à tous les objets dérivés</returns>
             -----------------------------------------------------------------------------
         </member>
         <member name="T:Bdt.Shared.Logs.MultiLogger">
@@ -543,11 +543,53 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="T:Bdt.Shared.Protocol.HttpSoapRemoting">
+        <member name="P:Bdt.Shared.Protocol.HttpSslSoapRemoting.IsSecured">
             -----------------------------------------------------------------------------
             <summary>
-            Protocole de communication basé sur le remoting .NET et sur le protocole HTTP
-            Utilise un formateur SOAP pour les données
+            Utiliser le cryptage SSL
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="T:Bdt.Shared.Protocol.HttpSslBinaryRemoting">
+            -----------------------------------------------------------------------------
+            <summary>
+            Protocole de communication basé sur le remoting .NET et sur le protocole HTTPs
+            Utilise un formateur binaire pour les données
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Protocol.HttpSslBinaryRemoting.IsSecured">
+            -----------------------------------------------------------------------------
+            <summary>
+            Utiliser le cryptage SSL
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="T:Bdt.Shared.Protocol.TcpRemoting">
+            -----------------------------------------------------------------------------
+            <summary>
+            Protocole de communication basé sur le remoting .NET et sur le protocole TCP
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Protocol.TcpRemoting.ClientChannel">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le canal de communication côté client
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Protocol.TcpRemoting.ServerChannel">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le canal de communication côté serveur
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Protocol.TcpRemoting.ServerURL">
+            -----------------------------------------------------------------------------
+            <summary>
+            L'URL nécessaire pour se connecter au serveur
             </summary>
             -----------------------------------------------------------------------------
         </member>
@@ -558,10 +600,24 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="T:Bdt.Shared.Protocol.GenericRemoting`1">
+        <member name="P:Bdt.Shared.Protocol.GenericHttpRemoting.ServerURL">
             -----------------------------------------------------------------------------
             <summary>
-            Protocole de communication basé sur le remoting .NET
+            L'URL nécessaire pour se connecter au serveur
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Protocol.GenericHttpRemoting.ProxyChannel">
+            -----------------------------------------------------------------------------
+            <summary>
+            Récuperation du channel pour fixer le proxy
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Protocol.GenericHttpRemoting.Proxy">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le proxy utilisé par le canal de communication côté client
             </summary>
             -----------------------------------------------------------------------------
         </member>
@@ -569,6 +625,27 @@
             -----------------------------------------------------------------------------
             <summary>
             Classe générique pour un protocole de communication
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Protocol.GenericProtocol.Name">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le nom du serveur
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Protocol.GenericProtocol.Port">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le port du serveur
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Protocol.GenericProtocol.Address">
+            -----------------------------------------------------------------------------
+            <summary>
+            L'adresse du serveur
             </summary>
             -----------------------------------------------------------------------------
         </member>
@@ -618,24 +695,38 @@
             <returns>une instance adaptée</returns>
             -----------------------------------------------------------------------------
         </member>
-        <member name="P:Bdt.Shared.Protocol.GenericProtocol.Name">
+        <member name="T:Bdt.Shared.Protocol.GenericRemoting`1">
             -----------------------------------------------------------------------------
             <summary>
-            Le nom du serveur
+            Protocole de communication basé sur le remoting .NET
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="P:Bdt.Shared.Protocol.GenericProtocol.Port">
+        <member name="P:Bdt.Shared.Protocol.GenericRemoting`1.ServerChannel">
             -----------------------------------------------------------------------------
             <summary>
-            Le port du serveur
+            Le canal de communication côté serveur
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="P:Bdt.Shared.Protocol.GenericProtocol.Address">
+        <member name="P:Bdt.Shared.Protocol.GenericRemoting`1.ClientChannel">
             -----------------------------------------------------------------------------
             <summary>
-            L'adresse du serveur
+            Le canal de communication côté client
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Protocol.GenericRemoting`1.ServerURL">
+            -----------------------------------------------------------------------------
+            <summary>
+            L'URL nécessaire pour se connecter au serveur
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Protocol.GenericRemoting`1.IsSecured">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le service est-il sécurisé
             </summary>
             -----------------------------------------------------------------------------
         </member>
@@ -676,99 +767,6 @@
             <returns>une instance de tunnel</returns>
             -----------------------------------------------------------------------------
         </member>
-        <member name="P:Bdt.Shared.Protocol.GenericRemoting`1.ServerChannel">
-            -----------------------------------------------------------------------------
-            <summary>
-            Le canal de communication côté serveur
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Protocol.GenericRemoting`1.ClientChannel">
-            -----------------------------------------------------------------------------
-            <summary>
-            Le canal de communication côté client
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Protocol.GenericRemoting`1.ServerURL">
-            -----------------------------------------------------------------------------
-            <summary>
-            L'URL nécessaire pour se connecter au serveur
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Protocol.GenericRemoting`1.IsSecured">
-            -----------------------------------------------------------------------------
-            <summary>
-            Le service est-il sécurisé
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="T:Bdt.Shared.Protocol.IProxyCompatible">
-            -----------------------------------------------------------------------------
-            <summary>
-            Interfance indiquant la compatibilité du protocole avec un proxy pour
-            le canal de communication côté client
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Protocol.IProxyCompatible.Proxy">
-            -----------------------------------------------------------------------------
-            <summary>
-            Le proxy utilisé par le canal de communication côté client
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Protocol.GenericHttpRemoting.ServerURL">
-            -----------------------------------------------------------------------------
-            <summary>
-            L'URL nécessaire pour se connecter au serveur
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Protocol.GenericHttpRemoting.ProxyChannel">
-            -----------------------------------------------------------------------------
-            <summary>
-            Récuperation du channel pour fixer le proxy
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Protocol.GenericHttpRemoting.Proxy">
-            -----------------------------------------------------------------------------
-            <summary>
-            Le proxy utilisé par le canal de communication côté client
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Protocol.HttpSoapRemoting.ClientChannel">
-            -----------------------------------------------------------------------------
-            <summary>
-            Le canal de communication côté client
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Protocol.HttpSoapRemoting.ServerChannel">
-            -----------------------------------------------------------------------------
-            <summary>
-            Le canal de communication côté serveur
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Protocol.HttpSslSoapRemoting.IsSecured">
-            -----------------------------------------------------------------------------
-            <summary>
-            Utiliser le cryptage SSL
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="T:Bdt.Shared.Protocol.HttpSslBinaryRemoting">
-            -----------------------------------------------------------------------------
-            <summary>
-            Protocole de communication basé sur le remoting .NET et sur le protocole HTTPs
-            Utilise un formateur binaire pour les données
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
         <member name="T:Bdt.Shared.Protocol.HttpBinaryRemoting">
             -----------------------------------------------------------------------------
             <summary>
@@ -791,38 +789,40 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="P:Bdt.Shared.Protocol.HttpSslBinaryRemoting.IsSecured">
+        <member name="T:Bdt.Shared.Protocol.HttpSoapRemoting">
             -----------------------------------------------------------------------------
             <summary>
-            Utiliser le cryptage SSL
+            Protocole de communication basé sur le remoting .NET et sur le protocole HTTP
+            Utilise un formateur SOAP pour les données
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="T:Bdt.Shared.Protocol.TcpRemoting">
-            -----------------------------------------------------------------------------
-            <summary>
-            Protocole de communication basé sur le remoting .NET et sur le protocole TCP
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Protocol.TcpRemoting.ClientChannel">
+        <member name="P:Bdt.Shared.Protocol.HttpSoapRemoting.ClientChannel">
             -----------------------------------------------------------------------------
             <summary>
             Le canal de communication côté client
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="P:Bdt.Shared.Protocol.TcpRemoting.ServerChannel">
+        <member name="P:Bdt.Shared.Protocol.HttpSoapRemoting.ServerChannel">
             -----------------------------------------------------------------------------
             <summary>
             Le canal de communication côté serveur
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="P:Bdt.Shared.Protocol.TcpRemoting.ServerURL">
+        <member name="T:Bdt.Shared.Protocol.IProxyCompatible">
             -----------------------------------------------------------------------------
             <summary>
-            L'URL nécessaire pour se connecter au serveur
+            Interfance indiquant la compatibilité du protocole avec un proxy pour
+            le canal de communication côté client
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Protocol.IProxyCompatible.Proxy">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le proxy utilisé par le canal de communication côté client
             </summary>
             -----------------------------------------------------------------------------
         </member>
@@ -862,44 +862,6 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="T:Bdt.Shared.Request.IConnectionContextRequest">
-            -----------------------------------------------------------------------------
-            <summary>
-            Une demande générique dans le cadre d'une connexion
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="T:Bdt.Shared.Request.ISessionContextRequest">
-            -----------------------------------------------------------------------------
-            <summary>
-            Une demande générique dans le cadre d'une session
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Request.ISessionContextRequest.Sid">
-            -----------------------------------------------------------------------------
-            <summary>
-            Le jeton de session
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Request.IConnectionContextRequest.Cid">
-            -----------------------------------------------------------------------------
-            <summary>
-            Le jeton de connexion
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="M:Bdt.Shared.Request.KillConnectionRequest.#ctor(System.Int32,System.Int32,System.Int32)">
-            -----------------------------------------------------------------------------
-            <summary>
-            Constructeur
-            </summary>
-            <param name="sid">Le jeton de session</param>
-            <param name="adminsid">Le jeton de session administrateur</param>
-            <param name="cid">Le jeton de connexion</param>
-            -----------------------------------------------------------------------------
-        </member>
         <member name="P:Bdt.Shared.Request.KillConnectionRequest.Cid">
             -----------------------------------------------------------------------------
             <summary>
@@ -921,20 +883,21 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="T:Bdt.Shared.Request.KillSessionRequest">
-            -----------------------------------------------------------------------------
-            <summary>
-            Une demande de suppression d'une session
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="M:Bdt.Shared.Request.KillSessionRequest.#ctor(System.Int32,System.Int32)">
+        <member name="M:Bdt.Shared.Request.KillConnectionRequest.#ctor(System.Int32,System.Int32,System.Int32)">
             -----------------------------------------------------------------------------
             <summary>
             Constructeur
             </summary>
             <param name="sid">Le jeton de session</param>
-            <param name="adminsid">Le jeton de session admin</param>
+            <param name="adminsid">Le jeton de session administrateur</param>
+            <param name="cid">Le jeton de connexion</param>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="T:Bdt.Shared.Request.KillSessionRequest">
+            -----------------------------------------------------------------------------
+            <summary>
+            Une demande de suppression d'une session
+            </summary>
             -----------------------------------------------------------------------------
         </member>
         <member name="P:Bdt.Shared.Request.KillSessionRequest.Sid">
@@ -951,10 +914,26 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
+        <member name="M:Bdt.Shared.Request.KillSessionRequest.#ctor(System.Int32,System.Int32)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Constructeur
+            </summary>
+            <param name="sid">Le jeton de session</param>
+            <param name="adminsid">Le jeton de session admin</param>
+            -----------------------------------------------------------------------------
+        </member>
         <member name="T:Bdt.Shared.Request.SessionContextRequest">
             -----------------------------------------------------------------------------
             <summary>
             Une demande générique dans le contexte d'une session
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Request.SessionContextRequest.Sid">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le jeton de session
             </summary>
             -----------------------------------------------------------------------------
         </member>
@@ -966,7 +945,14 @@
             <param name="sid">Le jeton de session</param>
             -----------------------------------------------------------------------------
         </member>
-        <member name="P:Bdt.Shared.Request.SessionContextRequest.Sid">
+        <member name="T:Bdt.Shared.Request.ISessionContextRequest">
+            -----------------------------------------------------------------------------
+            <summary>
+            Une demande générique dans le cadre d'une session
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Request.ISessionContextRequest.Sid">
             -----------------------------------------------------------------------------
             <summary>
             Le jeton de session
@@ -978,15 +964,6 @@
             <summary>
             Une demande de login
             </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="M:Bdt.Shared.Request.LoginRequest.#ctor(System.String,System.String)">
-            -----------------------------------------------------------------------------
-            <summary>
-            Constructeur
-            </summary>
-            <param name="username">Le nom de l'utilisateur</param>
-            <param name="password">Le mot de passe de l'utilisateur</param>
             -----------------------------------------------------------------------------
         </member>
         <member name="P:Bdt.Shared.Request.LoginRequest.Username">
@@ -1003,21 +980,20 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
+        <member name="M:Bdt.Shared.Request.LoginRequest.#ctor(System.String,System.String)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Constructeur
+            </summary>
+            <param name="username">Le nom de l'utilisateur</param>
+            <param name="password">Le mot de passe de l'utilisateur</param>
+            -----------------------------------------------------------------------------
+        </member>
         <member name="T:Bdt.Shared.Request.ConnectRequest">
             -----------------------------------------------------------------------------
             <summary>
             Une demande de connexion
             </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="M:Bdt.Shared.Request.ConnectRequest.#ctor(System.Int32,System.String,System.Int32)">
-            -----------------------------------------------------------------------------
-            <summary>
-            Constructeur
-            </summary>
-            <param name="sid">Le jeton de session</param>
-            <param name="address">L'adresse distante</param>
-            <param name="port">Le port distant</param>
             -----------------------------------------------------------------------------
         </member>
         <member name="P:Bdt.Shared.Request.ConnectRequest.Sid">
@@ -1041,20 +1017,21 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="T:Bdt.Shared.Request.ConnectionContextRequest">
-            -----------------------------------------------------------------------------
-            <summary>
-            Une demande générique dans le cadre d'une connexion
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="M:Bdt.Shared.Request.ConnectionContextRequest.#ctor(System.Int32,System.Int32)">
+        <member name="M:Bdt.Shared.Request.ConnectRequest.#ctor(System.Int32,System.String,System.Int32)">
             -----------------------------------------------------------------------------
             <summary>
             Constructeur
             </summary>
             <param name="sid">Le jeton de session</param>
-            <param name="cid">Le jeton de connexion</param>
+            <param name="address">L'adresse distante</param>
+            <param name="port">Le port distant</param>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="T:Bdt.Shared.Request.ConnectionContextRequest">
+            -----------------------------------------------------------------------------
+            <summary>
+            Une demande générique dans le cadre d'une connexion
+            </summary>
             -----------------------------------------------------------------------------
         </member>
         <member name="P:Bdt.Shared.Request.ConnectionContextRequest.Cid">
@@ -1071,21 +1048,34 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="T:Bdt.Shared.Request.WriteRequest">
-            -----------------------------------------------------------------------------
-            <summary>
-            Une demande d'écriture
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="M:Bdt.Shared.Request.WriteRequest.#ctor(System.Int32,System.Int32,System.Byte[])">
+        <member name="M:Bdt.Shared.Request.ConnectionContextRequest.#ctor(System.Int32,System.Int32)">
             -----------------------------------------------------------------------------
             <summary>
             Constructeur
             </summary>
             <param name="sid">Le jeton de session</param>
             <param name="cid">Le jeton de connexion</param>
-            <param name="data">Les données à écrire</param>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="T:Bdt.Shared.Request.IConnectionContextRequest">
+            -----------------------------------------------------------------------------
+            <summary>
+            Une demande générique dans le cadre d'une connexion
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Request.IConnectionContextRequest.Cid">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le jeton de connexion
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="T:Bdt.Shared.Request.WriteRequest">
+            -----------------------------------------------------------------------------
+            <summary>
+            Une demande d'écriture
+            </summary>
             -----------------------------------------------------------------------------
         </member>
         <member name="P:Bdt.Shared.Request.WriteRequest.Cid">
@@ -1107,6 +1097,16 @@
             <summary>
             Les données à écrire
             </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="M:Bdt.Shared.Request.WriteRequest.#ctor(System.Int32,System.Int32,System.Byte[])">
+            -----------------------------------------------------------------------------
+            <summary>
+            Constructeur
+            </summary>
+            <param name="sid">Le jeton de session</param>
+            <param name="cid">Le jeton de connexion</param>
+            <param name="data">Les données à écrire</param>
             -----------------------------------------------------------------------------
         </member>
         <member name="T:Bdt.Shared.Resources.Strings">
@@ -1167,27 +1167,6 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="T:Bdt.Shared.Response.IMinimalResponse">
-            -----------------------------------------------------------------------------
-            <summary>
-            Une réponse générique dans le cadre d'une session
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Response.IMinimalResponse.Success">
-            -----------------------------------------------------------------------------
-            <summary>
-            La requête a aboutie/échoué ?
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Response.IMinimalResponse.Message">
-            -----------------------------------------------------------------------------
-            <summary>
-            Le message d'information
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
         <member name="P:Bdt.Shared.Response.MonitorResponse.Sessions">
             -----------------------------------------------------------------------------
             <summary>
@@ -1216,15 +1195,6 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
-        <member name="M:Bdt.Shared.Response.MinimalResponse.#ctor(System.Boolean,System.String)">
-            -----------------------------------------------------------------------------
-            <summary>
-            Constructeur
-            </summary>
-            <param name="success">réussi/échoué</param>
-            <param name="message">Le message d'information</param>
-            -----------------------------------------------------------------------------
-        </member>
         <member name="P:Bdt.Shared.Response.MinimalResponse.Success">
             -----------------------------------------------------------------------------
             <summary>
@@ -1239,21 +1209,20 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
+        <member name="M:Bdt.Shared.Response.MinimalResponse.#ctor(System.Boolean,System.String)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Constructeur
+            </summary>
+            <param name="success">réussi/échoué</param>
+            <param name="message">Le message d'information</param>
+            -----------------------------------------------------------------------------
+        </member>
         <member name="T:Bdt.Shared.Response.LoginResponse">
             -----------------------------------------------------------------------------
             <summary>
             Une réponse générique de login
             </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="M:Bdt.Shared.Response.LoginResponse.#ctor(System.Boolean,System.String,System.Int32)">
-            -----------------------------------------------------------------------------
-            <summary>
-            Constructeur
-            </summary>
-            <param name="success">Login réussi/échoué</param>
-            <param name="message">Le message d'information</param>
-            <param name="sid">Le jeton de session affecté</param>
             -----------------------------------------------------------------------------
         </member>
         <member name="P:Bdt.Shared.Response.LoginResponse.Success">
@@ -1277,31 +1246,20 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
+        <member name="M:Bdt.Shared.Response.LoginResponse.#ctor(System.Boolean,System.String,System.Int32)">
+            -----------------------------------------------------------------------------
+            <summary>
+            Constructeur
+            </summary>
+            <param name="success">Login réussi/échoué</param>
+            <param name="message">Le message d'information</param>
+            <param name="sid">Le jeton de session affecté</param>
+            -----------------------------------------------------------------------------
+        </member>
         <member name="T:Bdt.Shared.Response.ConnectResponse">
             -----------------------------------------------------------------------------
             <summary>
             Une réponse de connexion
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="T:Bdt.Shared.Response.IConnectionContextResponse">
-            -----------------------------------------------------------------------------
-            <summary>
-            Une réponse générique dans le cadre d'une connexion
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Response.IConnectionContextResponse.DataAvailable">
-            -----------------------------------------------------------------------------
-            <summary>
-            Des données sont-elles disponibles?
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Response.IConnectionContextResponse.Connected">
-            -----------------------------------------------------------------------------
-            <summary>
-            La connexion est-elle effective?
             </summary>
             -----------------------------------------------------------------------------
         </member>
@@ -1340,6 +1298,27 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
+        <member name="T:Bdt.Shared.Response.IMinimalResponse">
+            -----------------------------------------------------------------------------
+            <summary>
+            Une réponse générique dans le cadre d'une session
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Response.IMinimalResponse.Success">
+            -----------------------------------------------------------------------------
+            <summary>
+            La requête a aboutie/échoué ?
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Response.IMinimalResponse.Message">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le message d'information
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
         <member name="T:Bdt.Shared.Response.ConnectionContextResponse">
             -----------------------------------------------------------------------------
             <summary>
@@ -1372,6 +1351,27 @@
             -----------------------------------------------------------------------------
             <summary>
             Le message d'information
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="T:Bdt.Shared.Response.IConnectionContextResponse">
+            -----------------------------------------------------------------------------
+            <summary>
+            Une réponse générique dans le cadre d'une connexion
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Response.IConnectionContextResponse.DataAvailable">
+            -----------------------------------------------------------------------------
+            <summary>
+            Des données sont-elles disponibles?
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Response.IConnectionContextResponse.Connected">
+            -----------------------------------------------------------------------------
+            <summary>
+            La connexion est-elle effective?
             </summary>
             -----------------------------------------------------------------------------
         </member>
@@ -1529,6 +1529,27 @@
             </summary>
             -----------------------------------------------------------------------------
         </member>
+        <member name="P:Bdt.Shared.Runtime.Program.Protocol">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le protocole de communication
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Runtime.Program.Configuration">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le protocole de communication
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
+        <member name="P:Bdt.Shared.Runtime.Program.ConfigFile">
+            -----------------------------------------------------------------------------
+            <summary>
+            Le fichier de configuration
+            </summary>
+            -----------------------------------------------------------------------------
+        </member>
         <member name="M:Bdt.Shared.Runtime.Program.LoadConfiguration">
             -----------------------------------------------------------------------------
             <summary>
@@ -1581,27 +1602,6 @@
             </summary>
             <param name="bytes">Le tableau à encoder/décoder (xor réversible)</param>
             <param name="key">La clef de codage</param>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Runtime.Program.Protocol">
-            -----------------------------------------------------------------------------
-            <summary>
-            Le protocole de communication
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Runtime.Program.Configuration">
-            -----------------------------------------------------------------------------
-            <summary>
-            Le protocole de communication
-            </summary>
-            -----------------------------------------------------------------------------
-        </member>
-        <member name="P:Bdt.Shared.Runtime.Program.ConfigFile">
-            -----------------------------------------------------------------------------
-            <summary>
-            Le fichier de configuration
-            </summary>
             -----------------------------------------------------------------------------
         </member>
         <member name="T:Bdt.Shared.Service.ITunnel">

@@ -223,10 +223,10 @@
     <value>Display help</value>
   </data>
   <data name="KILL_CONNECTION_HELP" xml:space="preserve">
-    <value>Kill an existing connection, given his sid and cid</value>
+    <value>Kill an existing connection, given its sid and cid</value>
   </data>
   <data name="KILL_SESSION_HELP" xml:space="preserve">
-    <value>Kill an existing session, given his sid</value>
+    <value>Kill an existing session, given its sid</value>
   </data>
   <data name="MONITOR_HELP" xml:space="preserve">
     <value>Display all sessions and connections</value>
