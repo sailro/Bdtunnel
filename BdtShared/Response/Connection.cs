@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,75 +19,19 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
-#endregion
 
 namespace Bdt.Shared.Response
 {
-
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Une connexion au sein du tunnel
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    [Serializable]
-    public struct Connection 
-    {
-
-        #region " Proprietes "
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le nombre d'octets lus
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public int ReadCount { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le nombre d'octets écrits
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public int WriteCount { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// L'adresse distante
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public string Address { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le hôte distant
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public string Host { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le port distant
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public int Port { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// La date de dernier accès
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public DateTime LastAccess { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le jeton de connexion
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public string Cid { get; set; }
-
-	    #endregion
-
-    }
-
+	[Serializable]
+	public struct Connection
+	{
+		public int ReadCount { get; set; }
+		public int WriteCount { get; set; }
+		public string Address { get; set; }
+		public string Host { get; set; }
+		public int Port { get; set; }
+		public DateTime LastAccess { get; set; }
+		public string Cid { get; set; }
+	}
 }

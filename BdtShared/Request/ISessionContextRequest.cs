@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -21,29 +21,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 namespace Bdt.Shared.Request
 {
-
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Une demande générique dans le cadre d'une session
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public interface ISessionContextRequest
-    {
-
-        #region " Attributs "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le jeton de session
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        int Sid
-        {
-            get;
-        }
-        #endregion
-
-    }
-
+	public interface ISessionContextRequest
+	{
+		int Sid { get; }
+	}
 }
-
-

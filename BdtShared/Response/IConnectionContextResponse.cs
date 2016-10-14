@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -21,41 +21,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 namespace Bdt.Shared.Response
 {
-
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Une réponse générique dans le cadre d'une connexion
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public interface IConnectionContextResponse : IMinimalResponse 
-    {
-
-        #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Des données sont-elles disponibles?
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        bool DataAvailable
-        {
-            get;
-            set;
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// La connexion est-elle effective?
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        bool Connected
-        {
-            get;
-            set;
-        }
-        #endregion
-
-    }
-
+	public interface IConnectionContextResponse : IMinimalResponse
+	{
+		bool DataAvailable { get; set; }
+		bool Connected { get; set; }
+	}
 }
-
-

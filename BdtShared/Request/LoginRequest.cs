@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,56 +19,20 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
-#endregion
 
 namespace Bdt.Shared.Request
 {
+	[Serializable]
+	public struct LoginRequest
+	{
+		public string Username { get; private set; }
+		public string Password { get; private set; }
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Une demande de login
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    [Serializable]
-    public struct LoginRequest 
-    {
-
-        #region " Proprietes "
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le nom de l'utilisateur
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public string Username { get; private set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le mot de passe de l'utilisateur
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public string Password { get; private set; }
-
-	    #endregion
-
-        #region " Methodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur
-        /// </summary>
-        /// <param name="username">Le nom de l'utilisateur</param>
-        /// <param name="password">Le mot de passe de l'utilisateur</param>
-        /// -----------------------------------------------------------------------------
-        public LoginRequest(string username, string password) : this()
-        {
-            Username = username;
-            Password = password;
-        }
-        #endregion
-
-    }
-
+		public LoginRequest(string username, string password) : this()
+		{
+			Username = username;
+			Password = password;
+		}
+	}
 }
-

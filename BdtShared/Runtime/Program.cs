@@ -19,210 +19,106 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
 using System.Globalization;
 using Bdt.Shared.Resources;
 using Bdt.Shared.Logs;
 using Bdt.Shared.Configuration;
 using Bdt.Shared.Protocol;
-#endregion
 
 namespace Bdt.Shared.Runtime
 {
+	public abstract class Program : LoggedObject
+	{
+		private const string CfgLog = SharedConfig.WordLogs + SharedConfig.TagElement;
+		protected const string CfgConsole = CfgLog + SharedConfig.WordConsole;
+		protected const string CfgFile = CfgLog + SharedConfig.WordFile;
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Une ébauche de programme
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public abstract class Program : LoggedObject
-    {
+		protected BaseLogger ConsoleLogger;
+		protected FileLogger FileLogger;
+		protected string[] Args;
 
-        #region " Constantes "
-	    private const string CfgLog = SharedConfig.WordLogs + SharedConfig.TagElement;
-        protected const string CfgConsole = CfgLog + SharedConfig.WordConsole;
-        protected const string CfgFile = CfgLog + SharedConfig.WordFile;
-        #endregion
+		public GenericProtocol Protocol { get; protected set; }
+		public ConfigPackage Configuration { get; protected set; }
 
-        #region " Attributs "
+		public virtual string ConfigFile
+		{
+			get { return string.Format("{0}Cfg.xml", GetType().Assembly.GetName().Name); }
+		}
 
-	    protected BaseLogger ConsoleLogger;
-        protected FileLogger FileLogger;
-        protected string[] Args;
-        #endregion
+		public void LoadConfiguration()
+		{
+			LoadConfiguration(Args);
+		}
 
-        #region " Proprietes "
+		protected virtual BaseLogger CreateLoggers()
+		{
+			var ldcConfig = new StringConfig(Args, 0);
+			var xmlConfig = new XmlConfig(ConfigFile, 1);
+			Configuration = new ConfigPackage();
+			Configuration.AddSource(ldcConfig);
+			Configuration.AddSource(xmlConfig);
 
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le protocole de communication
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public GenericProtocol Protocol { get; protected set; }
+			var log = new MultiLogger();
+			ConsoleLogger = new ConsoleLogger(CfgConsole, Configuration);
+			FileLogger = new FileLogger(CfgFile, Configuration);
+			log.AddLogger(ConsoleLogger);
+			log.AddLogger(FileLogger);
 
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le protocole de communication
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public ConfigPackage Configuration { get; protected set; }
+			return log;
+		}
 
-	    /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le fichier de configuration
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public virtual string ConfigFile
-        {
-            get
-            {
-                return string.Format("{0}Cfg.xml", this.GetType().Assembly.GetName().Name);
-            }
-        }
-        #endregion
+		public virtual void LoadConfiguration(string[] args)
+		{
+			Args = args;
 
-        #region " Méthodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Chargement des données de configuration
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public void LoadConfiguration()
-        {
-            LoadConfiguration(Args);
-        }
+			GlobalLogger = CreateLoggers();
+			Log(Strings.LOADING_CONFIGURATION, ESeverity.DEBUG);
+			var cfg = new SharedConfig(Configuration);
+			Protocol = GenericProtocol.GetInstance(cfg);
+			SetCulture(cfg.ServiceCulture);
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Initialisation des loggers
-        /// </summary>
-        /// <returns>un MultiLogger lié à une source fichier et console</returns>
-        /// -----------------------------------------------------------------------------
-        protected virtual BaseLogger CreateLoggers ()
-        {
-            var ldcConfig = new StringConfig(Args, 0);
-            var xmlConfig = new XMLConfig(ConfigFile, 1);
-            Configuration = new ConfigPackage();
-            Configuration.AddSource(ldcConfig);
-            Configuration.AddSource(xmlConfig);
+		protected virtual void SetCulture(string name)
+		{
+			if (!string.IsNullOrEmpty(name))
+				Strings.Culture = new CultureInfo(name);
+		}
 
-            var log = new MultiLogger();
-            ConsoleLogger = new ConsoleLogger(CfgConsole, Configuration);
-            FileLogger = new FileLogger(CfgFile, Configuration);
-            log.AddLogger(ConsoleLogger);
-            log.AddLogger(FileLogger);
+		public virtual void UnLoadConfiguration()
+		{
+			Log(Strings.UNLOADING_CONFIGURATION, ESeverity.DEBUG);
 
-            return log;
-        }
+			if (ConsoleLogger != null)
+			{
+				ConsoleLogger.Close();
+				ConsoleLogger = null;
+			}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Chargement des données de configuration
-        /// </summary>
-        /// <param name="args">Arguments de la ligne de commande</param>
-        /// -----------------------------------------------------------------------------
-        public virtual void LoadConfiguration(string[] args)
-        {
-            Args = args;
+			if (FileLogger != null)
+			{
+				FileLogger.Close();
+				FileLogger = null;
+			}
 
-            GlobalLogger = CreateLoggers();
-            Log(Strings.LOADING_CONFIGURATION, ESeverity.DEBUG);
-            var cfg = new SharedConfig(Configuration);
-            Protocol = GenericProtocol.GetInstance(cfg);
-            SetCulture(cfg.ServiceCulture);
-        }
+			GlobalLogger = null;
+			Configuration = null;
+			Protocol = null;
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Fixe la culture courante
-        /// </summary>
-        /// <param name="name">le nom de la culture</param>
-        /// -----------------------------------------------------------------------------
-        protected virtual void SetCulture(String name)
-        {
-	        if (!string.IsNullOrEmpty(name))
-		        Strings.Culture = new CultureInfo(name);
-        }
+		public static string FrameworkVersion()
+		{
+			var plateform = Type.GetType("Mono.Runtime", false) == null ? ".NET" : "Mono";
+			return string.Format(Strings.POWERED_BY, plateform, Environment.Version);
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Déchargement des données de configuration
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public virtual void UnLoadConfiguration()
-        {
-            Log(Strings.UNLOADING_CONFIGURATION, ESeverity.DEBUG);
+		public static void StaticXorEncoder(ref byte[] bytes, int key)
+		{
+			if (bytes == null)
+				return;
 
-            if (ConsoleLogger != null)
-            {
-                ConsoleLogger.Close();
-                ConsoleLogger = null;
-            }
-
-            if (FileLogger != null)
-            {
-                FileLogger.Close();
-                FileLogger = null;
-            }
-
-            GlobalLogger = null;
-            Configuration = null;
-            Protocol = null;
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Affiche le nom et la version du framework utilisé
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public static string FrameworkVersion()
-        {
-            var plateform = (Type.GetType("Mono.Runtime", false) == null) ? ".NET" : "Mono";
-            return string.Format(Strings.POWERED_BY, plateform, Environment.Version);
-        }
-
-        /*
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Encodeur simple par Xor pour un tableau d'octets
-        /// </summary>
-        /// <param name="bytes">Le tableau à encoder/décoder (xor réversible)</param>
-        /// <param name="seed">La racine d'initialisation du générateur aléatoire</param>
-        /// -----------------------------------------------------------------------------
-        public static void RandomXorEncoder (ref byte[] bytes, int seed)
-        {
-            Random rnd = new Random(seed);
-            if (bytes!=null)
-            {
-                for (int i = 0; i <= bytes.Length - 1; i++)
-                {
-                    bytes[i] = (byte) (bytes[i] ^ Convert.ToByte(Math.Abs(rnd.Next() % 256)));
-                }
-            }
-        }
-        */
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Encodeur simple par Xor pour un tableau d'octets
-        /// </summary>
-        /// <param name="bytes">Le tableau à encoder/décoder (xor réversible)</param>
-        /// <param name="key">La clef de codage</param>
-        /// -----------------------------------------------------------------------------
-        public static void StaticXorEncoder(ref byte[] bytes, int key)
-        {
-            if (bytes != null)
-            {
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    bytes[i] = (byte)(bytes[i] ^ Convert.ToByte(key % 256));
-                }
-            }
-        }
-        #endregion
-
-    }
-
+			for (var i = 0; i < bytes.Length; i++)
+				bytes[i] = (byte) (bytes[i] ^ Convert.ToByte(key%256));
+		}
+	}
 }
-

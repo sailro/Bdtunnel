@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,53 +19,15 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
-#endregion
 
 namespace Bdt.Shared.Response
 {
-
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Une réponse générique dans le contexte d'une session
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    [Serializable]
-    public struct MonitorResponse : IMinimalResponse 
-    {
-
-        #region " Proprietes "
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Les sessions
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public Session[] Sessions { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// La requête a aboutie/échoué ?
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public bool Success { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le message d'information
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public string Message { get; set; }
-
-	    #endregion
-
-        #region " Methodes "
-
-	    #endregion
-
-    }
-
+	[Serializable]
+	public struct MonitorResponse : IMinimalResponse
+	{
+		public Session[] Sessions { get; set; }
+		public bool Success { get; set; }
+		public string Message { get; set; }
+	}
 }
-
-

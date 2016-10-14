@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,74 +19,29 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System.Runtime.Remoting.Channels.Ipc;
-#endregion
 
 namespace Bdt.Shared.Protocol
 {
+	public class IpcRemoting : GenericRemoting<IpcChannel>
+	{
+		protected override IpcChannel ClientChannel
+		{
+			get { return ClientChannelField ?? (ClientChannelField = new IpcChannel(CreateClientChannelProperties(), null, null)); }
+		}
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Protocole de communication basé sur le remoting .NET et sur le protocole IPC
-    /// Exclusivement pour une communication sur la même machine (client/serveur)
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public class IpcRemoting : GenericRemoting<IpcChannel>
-    {
+		protected override IpcChannel ServerChannel
+		{
+			get { return ServerChannelField ?? (ServerChannelField = new IpcChannel(CreateServerChannelProperties(), null, null)); }
+		}
 
-        #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le canal de communication côté client
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected override IpcChannel ClientChannel
-        {
-            get
-            {
-                if (ClientChannelField == null)
-                {
-                    ClientChannelField = new IpcChannel(CreateClientChannelProperties(), null, null);
-                }
-                return ClientChannelField;
-            }
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le canal de communication côté serveur
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected override IpcChannel ServerChannel
-        {
-            get
-            {
-                if (ServerChannelField == null)
-                {
-                    ServerChannelField = new IpcChannel(CreateServerChannelProperties(), null, null);
-                }
-                return ServerChannelField;
-            }
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// L'URL nécessaire pour se connecter au serveur
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected override string ServerURL
-        {
-            get
-            {
-                //return string.Format("ipc://{0}:{1}/{2}", Address, Port, Name);
-                return string.Format("ipc://{0}/{0}", Name);
-            }
-        }
-
-        #endregion
-
-    }
-
+		protected override string ServerURL
+		{
+			get
+			{
+				//return string.Format("ipc://{0}:{1}/{2}", Address, Port, Name);
+				return string.Format("ipc://{0}/{0}", Name);
+			}
+		}
+	}
 }
-

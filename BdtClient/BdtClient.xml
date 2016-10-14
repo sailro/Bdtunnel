@@ -87,12 +87,12 @@
         </member>
         <member name="P:Bdt.Client.Resources.Strings.KILL_CONNECTION_HELP">
             <summary>
-              Looks up a localized string similar to Kill an existing connection, given his sid and cid.
+              Looks up a localized string similar to Kill an existing connection, given its sid and cid.
             </summary>
         </member>
         <member name="P:Bdt.Client.Resources.Strings.KILL_SESSION_HELP">
             <summary>
-              Looks up a localized string similar to Kill an existing session, given his sid.
+              Looks up a localized string similar to Kill an existing session, given its sid.
             </summary>
         </member>
         <member name="P:Bdt.Client.Resources.Strings.MONITOR_HELP">

@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,67 +19,18 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
-#endregion
 
 namespace Bdt.Shared.Response
 {
-
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Une session utilisateur au sein du tunnel
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    [Serializable]
-    public struct Session 
-    {
-
-		#region " Proprietes "
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le jeton de session
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public string Sid { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Les connexions
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public Connection[] Connections { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le nom associé
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public string Username { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Utilisateur en mode admin
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public bool Admin { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// La date de login
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public DateTime Logon { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// La date de dernier accès
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public DateTime LastAccess { get; set; }
-
-	    #endregion
-    }
-
+	[Serializable]
+	public struct Session
+	{
+		public string Sid { get; set; }
+		public Connection[] Connections { get; set; }
+		public string Username { get; set; }
+		public bool Admin { get; set; }
+		public DateTime Logon { get; set; }
+		public DateTime LastAccess { get; set; }
+	}
 }

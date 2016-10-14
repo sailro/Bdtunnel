@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -21,32 +21,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 namespace Bdt.Shared.Protocol
 {
-
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Protocole de communication basé sur le remoting .NET et sur le protocole HTTPs
-    /// Utilise un formateur SOAP pour les données
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public class HttpSslSoapRemoting : HttpSoapRemoting 
-    {
-
-        #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Utiliser le cryptage SSL
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected override bool IsSecured
-        {
-            get
-            {
-                return true;
-            }
-        }
-        #endregion
-
-    }
-
+	public class HttpSslSoapRemoting : HttpSoapRemoting
+	{
+		protected override bool IsSecured
+		{
+			get { return true; }
+		}
+	}
 }
-

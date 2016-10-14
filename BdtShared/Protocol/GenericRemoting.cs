@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,164 +19,83 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
 using System.Globalization;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
-
 using Bdt.Shared.Resources;
 using Bdt.Shared.Service;
 using Bdt.Shared.Logs;
 using System.Collections;
-#endregion
 
 namespace Bdt.Shared.Protocol
 {
+	public abstract class GenericRemoting<T> : GenericProtocol where T : IChannel
+	{
+		private const string CfgName = "name";
+		private const string CfgPortName = "portName";
+		private const string CfgPort = "port";
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Protocole de communication basé sur le remoting .NET
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public abstract class GenericRemoting<T> : GenericProtocol where T: IChannel
-    {
+		protected T ClientChannelField;
+		protected T ServerChannelField;
 
-        #region " Constantes "
-	    private const string CfgName = "name";
-	    private const string CfgPortName = "portName";
-	    private const string CfgPort = "port";
-        #endregion
+		protected abstract T ServerChannel { get; }
 
-        #region " Attributs "
-        protected T ClientChannelField;
-        protected T ServerChannelField;
-        #endregion
+		protected abstract T ClientChannel { get; }
 
-        #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le canal de communication côté serveur
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected abstract T ServerChannel
-        {
-            get;
-        }
+		protected abstract string ServerURL { get; }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le canal de communication côté client
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected abstract T ClientChannel
-        {
-            get;
-        }
+		protected virtual bool IsSecured
+		{
+			get { return false; }
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// L'URL nécessaire pour se connecter au serveur
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected abstract string ServerURL
-        {
-            get;
-        }
+		public override void ConfigureClient()
+		{
+			Log(string.Format(Strings.CONFIGURING_CLIENT, GetType().Name, ServerURL), ESeverity.DEBUG);
+			ChannelServices.RegisterChannel(ClientChannel, IsSecured);
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le service est-il sécurisé
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected virtual bool IsSecured
-        {
-            get
-            {
-                return false;
-            }
-        }
-        #endregion
+		public override void UnConfigureClient()
+		{
+			Log(string.Format(Strings.UNCONFIGURING_CLIENT, GetType().Name), ESeverity.DEBUG);
+			ChannelServices.UnregisterChannel(ClientChannel);
+		}
 
-        #region " Méthodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Configuration côté client
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public override void ConfigureClient()
-        {
-            Log(string.Format(Strings.CONFIGURING_CLIENT, GetType().Name, ServerURL), ESeverity.DEBUG);
-            ChannelServices.RegisterChannel(ClientChannel, IsSecured);
-        }
+		public override void ConfigureServer(Type type)
+		{
+			Log(string.Format(Strings.CONFIGURING_SERVER, GetType().Name, Port), ESeverity.INFO);
+			ChannelServices.RegisterChannel(ServerChannel, IsSecured);
+			var wks = new WellKnownServiceTypeEntry(type, Name, WellKnownObjectMode.Singleton);
+			RemotingConfiguration.RegisterWellKnownServiceType(wks);
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Dé-configuration côté client
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public override void UnConfigureClient()
-        {
-            Log(string.Format(Strings.UNCONFIGURING_CLIENT, GetType().Name), ESeverity.DEBUG);
-            ChannelServices.UnregisterChannel(ClientChannel);
-        }
+		public override void UnConfigureServer()
+		{
+			Log(string.Format(Strings.UNCONFIGURING_SERVER, GetType().Name, Port), ESeverity.INFO);
+			ChannelServices.UnregisterChannel(ServerChannel);
+			var channel = ServerChannel as IChannelReceiver;
+			if (channel != null)
+				channel.StopListening(null);
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Configuration côté serveur
-        /// </summary>
-        /// <param name="type">le type d'objet à rendre distant</param>
-        /// -----------------------------------------------------------------------------
-        public override void ConfigureServer(Type type)
-        {
-            Log(string.Format(Strings.CONFIGURING_SERVER, GetType().Name, Port), ESeverity.INFO);
-            ChannelServices.RegisterChannel(ServerChannel, IsSecured);
-            var wks = new WellKnownServiceTypeEntry(type, Name, WellKnownObjectMode.Singleton);
-            RemotingConfiguration.RegisterWellKnownServiceType(wks);
-        }
+		public override ITunnel GetTunnel()
+		{
+			return (ITunnel) Activator.GetObject(typeof(ITunnel), ServerURL);
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Déconfiguration côté serveur
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public override void UnConfigureServer()
-        {
-            Log(string.Format(Strings.UNCONFIGURING_SERVER, GetType().Name, Port), ESeverity.INFO);
-            ChannelServices.UnregisterChannel(ServerChannel);
-	        var channel = ServerChannel as IChannelReceiver;
-	        if (channel != null)
-                channel.StopListening(null);
-        }
+		protected Hashtable CreateClientChannelProperties()
+		{
+			var properties = new Hashtable {{CfgName, string.Format("{0}.Client", Name)}};
+			properties.Add(CfgPortName, properties[CfgName]);
+			return properties;
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Retourne une instance de tunnel
-        /// </summary>
-        /// <returns>une instance de tunnel</returns>
-        /// -----------------------------------------------------------------------------
-        public override ITunnel GetTunnel()
-        {
-            return ((ITunnel)Activator.GetObject(typeof(ITunnel), ServerURL));
-        }
-
-	    protected Hashtable CreateClientChannelProperties()
-        {
-            var properties = new Hashtable {{CfgName, string.Format("{0}.Client", Name)}};
-		    properties.Add(CfgPortName, properties[CfgName]);
-            return properties;
-        }
-
-	    protected Hashtable CreateServerChannelProperties()
-        {
-            var properties = new Hashtable {{CfgName, Name}, {CfgPort, Port.ToString(CultureInfo.InvariantCulture)}};
-		    properties.Add(CfgPortName, properties[CfgName]);
-            return properties;
-        }
-
-        #endregion
-
-    }
-
+		protected Hashtable CreateServerChannelProperties()
+		{
+			var properties = new Hashtable {{CfgName, Name}, {CfgPort, Port.ToString(CultureInfo.InvariantCulture)}};
+			properties.Add(CfgPortName, properties[CfgName]);
+			return properties;
+		}
+	}
 }
-

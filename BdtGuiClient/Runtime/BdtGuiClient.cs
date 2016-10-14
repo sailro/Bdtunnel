@@ -46,7 +46,7 @@ namespace Bdt.GuiClient.Runtime
 		protected override BaseLogger CreateLoggers()
 		{
 			var ldcConfig = new StringConfig(Args, 0);
-			var xmlConfig = new XMLConfig(ConfigFile, 1);
+			var xmlConfig = new XmlConfig(ConfigFile, 1);
 			Configuration = new ConfigPackage();
 			Configuration.AddSource(ldcConfig);
 			Configuration.AddSource(xmlConfig);

@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,58 +19,20 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
-#endregion
 
 namespace Bdt.Shared.Response
 {
+	[Serializable]
+	public struct MinimalResponse : IMinimalResponse
+	{
+		public bool Success { get; set; }
+		public string Message { get; set; }
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Une réponse générique dans le contexte d'une session
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    [Serializable]
-    public struct MinimalResponse : IMinimalResponse 
-    {
-
-        #region " Proprietes "
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// La requête a aboutie/échoué ?
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public bool Success { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le message d'information
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public string Message { get; set; }
-
-	    #endregion
-
-        #region " Methodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur
-        /// </summary>
-        /// <param name="success">réussi/échoué</param>
-        /// <param name="message">Le message d'information</param>
-        /// -----------------------------------------------------------------------------
-        public MinimalResponse(bool success, string message) : this()
-        {
-            Success = success;
-            Message = message;
-        }
-
-	    #endregion
-
-    }
-
+		public MinimalResponse(bool success, string message) : this()
+		{
+			Success = success;
+			Message = message;
+		}
+	}
 }
-
-

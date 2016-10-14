@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,78 +19,30 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System.IO;
-
 using Bdt.Shared.Configuration;
-#endregion
 
 namespace Bdt.Shared.Logs
 {
+	public class FileLogger : BaseLogger
+	{
+		public const string ConfigAppend = "append";
+		public const string ConfigFilename = "filename";
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Génération des logs dans un fichier
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public class FileLogger : BaseLogger
-    {
+		public string Filename { get; protected set; }
+		public bool Append { get; protected set; }
 
-        #region " Constantes "
-        public const string ConfigAppend = "append";
-        public const string ConfigFilename = "filename";
-        #endregion
+		protected FileLogger()
+		{
+		}
 
-        #region " Propriétés "
+		public FileLogger(string prefix, ConfigPackage config) : base(null, prefix, config)
+		{
+			Filename = config.Value(prefix + BaseConfig.SourceItemAttribute + ConfigFilename, Filename);
+			Append = config.ValueBool(prefix + BaseConfig.SourceItemAttribute + ConfigAppend, Append);
 
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Retourne le nom du fichier utilisé pour l'écriture des logs
-	    /// </summary>
-	    /// <returns>le nom du fichier utilisé pour l'écriture des logs</returns>
-	    /// -----------------------------------------------------------------------------
-	    public string Filename { get; protected set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Retourne l'état indiquant si les données doivent être ajoutées au fichier
-	    /// </summary>
-	    /// <returns>l'état indiquant si les données doivent être ajoutées au fichier</returns>
-	    /// -----------------------------------------------------------------------------
-	    public bool Append { get; protected set; }
-
-	    #endregion
-
-        #region " Méthodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur pour un log vierge
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected FileLogger ()
-        {
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur pour un log à partir des données fournies dans une configuration
-        /// </summary>
-        /// <param name="prefix">le prefixe dans la configuration ex: application/log</param>
-        /// <param name="config">la configuration pour la lecture des parametres</param>
-        /// -----------------------------------------------------------------------------
-        public FileLogger(string prefix, ConfigPackage config)
-            : base(null, prefix, config)
-        {
-            Filename = config.Value(prefix + BaseConfig.SourceItemAttribute + ConfigFilename, Filename);
-            Append = config.ValueBool(prefix + BaseConfig.SourceItemAttribute + ConfigAppend, Append);
-	        
 			if (Enabled)
-		        Writer = new StreamWriter(Filename, Append, System.Text.Encoding.Default);
-        }
-
-	    #endregion
-
-    }
-
+				Writer = new StreamWriter(Filename, Append, System.Text.Encoding.Default);
+		}
+	}
 }
-

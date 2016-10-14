@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,117 +19,65 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
 using System.Collections;
-#endregion
 
 namespace Bdt.Shared.Configuration
 {
+	public abstract class BaseConfig : IComparable
+	{
+		protected const string SourcePathSeparator = "/";
+		public const string SourceItemAttribute = "@";
+		protected const string SourceItemEquals = "=";
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Représente une source de configuration générique. Permet de servir de base pour l'élaboration
-    /// d'autres sources.
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public abstract class BaseConfig : IComparable
-    {
+		private readonly SortedList _values = new SortedList(); // Les elements classés par code
 
-        #region " Constantes "
-	    protected const string SourcePathSeparator = "/";
-        public const string SourceItemAttribute = "@";
-	    protected const string SourceItemEquals = "=";
-        #endregion
+		private int Priority { get; set; }
 
-        #region " Attributs "
-        private readonly SortedList _values = new SortedList(); // Les elements classés par code
+		public string Value(string code, string defaultValue)
+		{
+			return _values.ContainsKey(code) ? Convert.ToString(_values[code]) : defaultValue;
+		}
 
-	    #endregion
+		public void SetValue(string code, string value)
+		{
+			if (_values.ContainsKey(code))
+				_values[code] = value;
+			else
+				_values.Add(code, value);
+		}
 
-        #region " Propriétés "
+		protected BaseConfig(int priority)
+		{
+			Priority = priority;
+		}
 
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Retourne/Fixe la priorité de la source
-	    /// </summary>
-	    /// <returns>la priorité de la source</returns>
-	    /// -----------------------------------------------------------------------------
-	    private int Priority { get; set; }
+		public abstract void Rehash();
 
-	    /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Retourne/Fixe la priorité de la source
-        /// </summary>
-        /// <returns>la priorité de la source</returns>
-        /// -----------------------------------------------------------------------------
-        public string Value(string code, string defaultValue)
-	    {
-		    return _values.ContainsKey(code) ? Convert.ToString(_values[code]) : defaultValue;
-	    }
+		public sealed override string ToString()
+		{
+			var returnValue = string.Empty;
 
-	    public void SetValue(string code, string value)
-        {
-            if (_values.ContainsKey(code))
-                _values[code] = value;
-            else
-                _values.Add(code, value);
-        }
-        #endregion
-
-        #region " Méthodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur d'une source avec un décrypteur de données optionnel
-        /// Les valeurs entre SOURCE_SCRAMBLED_START et SOURCE_SCRAMBLED_END seront
-        /// automatiquement décryptées
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected BaseConfig(int priority)
-        {
-            Priority = priority;
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Force le rechargement de la source de donnée
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public abstract void Rehash();
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Concatène tous les éléments depuis cette source
-        /// </summary>
-        /// <returns>le format de chaque ligne est classe,priorité,code,valeur</returns>
-        /// -----------------------------------------------------------------------------
-        public sealed override string ToString()
-        {
-	        string returnValue = string.Empty;
-
-            foreach (string key in _values.Keys)
-                returnValue += "   <" + GetType().Name + "(" + Priority + ")" + "> [" + key + "] " + SourceItemEquals + " [" + Value(key, String.Empty) + "]" + "\r\n";
+			foreach (string key in _values.Keys)
+				returnValue += "   <" + GetType().Name + "(" + Priority + ")" + "> [" + key + "] " + SourceItemEquals + " [" + Value(key, string.Empty) + "]" + "\r\n";
 
 			return returnValue;
-        }
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Comparateur par priorité
-        /// </summary>
-        /// <param name="obj">la config à comparer</param>
-        /// <returns>voir IComparable.CompareTo</returns>
-        /// -----------------------------------------------------------------------------
-        public int CompareTo(object obj)
-        {
-	        if ((obj) is BaseConfig)
-                return Priority - ((BaseConfig)obj).Priority;
+		/// -----------------------------------------------------------------------------
+		/// <summary>
+		/// Comparateur par priorité
+		/// </summary>
+		/// <param name="obj">la config à comparer</param>
+		/// <returns>voir IComparable.CompareTo</returns>
+		/// -----------------------------------------------------------------------------
+		public int CompareTo(object obj)
+		{
+			var baseConfig = obj as BaseConfig;
+			if (baseConfig != null)
+				return Priority - baseConfig.Priority;
 
 			return 0;
-        }
-
-	    #endregion
-
-    }
+		}
+	}
 }
-

@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,55 +19,32 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System.Runtime.Remoting.Channels.Http;
 using System.Runtime.Remoting.Channels;
-#endregion
 
 namespace Bdt.Shared.Protocol
 {
+	public class HttpSoapRemoting : GenericHttpRemoting
+	{
+		protected override HttpChannel ClientChannel
+		{
+			get
+			{
+				return ClientChannelField ??
+				       (ClientChannelField =
+					       new HttpChannel(CreateClientChannelProperties(), new SoapClientFormatterSinkProvider(), null));
+			}
+		}
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Protocole de communication basé sur le remoting .NET et sur le protocole HTTP
-    /// Utilise un formateur SOAP pour les données
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public class HttpSoapRemoting : GenericHttpRemoting
-    {
-
-        #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le canal de communication côté client
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected override HttpChannel ClientChannel
-        {
-            get {
-	            return ClientChannelField ??
-	                   (ClientChannelField =
-	                    new HttpChannel(CreateClientChannelProperties(), new SoapClientFormatterSinkProvider(), null));
-            }
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le canal de communication côté serveur
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected override HttpChannel ServerChannel
-        {
-            get {
-	            return ServerChannelField ??
-	                   (ServerChannelField =
-	                    new HttpChannel(CreateServerChannelProperties(), new SoapClientFormatterSinkProvider(),
-	                                    new SoapServerFormatterSinkProvider()));
-            }
-        }
-        #endregion
-
-    }
-
+		protected override HttpChannel ServerChannel
+		{
+			get
+			{
+				return ServerChannelField ??
+				       (ServerChannelField =
+					       new HttpChannel(CreateServerChannelProperties(), new SoapClientFormatterSinkProvider(),
+						       new SoapServerFormatterSinkProvider()));
+			}
+		}
+	}
 }
-

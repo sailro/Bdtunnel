@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,55 +19,23 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using Bdt.Shared.Configuration;
-#endregion
 
 namespace Bdt.Shared.Logs
 {
+	public class ConsoleLogger : BaseLogger
+	{
+		protected ConsoleLogger()
+		{
+		}
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Génération des logs sur le flux de sortie standard
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public class ConsoleLogger : BaseLogger
-    {
+		public ConsoleLogger(string prefix, ConfigPackage config)
+			: base(System.Console.Out, prefix, config)
+		{
+		}
 
-        #region " Méthodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur pour un log vierge
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected ConsoleLogger ()
-        {
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur pour un log à partir des données fournies dans une configuration
-        /// </summary>
-        /// <param name="prefix">le prefixe dans la configuration ex: application/log</param>
-        /// <param name="config">la configuration pour la lecture des parametres</param>
-        /// -----------------------------------------------------------------------------
-        public ConsoleLogger(string prefix, ConfigPackage config)
-            : base(System.Console.Out, prefix, config)
-        {
-        }
-
-	    /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Fermeture du logger
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public override void Close()
-        {
-            // on ne fait rien pour ne pas fermer le stdout.
-        }
-
-        #endregion
-
-    }
-
+		public override void Close()
+		{
+		}
+	}
 }

@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -21,60 +21,25 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 namespace Bdt.Shared.Configuration
 {
+	public sealed class StringConfig : BaseConfig
+	{
+		private string[] Args { get; set; }
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Représente une source de configuration basée sur une ligne de commande
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public sealed class StringConfig : BaseConfig
-    {
+		public StringConfig(string[] args, int priority) : base(priority)
+		{
+			Args = args;
+			Rehash();
+		}
 
-        #region " Propriétés "
 
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Retourne/Fixe les arguments de la ligne de commande
-	    /// </summary>
-	    /// <returns>les arguments de la ligne de commande</returns>
-	    /// -----------------------------------------------------------------------------
-	    private string[] Args { get; set; }
-
-	    #endregion
-
-        #region " Méthodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Création d'une source de donnée basée sur la ligne de commande
-        /// </summary>
-        /// <param name="args">les arguments de la ligne de commande</param>
-        /// <param name="priority">la priorité de cette source (la plus basse=prioritaire)</param>
-        /// -----------------------------------------------------------------------------
-        public StringConfig(string[] args, int priority)
-            : base(priority)
-        {
-            Args = args;
-            Rehash();
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Force le rechargement de la source de donnée
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public override void Rehash()
-        {
-            foreach (string arg in Args)
-            {
-                var equalIndex = arg.IndexOf(SourceItemEquals, System.StringComparison.Ordinal);
-                if ((equalIndex >= 0) && equalIndex + 1 < arg.Length)
-                    SetValue(arg.Substring(0, equalIndex), arg.Substring(equalIndex + 1));
-            }
-        }
-        #endregion
-
-    }
-
+		public override void Rehash()
+		{
+			foreach (var arg in Args)
+			{
+				var equalIndex = arg.IndexOf(SourceItemEquals, System.StringComparison.Ordinal);
+				if ((equalIndex >= 0) && equalIndex + 1 < arg.Length)
+					SetValue(arg.Substring(0, equalIndex), arg.Substring(equalIndex + 1));
+			}
+		}
+	}
 }
-
-

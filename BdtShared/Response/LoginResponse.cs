@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,66 +19,22 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
-#endregion
 
 namespace Bdt.Shared.Response
 {
+	[Serializable]
+	public struct LoginResponse : IMinimalResponse
+	{
+		public bool Success { get; set; }
+		public string Message { get; set; }
+		public int Sid { get; private set; }
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Une réponse générique de login
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    [Serializable]
-    public struct LoginResponse : IMinimalResponse 
-    {
-
-		#region " Proprietes "
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// La requête a aboutie/échoué ?
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public bool Success { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le message d'information
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public string Message { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le jeton de session
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public int Sid { get; private set; }
-
-	    #endregion
-
-        #region " Methodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur
-        /// </summary>
-        /// <param name="success">Login réussi/échoué</param>
-        /// <param name="message">Le message d'information</param>
-        /// <param name="sid">Le jeton de session affecté</param>
-        /// -----------------------------------------------------------------------------
-        public LoginResponse(bool success, string message, int sid) : this()
-        {
-            Success = success;
-            Message = message;
-            Sid = sid;
-        }
-        #endregion
-
-    }
-
+		public LoginResponse(bool success, string message, int sid) : this()
+		{
+			Success = success;
+			Message = message;
+			Sid = sid;
+		}
+	}
 }
-
-

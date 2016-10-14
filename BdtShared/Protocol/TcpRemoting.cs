@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,63 +19,33 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System.Runtime.Remoting.Channels.Tcp;
-#endregion
 
 namespace Bdt.Shared.Protocol
 {
+	public class TcpRemoting : GenericRemoting<TcpChannel>
+	{
+		protected override TcpChannel ClientChannel
+		{
+			get
+			{
+				return ClientChannelField ??
+				       (ClientChannelField = new TcpChannel(CreateClientChannelProperties(), null, null));
+			}
+		}
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Protocole de communication basé sur le remoting .NET et sur le protocole TCP
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public class TcpRemoting : GenericRemoting<TcpChannel>
-    {
+		protected override TcpChannel ServerChannel
+		{
+			get
+			{
+				return ServerChannelField ??
+				       (ServerChannelField = new TcpChannel(CreateServerChannelProperties(), null, null));
+			}
+		}
 
-        #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le canal de communication côté client
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected override TcpChannel ClientChannel
-        {
-            get {
-	            return ClientChannelField ??
-	                   (ClientChannelField = new TcpChannel(CreateClientChannelProperties(), null, null));
-            }
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le canal de communication côté serveur
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected override TcpChannel ServerChannel
-        {
-            get {
-	            return ServerChannelField ??
-	                   (ServerChannelField = new TcpChannel(CreateServerChannelProperties(), null, null));
-            }
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// L'URL nécessaire pour se connecter au serveur
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        protected override string ServerURL
-        {
-            get
-            {
-                return string.Format("tcp://{0}:{1}/{2}", Address, Port, Name);
-            }
-        }
-        #endregion
-
-    }
-
+		protected override string ServerURL
+		{
+			get { return string.Format("tcp://{0}:{1}/{2}", Address, Port, Name); }
+		}
+	}
 }
-

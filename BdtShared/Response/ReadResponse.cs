@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,63 +19,17 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
-#endregion
 
 namespace Bdt.Shared.Response
 {
-
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Une réponse de lecture
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    [Serializable]
-    public struct ReadResponse : IConnectionContextResponse
-    {
-
-        #region " Proprietes "
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Des données sont-elles disponibles?
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public bool DataAvailable { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// La connexion est-elle effective?
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public bool Connected { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// La requête a aboutie/échoué ?
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public bool Success { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Le message d'information
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public string Message { get; set; }
-
-	    /// -----------------------------------------------------------------------------
-	    /// <summary>
-	    /// Les données lues
-	    /// </summary>
-	    /// -----------------------------------------------------------------------------
-	    public byte[] Data { get; set; }
-
-	    #endregion
-
-    }
-
+	[Serializable]
+	public struct ReadResponse : IConnectionContextResponse
+	{
+		public bool DataAvailable { get; set; }
+		public bool Connected { get; set; }
+		public bool Success { get; set; }
+		public string Message { get; set; }
+		public byte[] Data { get; set; }
+	}
 }
-
-

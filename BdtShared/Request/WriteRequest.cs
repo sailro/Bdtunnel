@@ -1,4 +1,4 @@
-/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,64 +19,22 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
-#endregion
 
 namespace Bdt.Shared.Request
 {
+	[Serializable]
+	public struct WriteRequest : IConnectionContextRequest
+	{
+		public int Cid { get; private set; }
+		public int Sid { get; private set; }
+		public byte[] Data { get; private set; }
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Une demande d'écriture
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    [Serializable]
-    public struct WriteRequest : IConnectionContextRequest
-    {
-
-        #region " Proprietes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le jeton de connexion
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public int Cid { get; private set; }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Le jeton de session
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public int Sid { get; private set; }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Les données à écrire
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public byte[] Data { get; private set; }
-
-		#endregion
-
-        #region " Methodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur
-        /// </summary>
-        /// <param name="sid">Le jeton de session</param>
-        /// <param name="cid">Le jeton de connexion</param>
-        /// <param name="data">Les données à écrire</param>
-        /// -----------------------------------------------------------------------------
-        public WriteRequest(int sid, int cid, byte[] data) : this()
-        {
-            Sid = sid;
-            Cid = cid;
-            Data = data;
-        }
-        #endregion
-
-    }
-
+		public WriteRequest(int sid, int cid, byte[] data) : this()
+		{
+			Sid = sid;
+			Cid = cid;
+			Data = data;
+		}
+	}
 }
-
