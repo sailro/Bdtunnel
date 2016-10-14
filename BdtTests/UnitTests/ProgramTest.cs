@@ -1,4 +1,4 @@
-﻿/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+﻿/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,52 +19,36 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Bdt.Shared.Runtime;
-#endregion
 
 namespace Bdt.Tests.UnitTests
 {
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Tests sur les fonctions simples
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    [TestClass]
-    public class ProgramTest : BaseTest
-    {
+	[TestClass]
+	public class ProgramTest : BaseTest
+	{
+		[TestMethod]
+		public void TestStaticXorEncoder()
+		{
+			for (var key = 0; key < byte.MaxValue; key++)
+			{
+				for (var datalength = 0; datalength < 1024; datalength = datalength == 0 ? 1 : datalength*2)
+				{
+					var buffer = new byte[datalength];
+					var outbuffer = new byte[datalength];
 
-        #region " Méthodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Test le codage des informations
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        [TestMethod]
-        public void TestStaticXorEncoder()
-        {
-            for (var key = 0; key < byte.MaxValue; key++)
-            {
-                for (var datalength = 0; datalength < 1024; datalength = (datalength == 0) ? 1 : datalength * 2)
-                {
-                    var buffer = new byte[datalength];
-                    var outbuffer = new byte[datalength];
+					var rnd = new Random();
+					rnd.NextBytes(buffer);
+					Array.Copy(buffer, outbuffer, datalength);
 
-                    var rnd = new Random();
-                    rnd.NextBytes(buffer);
-                    Array.Copy(buffer, outbuffer, datalength);
+					Program.StaticXorEncoder(ref buffer, key);
+					Program.StaticXorEncoder(ref buffer, key);
 
-                    Program.StaticXorEncoder(ref buffer, key);
-                    Program.StaticXorEncoder(ref buffer, key);
-
-	                for (var i = 0; i < datalength; i++)
-		                Assert.AreEqual(buffer[i], outbuffer[i], String.Format("Offset {0}, key={1}", i, key));
-                }
-            }
-        }
-        #endregion
-
-    }
+					for (var i = 0; i < datalength; i++)
+						Assert.AreEqual(buffer[i], outbuffer[i], string.Format("Offset {0}, key={1}", i, key));
+				}
+			}
+		}
+	}
 }

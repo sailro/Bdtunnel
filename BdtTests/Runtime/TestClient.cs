@@ -1,4 +1,4 @@
-﻿/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+﻿/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,7 +19,6 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using Bdt.Client.Runtime;
 using Bdt.Shared.Configuration;
 using Bdt.Shared.Logs;
@@ -28,64 +27,33 @@ using Bdt.Tests.Logs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Bdt.Client.Configuration;
 using Bdt.Shared.Resources;
-#endregion
 
 namespace Bdt.Tests.Runtime
 {
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Un client de test
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    class TestClient : BdtClient
-    {
+	internal class TestClient : BdtClient
+	{
+		private readonly TestContext _context;
 
-        #region " Attributs "
-        private readonly TestContext _context;
-        #endregion
+		protected override BaseLogger CreateLoggers()
+		{
+			return new TestContextLogger(_context);
+		}
 
-        #region " Méthodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Initialisation des loggers
-        /// </summary>
-        /// <returns>un MultiLogger lié à une source fichier et console</returns>
-        /// -----------------------------------------------------------------------------
-        protected override BaseLogger CreateLoggers()
-        {
-            return new TestContextLogger(_context);
-        }
+		public override void LoadConfiguration(string[] args)
+		{
+			Args = args;
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Chargement des données de configuration
-        /// </summary>
-        /// <param name="args">Arguments de la ligne de commande</param>
-        /// -----------------------------------------------------------------------------
-        public override void LoadConfiguration(string[] args)
-        {
-            Args = args;
-
-            GlobalLogger = CreateLoggers();
-            Log(Strings.LOADING_CONFIGURATION, ESeverity.DEBUG);
+			GlobalLogger = CreateLoggers();
+			Log(Strings.LOADING_CONFIGURATION, ESeverity.DEBUG);
 			Protocol = GenericProtocol.GetInstance(ClientConfig);
 			SetCulture(ClientConfig.ServiceCulture);
-        }
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur
-        /// </summary>
-        /// <param name="context">le contexte du test</param>
-        /// <param name="config">la configuration client</param>
-        /// -----------------------------------------------------------------------------
-        public TestClient(TestContext context, ConfigPackage config)
-        {
-            _context = context;
+		public TestClient(TestContext context, ConfigPackage config)
+		{
+			_context = context;
 			ClientConfig = new ClientConfig(config, null, null);
-            Configuration = config;
-        }
-        #endregion
-
-    }
+			Configuration = config;
+		}
+	}
 }

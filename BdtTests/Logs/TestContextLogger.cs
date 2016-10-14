@@ -1,4 +1,4 @@
-﻿/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+﻿/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,62 +19,27 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using Bdt.Shared.Logs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-#endregion
 
 namespace Bdt.Tests.Logs
 {
+	public class TestContextLogger : BaseLogger
+	{
+		private readonly TestContext _context;
 
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Génération des logs sur le flux de test
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public class TestContextLogger : BaseLogger
-    {
-        #region " Attributs "
-        private readonly TestContext _context;
-        #endregion
+		public TestContextLogger(TestContext context)
+		{
+			_context = context;
+		}
 
-        #region " Méthodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructeur 
-        /// </summary>
-        /// <param name="context">Le context d'un test</param>
-        /// -----------------------------------------------------------------------------
-        public TestContextLogger(TestContext context)
-        {
-            _context = context;
-        }
+		public override void Log(object sender, string message, ESeverity severity)
+		{
+			_context.WriteLine("[{0}] {1} {2}", severity, sender.GetType().Name, message);
+		}
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Ecriture d'une entrée de log. Ne sera actif que pour une sévérité à ERREUR
-        /// </summary>
-        /// <param name="sender">l'emetteur</param>
-        /// <param name="message">le message à logger</param>
-        /// <param name="severity">la sévérité</param>
-        /// -----------------------------------------------------------------------------
-        public override void Log(object sender, string message, ESeverity severity)
-        {
-            _context.WriteLine("[{0}] {1} {2}", severity, sender.GetType().Name, message);
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Fermeture du logger
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        public override void Close()
-        {
-            // on ne fait rien
-        }
-
-        #endregion
-
-    }
-
+		public override void Close()
+		{
+		}
+	}
 }

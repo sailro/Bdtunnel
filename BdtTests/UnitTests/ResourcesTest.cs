@@ -1,4 +1,4 @@
-﻿/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+﻿/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,51 +19,34 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-#region " Inclusions "
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-#endregion
 
 namespace Bdt.Tests.UnitTests
 {
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Tests sur les fichiers de ressources localisées
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    [TestClass]
-    public class ResourcesTest : BaseTest
-    {
+	[TestClass]
+	public class ResourcesTest : BaseTest
+	{
+		[TestMethod]
+		public void TestTranslatedResources()
+		{
+			foreach (var project in AllTranslatedProjects)
+			{
+				var reference = ReadResources(project);
+				foreach (var translation in AllTranslationsExceptDefault)
+				{
+					var translated = ReadResources(project, translation);
 
-        #region " Méthodes "
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Test que les clefs présentes dans la traduction de référence sont également
-        /// présentes dans chacune des traductions
-        /// </summary>
-        /// -----------------------------------------------------------------------------
-        [TestMethod]
-        public void TestTranslatedResources()
-        {
-            foreach (var project in AllTranslatedProjects)
-            {
-                var reference = ReadResources(project);
-                foreach (var translation in AllTranslationsExceptDefault)
-                {
-                    var translated = ReadResources(project, translation);
+					// default -> translated
+					foreach (var key in reference.Keys.Where(key => !translated.ContainsKey(key)))
+						Assert.Fail("Check project={0}, translation={1}, entry={2} doesn't exists", project, translation, key);
 
-                    // default -> translated
-                    foreach (var key in reference.Keys.Where(key => !translated.ContainsKey(key)))
-	                    Assert.Fail("Check project={0}, translation={1}, entry={2} doesn't exists", project, translation, key);
-
-                    // translated -> default (reverse check)
-	                foreach (var key in translated.Keys.Where(key => !reference.ContainsKey(key)))
-		                Assert.Fail("Check project={0}, translation={1}, entry={2} doesn't exists in the default resource",
-		                            project, translation, key);
-                }
-            }
-        }
-        #endregion    
-
-    }
+					// translated -> default (reverse check)
+					foreach (var key in translated.Keys.Where(key => !reference.ContainsKey(key)))
+						Assert.Fail("Check project={0}, translation={1}, entry={2} doesn't exists in the default resource",
+							project, translation, key);
+				}
+			}
+		}
+	}
 }

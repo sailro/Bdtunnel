@@ -1,4 +1,4 @@
-﻿/* BoutDuTunnel Copyright (c)  2007-2013 Sebastien LEBRETON
+﻿/* BoutDuTunnel Copyright (c) 2007-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -21,19 +21,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 namespace Bdt.Tests.Model
 {
-    /// -----------------------------------------------------------------------------
-    /// <summary>
-    /// Les projets de la solution
-    /// </summary>
-    /// -----------------------------------------------------------------------------
-    public enum Project
-    {
+	public enum Project
+	{
 		// ReSharper disable UnusedMember.Global
-        BdtClient,
-        BdtGuiClient,
-        BdtServer,
-        BdtShared,
-        BdtWebServer,
+		BdtClient,
+		BdtGuiClient,
+		BdtServer,
+		BdtShared,
+		BdtWebServer,
 		// ReSharper restore UnusedMember.Global
 	}
 }
