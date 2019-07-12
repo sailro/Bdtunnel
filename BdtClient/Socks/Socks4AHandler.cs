@@ -39,7 +39,7 @@ namespace Bdt.Client.Socks
 				if (Version != 4)
 					return false;
 
-				if ((Buffer[4] != 0) || (Buffer[5] != 0) || (Buffer[6] != 0))
+				if (Buffer[4] != 0 || Buffer[5] != 0 || Buffer[6] != 0)
 					return false;
 
 				if (Command != Socks4BindCommand)

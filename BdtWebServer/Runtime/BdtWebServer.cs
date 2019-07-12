@@ -35,10 +35,7 @@ namespace Bdt.WebServer.Runtime
 	{
 		private readonly HttpServerUtility _server;
 
-		public override string ConfigFile
-		{
-			get { return _server.MapPath(string.Format("App_Data" + Path.DirectorySeparatorChar + "{0}Cfg.xml", typeof(BdtServer).Assembly.GetName().Name)); }
-		}
+		public override string ConfigFile => _server.MapPath(string.Format("App_Data" + Path.DirectorySeparatorChar + "{0}Cfg.xml", typeof(BdtServer).Assembly.GetName().Name));
 
 		public BdtWebServer(HttpServerUtility server)
 		{
@@ -66,7 +63,7 @@ namespace Bdt.WebServer.Runtime
 
 		public void Start()
 		{
-			LoadConfiguration(new String[] { });
+			LoadConfiguration(new string[] { });
 
 			Log(string.Format(Server.Resources.Strings.SERVER_TITLE, GetType().Assembly.GetName().Version.ToString(3)), ESeverity.INFO);
 			Log(FrameworkVersion(), ESeverity.INFO);
@@ -86,9 +83,9 @@ namespace Bdt.WebServer.Runtime
 			Configuration.AddSource(xmlConfig);
 
 			// Map the path to the current Web Application
-			const string key = CfgFile + Shared.Configuration.BaseConfig.SourceItemAttribute + FileLogger.ConfigFilename;
+			const string key = CfgFile + BaseConfig.SourceItemAttribute + FileLogger.ConfigFilename;
 			var filename = xmlConfig.Value(key, null);
-			if ((filename != null) && (!Path.IsPathRooted(filename)))
+			if (filename != null && !Path.IsPathRooted(filename))
 				xmlConfig.SetValue(key, _server.MapPath("App_Data" + Path.DirectorySeparatorChar + filename));
 
 			var log = new MultiLogger();

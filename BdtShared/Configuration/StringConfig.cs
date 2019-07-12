@@ -37,7 +37,7 @@ namespace Bdt.Shared.Configuration
 			foreach (var arg in Args)
 			{
 				var equalIndex = arg.IndexOf(SourceItemEquals, System.StringComparison.Ordinal);
-				if ((equalIndex >= 0) && equalIndex + 1 < arg.Length)
+				if (equalIndex >= 0 && equalIndex + 1 < arg.Length)
 					SetValue(arg.Substring(0, equalIndex), arg.Substring(equalIndex + 1));
 			}
 		}

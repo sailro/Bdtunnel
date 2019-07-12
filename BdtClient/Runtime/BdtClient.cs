@@ -116,7 +116,7 @@ namespace Bdt.Client.Runtime
 		{
 			ServicePointManager.Expect100Continue = ClientConfig.Expect100Continue;
 
-			if (!((protocol) is IProxyCompatible))
+			if (!(protocol is IProxyCompatible))
 				return;
 
 			var proxyProtocol = ((IProxyCompatible)protocol);
@@ -253,7 +253,7 @@ namespace Bdt.Client.Runtime
 				}
 			} while (retry);
 
-			if ((response != null) && (Tunnel != null))
+			if (response != null && Tunnel != null)
 			{
 				if (response.Message.IndexOf(GetType().Assembly.GetName().Version.ToString(3), StringComparison.Ordinal) < 0)
 				{

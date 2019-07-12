@@ -117,7 +117,7 @@ namespace Bdt.GuiClient.Forms
 			System.Threading.ThreadPool.QueueUserWorkItem(StopClient);
 		}
 
-		private void StartClient(Object state)
+		private void StartClient(object state)
 		{
 			try
 			{

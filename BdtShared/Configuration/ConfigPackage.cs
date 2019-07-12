@@ -75,7 +75,7 @@ namespace Bdt.Shared.Configuration
 
 		public override string ToString()
 		{
-			string returnValue = string.Empty;
+			var returnValue = string.Empty;
 			foreach (var source in _sources)
 				returnValue += source.ToString();
 

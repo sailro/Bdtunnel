@@ -111,7 +111,7 @@ namespace Bdt.Client.Sockets
 
 				try
 				{
-					isConnected = (!(_client.Client.Poll(SocketTestPollingTime, SelectMode.SelectRead) && _client.Client.Available == 0));
+					isConnected = !(_client.Client.Poll(SocketTestPollingTime, SelectMode.SelectRead) && _client.Client.Available == 0);
 					isDataAvailAble = _stream.DataAvailable;
 				}
 				catch (Exception ex)

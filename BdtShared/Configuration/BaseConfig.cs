@@ -30,7 +30,7 @@ namespace Bdt.Shared.Configuration
 		public const string SourceItemAttribute = "@";
 		protected const string SourceItemEquals = "=";
 
-		private readonly SortedList _values = new SortedList(); // Les elements classés par code
+		private readonly SortedList _values = new SortedList();
 
 		private int Priority { get; set; }
 
@@ -64,13 +64,6 @@ namespace Bdt.Shared.Configuration
 			return returnValue;
 		}
 
-		/// -----------------------------------------------------------------------------
-		/// <summary>
-		/// Comparateur par priorité
-		/// </summary>
-		/// <param name="obj">la config à comparer</param>
-		/// <returns>voir IComparable.CompareTo</returns>
-		/// -----------------------------------------------------------------------------
 		public int CompareTo(object obj)
 		{
 			var baseConfig = obj as BaseConfig;

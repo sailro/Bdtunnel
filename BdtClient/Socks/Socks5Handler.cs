@@ -63,7 +63,7 @@ namespace Bdt.Client.Socks
 				int numMethods = Buffer[1];
 				var methodAccepted = false;
 
-				if ((numMethods <= 0) || (numMethods != Buffer.Length - 2))
+				if (numMethods <= 0 || numMethods != Buffer.Length - 2)
 				{
 					Log(Strings.SOCKS5_MALFORMED_METHOD_ENUM, ESeverity.WARN);
 					return false;
@@ -71,7 +71,7 @@ namespace Bdt.Client.Socks
 
 				var handshake = new byte[2];
 				var i = 0;
-				while ((i < numMethods) && (!methodAccepted))
+				while (i < numMethods && !methodAccepted)
 				{
 					methodAccepted = (Buffer[i + 2] == Socks5NoAuthenticationRequired);
 					i += 1;

@@ -42,7 +42,7 @@ namespace Bdt.Server.Service
 
 		protected override void Timeout(ILogger logger)
 		{
-			logger.Log(this, String.Format(Strings.CONNECTION_TIMEOUT, TcpClient.Client.RemoteEndPoint), ESeverity.INFO);
+			logger.Log(this, string.Format(Strings.CONNECTION_TIMEOUT, TcpClient.Client.RemoteEndPoint), ESeverity.INFO);
 			SafeDisconnect();
 		}
 
