@@ -68,7 +68,7 @@ namespace Bdt.Shared.Logs
 			Writer = writer;
 
 			Enabled = config.ValueBool(prefix + Configuration.BaseConfig.SourceItemAttribute + ConfigEnabled, Enabled);
-			Filter = ((ESeverity) Enum.Parse(typeof(ESeverity), config.Value(prefix + Configuration.BaseConfig.SourceItemAttribute + ConfigFilter, Filter.ToString())));
+			Filter = ((ESeverity)Enum.Parse(typeof(ESeverity), config.Value(prefix + Configuration.BaseConfig.SourceItemAttribute + ConfigFilter, Filter.ToString())));
 			DateFormat = config.Value(prefix + Configuration.BaseConfig.SourceItemAttribute + ConfigDateFormat, DateFormat);
 			StringFormat = config.Value(prefix + Configuration.BaseConfig.SourceItemAttribute + ConfigStringFormat, StringFormat);
 		}
@@ -110,6 +110,7 @@ namespace Bdt.Shared.Logs
 			{
 			}
 			// ReSharper restore EmptyGeneralCatchClause
+
 			Writer = null;
 		}
 

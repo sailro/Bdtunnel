@@ -51,7 +51,7 @@ namespace Bdt.Client.Commands
 
 		public override string[] ParametersName
 		{
-			get { return new string[] {}; }
+			get { return new string[] { }; }
 		}
 
 		public void LogObject(ILogger logger, int indent, object obj)
@@ -71,6 +71,7 @@ namespace Bdt.Client.Commands
 					LogObject(logger, indent + 2, item);
 					index++;
 				}
+
 				logger.Log(this, indentstr + "}", ESeverity.INFO);
 			}
 			else

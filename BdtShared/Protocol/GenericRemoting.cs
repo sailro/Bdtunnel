@@ -81,7 +81,7 @@ namespace Bdt.Shared.Protocol
 
 		public override ITunnel GetTunnel()
 		{
-			return (ITunnel) Activator.GetObject(typeof(ITunnel), ServerURL);
+			return (ITunnel)Activator.GetObject(typeof(ITunnel), ServerURL);
 		}
 
 		protected Hashtable CreateClientChannelProperties()

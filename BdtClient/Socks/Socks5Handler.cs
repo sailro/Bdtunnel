@@ -76,6 +76,7 @@ namespace Bdt.Client.Socks
 					methodAccepted = (Buffer[i + 2] == Socks5NoAuthenticationRequired);
 					i += 1;
 				}
+
 				handshake[0] = 5; // version
 
 				if (!methodAccepted)
@@ -108,7 +109,7 @@ namespace Bdt.Client.Socks
 						switch (addressType)
 						{
 							case Socks5Ipv4:
-								RemotePort = 256*Convert.ToInt32(request[8]) + Convert.ToInt32(request[9]);
+								RemotePort = 256 * Convert.ToInt32(request[8]) + Convert.ToInt32(request[9]);
 								Address = request[4] + "." + request[5] + "." + request[6] + "." + request[7];
 								Reply[1] = Socks5Ok;
 								Array.Copy(request, 4, Reply, 4, 6);
@@ -117,7 +118,7 @@ namespace Bdt.Client.Socks
 							case Socks5Domain:
 								int length = request[4];
 								Address = new string(System.Text.Encoding.ASCII.GetChars(request), 5, length);
-								RemotePort = 256*Convert.ToInt32(request[length + 5]) + Convert.ToInt32(request[length + 6]);
+								RemotePort = 256 * Convert.ToInt32(request[length + 5]) + Convert.ToInt32(request[length + 6]);
 								Reply[1] = Socks5Ok;
 								Array.Clear(Reply, 4, 6);
 								Log(Strings.SOCKS5_REQUEST_HANDLED, ESeverity.DEBUG);
@@ -129,6 +130,7 @@ namespace Bdt.Client.Socks
 								Log(Strings.SOCKS5_ADDRESS_TYPE_UNKNOWN, ESeverity.WARN);
 								break;
 						}
+
 						break;
 					case Socks5BindCommand:
 						Log(Strings.SOCKS_BIND_UNSUPPORTED, ESeverity.WARN);

@@ -44,7 +44,7 @@ namespace Bdt.Client.Socks
 
 				if (Command != Socks4BindCommand)
 				{
-					RemotePort = 256*Convert.ToInt32(Buffer[2]) + Convert.ToInt32(Buffer[3]);
+					RemotePort = 256 * Convert.ToInt32(Buffer[2]) + Convert.ToInt32(Buffer[3]);
 					var position = -1;
 					for (var i = 8; i <= Buffer.Length - 1; i++)
 					{
@@ -54,6 +54,7 @@ namespace Bdt.Client.Socks
 						position = i;
 						break;
 					}
+
 					Address = position >= 0 ? new string(Encoding.ASCII.GetChars(Buffer), position + 1, Buffer.Length - position - 2) : string.Empty;
 
 					Reply[1] = Socks4Ok;

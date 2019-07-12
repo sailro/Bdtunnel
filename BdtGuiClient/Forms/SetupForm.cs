@@ -158,7 +158,7 @@ namespace Bdt.GuiClient.Forms
 		private void Apply_Click(object sender, EventArgs e)
 		{
 			_clientConfig.ServiceName = ServiceNameEdit.Text;
-			_clientConfig.ServiceProtocol = ((ProtocolItem) ServiceProtocolEdit.SelectedItem).Protocol.FullName;
+			_clientConfig.ServiceProtocol = ((ProtocolItem)ServiceProtocolEdit.SelectedItem).Protocol.FullName;
 			_clientConfig.ServiceAddress = ServiceAddressEdit.Text;
 			_clientConfig.ServicePort = Convert.ToInt32(ServicePortEdit.Value);
 			_clientConfig.ServiceUserName = ServiceUserEdit.Text;
@@ -178,20 +178,12 @@ namespace Bdt.GuiClient.Forms
 			_clientConfig.ProxyAddress = ProxyAddressEdit.Text;
 			_clientConfig.ProxyPort = Convert.ToInt32(ProxyPortEdit.Value);
 
-			_clientConfig.ConsoleLogger = new NullConsoleLogger(ConsoleLogDateFormatEdit.Text, (ESeverity) ConsoleLogFilterEdit.SelectedItem)
-			{
-				Enabled = ConsoleLogEnabledEdit.Checked,
-				StringFormat = ConsoleLogStringFormatEdit.Text
-			};
+			_clientConfig.ConsoleLogger = new NullConsoleLogger(ConsoleLogDateFormatEdit.Text, (ESeverity)ConsoleLogFilterEdit.SelectedItem) {Enabled = ConsoleLogEnabledEdit.Checked, StringFormat = ConsoleLogStringFormatEdit.Text};
 			_clientConfig.FileLogger = new NullFileLogger(FileLogNameEdit.Text, FileLogAppendEdit.Checked, FileLogDateFormatEdit.Text,
-				(ESeverity) FileLogFilterEdit.SelectedItem)
-			{
-				Enabled = FileLogEnabledEdit.Checked,
-				StringFormat = FileLogStringFormatEdit.Text
-			};
+				(ESeverity)FileLogFilterEdit.SelectedItem) {Enabled = FileLogEnabledEdit.Checked, StringFormat = FileLogStringFormatEdit.Text};
 
 			_clientConfig.Forwards.Clear();
-			foreach (var forward in (BindingList<PortForward>) BindingSource.DataSource)
+			foreach (var forward in (BindingList<PortForward>)BindingSource.DataSource)
 				if (!_clientConfig.Forwards.ContainsKey(forward.LocalPort))
 					_clientConfig.Forwards.Add(forward.LocalPort, forward);
 		}

@@ -53,6 +53,7 @@ namespace Bdt.Client.Socks
 				Log(ex.Message, ESeverity.ERROR);
 				Log(ex.ToString(), ESeverity.DEBUG);
 			}
+
 			if (handler != null)
 			{
 // ReSharper disable ObjectCreationAsStatement

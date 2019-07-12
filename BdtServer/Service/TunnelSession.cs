@@ -82,6 +82,7 @@ namespace Bdt.Server.Service
 				response.Connected = false;
 				response.DataAvailable = false;
 			}
+
 			response.Success = true;
 			response.Message = string.Empty;
 			return connection;

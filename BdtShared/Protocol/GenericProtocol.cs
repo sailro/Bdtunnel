@@ -40,7 +40,7 @@ namespace Bdt.Shared.Protocol
 
 		public static GenericProtocol GetInstance(SharedConfig config)
 		{
-			var protoObj = (GenericProtocol) typeof(GenericProtocol).Assembly.CreateInstance(config.ServiceProtocol);
+			var protoObj = (GenericProtocol)typeof(GenericProtocol).Assembly.CreateInstance(config.ServiceProtocol);
 			if (protoObj == null)
 				throw new NotSupportedException(config.ServiceProtocol);
 

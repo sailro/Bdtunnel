@@ -51,6 +51,7 @@ namespace Bdt.Shared.Logs
 			{
 				Logger.Log(sender, message, severity);
 			}
+
 			if (GlobalLogger != null)
 			{
 				GlobalLogger.Log(sender, message, severity);

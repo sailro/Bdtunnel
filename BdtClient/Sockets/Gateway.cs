@@ -132,6 +132,7 @@ namespace Bdt.Client.Sockets
 						{
 							HandleError(ex, true);
 						}
+
 						if (count > 0)
 						{
 							var transBuffer = new byte[count];
@@ -148,7 +149,7 @@ namespace Bdt.Client.Sockets
 					}
 					else
 					{
-						polltime = Convert.ToInt32(Math.Round(StatePollingFactor*polltime));
+						polltime = Convert.ToInt32(Math.Round(StatePollingFactor * polltime));
 						polltime = Math.Min(polltime, StatePollingMaxTime);
 					}
 
@@ -167,6 +168,7 @@ namespace Bdt.Client.Sockets
 							{
 								HandleError(ex, true);
 							}
+
 							polltime = StatePollingMinTime;
 						}
 						else
@@ -179,8 +181,10 @@ namespace Bdt.Client.Sockets
 				{
 					_mre.Set();
 				}
+
 				adjpolltime = Convert.ToInt32(DateTime.Now.Subtract(startmarker).TotalMilliseconds);
 			}
+
 			Disconnect();
 		}
 

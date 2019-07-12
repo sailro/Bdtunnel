@@ -49,7 +49,7 @@ namespace Bdt.Client.Socks
 
 				if (Command != Socks4BindCommand)
 				{
-					RemotePort = 256*Convert.ToInt32(Buffer[2]) + Convert.ToInt32(Buffer[3]);
+					RemotePort = 256 * Convert.ToInt32(Buffer[2]) + Convert.ToInt32(Buffer[3]);
 					Address = Buffer[4] + "." + Buffer[5] + "." + Buffer[6] + "." + Buffer[7];
 
 					Reply[1] = Socks4Ok;

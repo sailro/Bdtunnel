@@ -93,6 +93,7 @@ namespace Bdt.Client.Sockets
 				{
 					Log(ex.Message, ESeverity.ERROR);
 				}
+
 				Log(ex.ToString(), ESeverity.DEBUG);
 			}
 			catch (Exception ex)

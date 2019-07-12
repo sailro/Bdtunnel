@@ -118,7 +118,7 @@ namespace Bdt.Shared.Runtime
 				return;
 
 			for (var i = 0; i < bytes.Length; i++)
-				bytes[i] = (byte) (bytes[i] ^ Convert.ToByte(key%256));
+				bytes[i] = (byte)(bytes[i] ^ Convert.ToByte(key % 256));
 		}
 	}
 }

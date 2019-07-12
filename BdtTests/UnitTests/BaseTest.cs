@@ -44,7 +44,9 @@ namespace Bdt.Tests.UnitTests
 // ReSharper disable UnusedMember.Global
 			set
 // ReSharper restore UnusedMember.Global
-			{ _testContextInstance = value; }
+			{
+				_testContextInstance = value;
+			}
 		}
 
 		private static IEnumerable<Project> AllProjects
@@ -59,7 +61,7 @@ namespace Bdt.Tests.UnitTests
 
 		protected IEnumerable<Translation> AllTranslationsExceptDefault
 		{
-			get { return Enum.GetValues(typeof(Translation)).OfType<Translation>().Where(t => ((int) t) != (int) Translation.Default); }
+			get { return Enum.GetValues(typeof(Translation)).OfType<Translation>().Where(t => ((int)t) != (int)Translation.Default); }
 		}
 
 		private string GetProjectDirectory(Project project)
@@ -72,7 +74,7 @@ namespace Bdt.Tests.UnitTests
 #if DEBUG
 			return Path.Combine(Path.Combine(GetProjectDirectory(project), directory), "Debug");
 #else
-            return Path.Combine(Path.Combine(GetProjectDirectory(project), directory), "Release");
+			return Path.Combine(Path.Combine(GetProjectDirectory(project), directory), "Release");
 #endif
 		}
 
@@ -88,7 +90,7 @@ namespace Bdt.Tests.UnitTests
 			dic.Clear();
 			while (enumerator.MoveNext())
 			{
-				dic.Add((K) enumerator.Key, (V) enumerator.Value);
+				dic.Add((K)enumerator.Key, (V)enumerator.Value);
 			}
 		}
 

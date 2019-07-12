@@ -33,7 +33,7 @@ namespace Bdt.Tests.UnitTests
 		{
 			for (var key = 0; key < byte.MaxValue; key++)
 			{
-				for (var datalength = 0; datalength < 1024; datalength = datalength == 0 ? 1 : datalength*2)
+				for (var datalength = 0; datalength < 1024; datalength = datalength == 0 ? 1 : datalength * 2)
 				{
 					var buffer = new byte[datalength];
 					var outbuffer = new byte[datalength];

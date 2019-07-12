@@ -119,7 +119,7 @@ namespace Bdt.Client.Runtime
 			if (!((protocol) is IProxyCompatible))
 				return;
 
-			var proxyProtocol = ((IProxyCompatible) protocol);
+			var proxyProtocol = ((IProxyCompatible)protocol);
 			IWebProxy proxy;
 
 			if (ClientConfig.ProxyEnabled)
@@ -138,12 +138,7 @@ namespace Bdt.Client.Runtime
 					}
 					else
 					{
-						var netCreds = new NetworkCredential
-						{
-							UserName = ClientConfig.ProxyUserName,
-							Password = ClientConfig.ProxyPassword,
-							Domain = ClientConfig.ProxyDomain
-						};
+						var netCreds = new NetworkCredential {UserName = ClientConfig.ProxyUserName, Password = ClientConfig.ProxyPassword, Domain = ClientConfig.ProxyDomain};
 						proxy.Credentials = netCreds;
 					}
 				}
@@ -164,7 +159,7 @@ namespace Bdt.Client.Runtime
 			}
 
 			proxyProtocol.Proxy = proxy;
-			Log(webProxy != null ? string.Format(Strings.USING_PROXY, ((WebProxy) proxy).Address, proxy) : Strings.NOT_USING_PROXY, ESeverity.INFO);
+			Log(webProxy != null ? string.Format(Strings.USING_PROXY, ((WebProxy)proxy).Address, proxy) : Strings.NOT_USING_PROXY, ESeverity.INFO);
 		}
 
 		private static string InputString(string msg, bool hide)
@@ -189,6 +184,7 @@ namespace Bdt.Client.Runtime
 							Console.Write(@" ");
 							result.Remove(result.Length - 1, 1);
 						}
+
 						Console.SetCursorPosition(left + result.Length, top);
 						break;
 					default:
@@ -197,6 +193,7 @@ namespace Bdt.Client.Runtime
 							result.Append(cki.KeyChar);
 							Console.Write(hide ? '*' : cki.KeyChar);
 						}
+
 						break;
 				}
 			} while (cki.Key != ConsoleKey.Enter);
@@ -242,7 +239,7 @@ namespace Bdt.Client.Runtime
 					var webResponse = ex.Response as HttpWebResponse;
 					if (webResponse != null && Protocol is IProxyCompatible)
 					{
-						var proxyProtocol = (IProxyCompatible) Protocol;
+						var proxyProtocol = (IProxyCompatible)Protocol;
 						if (webResponse.StatusCode != HttpStatusCode.ProxyAuthenticationRequired)
 							continue;
 
@@ -262,6 +259,7 @@ namespace Bdt.Client.Runtime
 				{
 					Log(Strings.VERSION_MISMATCH, ESeverity.WARN);
 				}
+
 				Log(response.Message, ESeverity.INFO);
 				if (!response.Success)
 					return;

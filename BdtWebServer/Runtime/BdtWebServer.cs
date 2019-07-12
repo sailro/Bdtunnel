@@ -66,7 +66,7 @@ namespace Bdt.WebServer.Runtime
 
 		public void Start()
 		{
-			LoadConfiguration(new String[] {});
+			LoadConfiguration(new String[] { });
 
 			Log(string.Format(Server.Resources.Strings.SERVER_TITLE, GetType().Assembly.GetName().Version.ToString(3)), ESeverity.INFO);
 			Log(FrameworkVersion(), ESeverity.INFO);

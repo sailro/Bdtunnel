@@ -54,6 +54,7 @@ namespace Bdt.Shared.Protocol
 						break;
 					}
 				}
+
 				if (clientChannelFieldInfo == null)
 				{
 					// Thanks MONO 2.0 ...
@@ -61,7 +62,7 @@ namespace Bdt.Shared.Protocol
 					return null;
 				}
 
-				var channel = ((HttpClientChannel) clientChannelFieldInfo.GetValue(ClientChannel));
+				var channel = ((HttpClientChannel)clientChannelFieldInfo.GetValue(ClientChannel));
 				return channel;
 			}
 		}
@@ -78,7 +79,7 @@ namespace Bdt.Shared.Protocol
 					return null;
 				}
 
-				return (IWebProxy) proxyObjectFieldInfo.GetValue(ProxyChannel);
+				return (IWebProxy)proxyObjectFieldInfo.GetValue(ProxyChannel);
 			}
 			set
 			{

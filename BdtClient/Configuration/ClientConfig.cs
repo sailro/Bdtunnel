@@ -116,6 +116,7 @@ namespace Bdt.Client.Configuration
 			{
 				attr.Value = value.ToString();
 			}
+
 			return attr;
 		}
 

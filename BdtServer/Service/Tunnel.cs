@@ -37,7 +37,7 @@ namespace Bdt.Server.Service
 	public sealed class Tunnel : MarshalByRefObject, ITunnel, ILogger
 	{
 		private const int BufferSize = 32768;
-		private const int PollingTime = 1000*60; // msec -> 1m
+		private const int PollingTime = 1000 * 60; // msec -> 1m
 
 		private const string ConfigUserTemplate = "users/{0}@";
 		private const string ConfigUserEnabled = "enabled";
@@ -148,6 +148,7 @@ namespace Bdt.Server.Service
 						stimeout = DefaultSessionTimeoutDelay;
 						Log(string.Format(Strings.DEFAULT_SESSION_TIMEOUT, request.Username, stimeout), ESeverity.WARN);
 					}
+
 					if (ctimeout == int.MinValue)
 					{
 						ctimeout = DefaultConnectionTimeoutDelay;
@@ -220,14 +221,14 @@ namespace Bdt.Server.Service
 					connection.TcpClient = new TcpClient(request.Address, request.Port);
 					connection.Stream = connection.TcpClient.GetStream();
 
-					var endpoint = (IPEndPoint) connection.TcpClient.Client.RemoteEndPoint;
+					var endpoint = (IPEndPoint)connection.TcpClient.Client.RemoteEndPoint;
 					connection.Address = endpoint.Address.ToString();
 					connection.Port = endpoint.Port;
 					connection.LastAccess = DateTime.Now;
 					connection.ReadCount = 0;
 					connection.WriteCount = 0;
 
-					var enpoint = (IPEndPoint) connection.TcpClient.Client.RemoteEndPoint;
+					var enpoint = (IPEndPoint)connection.TcpClient.Client.RemoteEndPoint;
 					connection.Address = enpoint.Address.ToString();
 					connection.Port = enpoint.Port;
 
@@ -335,7 +336,7 @@ namespace Bdt.Server.Service
 					{
 						response.Success = true;
 						response.Message = string.Empty;
-						response.Data = new byte[] {};
+						response.Data = new byte[] { };
 					}
 				}
 			}

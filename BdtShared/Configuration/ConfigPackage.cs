@@ -39,6 +39,7 @@ namespace Bdt.Shared.Configuration
 
 				return result;
 			}
+
 			return defaultValue;
 		}
 

@@ -30,13 +30,7 @@ namespace Bdt.Client.Commands
 	{
 		protected static IEnumerable<Command> GetCommands()
 		{
-			var result = new List<Command>
-			{
-				new HelpCommand(),
-				new KillConnectionCommand(),
-				new KillSessionCommand(),
-				new MonitorCommand()
-			};
+			var result = new List<Command> {new HelpCommand(), new KillConnectionCommand(), new KillSessionCommand(), new MonitorCommand()};
 			return result.ToArray();
 		}
 

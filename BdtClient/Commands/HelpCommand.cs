@@ -39,7 +39,7 @@ namespace Bdt.Client.Commands
 
 		public override string[] ParametersName
 		{
-			get { return new string[] {}; }
+			get { return new string[] { }; }
 		}
 
 		public override void Execute(string[] parameters, ILogger logger, ITunnel tunnel, int sid)

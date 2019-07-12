@@ -26,28 +26,28 @@ using Bdt.Client.Resources;
 
 namespace Bdt.Client.Sockets
 {
-    public class GatewayServer : TcpServer
-    {
-	    private readonly ITunnel _tunnel;
-	    private readonly string _address;
-	    private readonly int _remoteport;
-	    private readonly int _sid;
+	public class GatewayServer : TcpServer
+	{
+		private readonly ITunnel _tunnel;
+		private readonly string _address;
+		private readonly int _remoteport;
+		private readonly int _sid;
 
-        public GatewayServer(int localport, bool shared, int remoteport, string address, ITunnel tunnel, int sid) : base(localport, shared)
-        {
-            Log(string.Format(Strings.FORWARDING, Ip, localport, address, remoteport), ESeverity.INFO);
+		public GatewayServer(int localport, bool shared, int remoteport, string address, ITunnel tunnel, int sid) : base(localport, shared)
+		{
+			Log(string.Format(Strings.FORWARDING, Ip, localport, address, remoteport), ESeverity.INFO);
 
-            _tunnel = tunnel;
-            _sid = sid;
-            _address = address;
-            _remoteport = remoteport;
-        }
+			_tunnel = tunnel;
+			_sid = sid;
+			_address = address;
+			_remoteport = remoteport;
+		}
 
-        protected override void OnNewConnection(TcpClient client)
-        {
+		protected override void OnNewConnection(TcpClient client)
+		{
 // ReSharper disable ObjectCreationAsStatement
-            new Gateway(client, _tunnel, _sid, _address, _remoteport);
+			new Gateway(client, _tunnel, _sid, _address, _remoteport);
 // ReSharper restore ObjectCreationAsStatement
-        }
-    }
+		}
+	}
 }

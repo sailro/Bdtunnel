@@ -57,7 +57,7 @@ namespace Bdt.Tests.UnitTests
 			server = new TestServer(TestContext, config);
 			client = new TestClient(TestContext, config);
 
-			var args = new String[] {};
+			var args = new String[] { };
 			server.LoadConfiguration(args);
 			client.LoadConfiguration(args);
 
@@ -120,7 +120,7 @@ namespace Bdt.Tests.UnitTests
 
 			var totalread = 0;
 
-			for (var datalength = 0; datalength < 4096; datalength = (datalength == 0) ? 1 : datalength*2)
+			for (var datalength = 0; datalength < 4096; datalength = (datalength == 0) ? 1 : datalength * 2)
 			{
 				var buffer = new byte[datalength];
 				var outbuffer = new byte[datalength];
@@ -144,6 +144,7 @@ namespace Bdt.Tests.UnitTests
 					Array.Copy(rear.Data, 0, outbuffer, readcount, rear.Data.Length);
 					readcount += rear.Data.Length;
 				}
+
 				Assert.AreEqual(datalength, readcount);
 
 				for (var i = 0; i < datalength; i++)
@@ -320,6 +321,7 @@ namespace Bdt.Tests.UnitTests
 				if (receiver != null)
 					receiver.StopListening(null);
 			}
+
 			foreach (var server in Servers)
 			{
 				try
@@ -332,6 +334,7 @@ namespace Bdt.Tests.UnitTests
 				}
 // ReSharper restore EmptyGeneralCatchClause
 			}
+
 			Servers.Clear();
 		}
 

@@ -131,6 +131,7 @@ namespace Bdt.GuiClient.Forms
 				_client.Log(e.ToString(), ESeverity.DEBUG);
 				StopClient(null);
 			}
+
 			NotifyContextMenu_Opened(this, EventArgs.Empty);
 		}
 

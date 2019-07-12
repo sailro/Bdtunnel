@@ -44,6 +44,7 @@ namespace Bdt.Shared.Configuration
 						if (attr.Value != string.Empty)
 							SetValue(path + subnode.Name + SourceItemAttribute + attr.Name, attr.Value);
 					}
+
 					if (subnode.InnerText != string.Empty)
 						SetValue(path + subnode.Name, subnode.InnerText);
 				}

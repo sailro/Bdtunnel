@@ -94,7 +94,7 @@ namespace Bdt.GuiClient.Runtime
 
 		private void HandleError(object sender, UnhandledExceptionEventArgs e)
 		{
-			HandleError((Exception) e.ExceptionObject);
+			HandleError((Exception)e.ExceptionObject);
 		}
 
 		private void HandleError(object sender, ThreadExceptionEventArgs e)

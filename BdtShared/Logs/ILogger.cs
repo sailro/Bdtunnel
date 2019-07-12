@@ -28,6 +28,7 @@ namespace Bdt.Shared.Logs
 		INFO = 2,
 		WARN = 3,
 		ERROR = 4,
+
 		// ReSharper disable UnusedMember.Global
 		FATAL = 5
 		// ReSharper restore UnusedMember.Global

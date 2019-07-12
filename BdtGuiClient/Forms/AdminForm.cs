@@ -73,7 +73,7 @@ namespace Bdt.GuiClient.Forms
 
 					if (Sessions.SelectedRows.Count > 0)
 					{
-						_currentsession = (Session) Sessions.SelectedRows[0].DataBoundItem;
+						_currentsession = (Session)Sessions.SelectedRows[0].DataBoundItem;
 						ConnectionsBindingSource.DataSource = _currentsession.Connections;
 					}
 					else
@@ -87,7 +87,6 @@ namespace Bdt.GuiClient.Forms
 				BtRefresh.Enabled = BtClose.Enabled = true;
 				UseWaitCursor = false;
 			}
-
 		}
 
 		private void Sessions_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -95,7 +94,7 @@ namespace Bdt.GuiClient.Forms
 			if (e.RowIndex < 0 || e.RowIndex >= Sessions.Rows.Count)
 				return;
 
-			_currentsession = (Session) Sessions.Rows[e.RowIndex].DataBoundItem;
+			_currentsession = (Session)Sessions.Rows[e.RowIndex].DataBoundItem;
 			ConnectionsBindingSource.DataSource = _currentsession.Connections;
 		}
 
@@ -103,7 +102,7 @@ namespace Bdt.GuiClient.Forms
 		{
 			foreach (DataGridViewRow row in Sessions.SelectedRows)
 			{
-				var session = (Session) row.DataBoundItem;
+				var session = (Session)row.DataBoundItem;
 				int targetsid;
 
 				if (!int.TryParse(session.Sid, System.Globalization.NumberStyles.HexNumber, null, out targetsid))
@@ -119,6 +118,7 @@ namespace Bdt.GuiClient.Forms
 						HandleResponse(response);
 				}
 			}
+
 			RefreshSessions();
 		}
 
@@ -126,7 +126,7 @@ namespace Bdt.GuiClient.Forms
 		{
 			foreach (DataGridViewRow row in Connections.SelectedRows)
 			{
-				var connection = (Connection) row.DataBoundItem;
+				var connection = (Connection)row.DataBoundItem;
 				int targetsid;
 				int targetcid;
 
@@ -138,6 +138,7 @@ namespace Bdt.GuiClient.Forms
 						HandleResponse(response);
 				}
 			}
+
 			RefreshSessions();
 		}
 
@@ -158,7 +159,7 @@ namespace Bdt.GuiClient.Forms
 
 		private void Sessions_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
-			var session = (Session) Sessions.Rows[e.RowIndex].DataBoundItem;
+			var session = (Session)Sessions.Rows[e.RowIndex].DataBoundItem;
 			if (session.Sid == _sidhex)
 				e.CellStyle.Font = new Font(e.CellStyle.Font, FontStyle.Bold);
 		}
