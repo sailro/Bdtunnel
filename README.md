@@ -1,4 +1,4 @@
-Bdtunnel
+Bdtunnel [![Build Status](https://dev.azure.com/sailro/Bdtunnel/_apis/build/status/sailro.Bdtunnel?branchName=master)](https://dev.azure.com/sailro/Bdtunnel/_build/latest?definitionId=3&branchName=master)
 ========
 
 BoutDuTunnel is a useful software for users behind restrictive firewalls and is intended to use network services that normally you cannot. You need a server located outside the firewalled area (for example your computer with permanent connection at home) which have full access to the Internet. BoutDuTunnel is then able to create virtual connections tunnelled in HTTP requests. All data is scrambled to preserve anonymity.
