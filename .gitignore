@@ -13,5 +13,6 @@
 /BdtTests/obj
 /BdtWebServer/bin
 /BdtWebServer/obj
-/*.suo
-/BdtClient/*.user
+*.suo
+*.user
+/.vs/
