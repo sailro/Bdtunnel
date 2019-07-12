@@ -81,7 +81,7 @@ namespace Bdt.WebServer.Runtime
 
 		protected override BaseLogger CreateLoggers()
 		{
-			var xmlConfig = new XMLConfig(ConfigFile, 1);
+			var xmlConfig = new XmlConfig(ConfigFile, 1);
 			Configuration = new ConfigPackage();
 			Configuration.AddSource(xmlConfig);
 
