@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+    <Authors>Sebastien Lebreton</Authors>
+    <VersionPrefix>1.6.0</VersionPrefix>
+    <Copyright>Sebastien Lebreton</Copyright>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Description>BoutDuTunnel Web server</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bdt.Shared\Bdt.Shared.csproj" />
+    <ProjectReference Include="..\Bdt.Server\Bdt.Server.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="System.Web" />
+  </ItemGroup>  
+  
+  <ItemGroup>
+    <Compile Update="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.*.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>  
+
+</Project>

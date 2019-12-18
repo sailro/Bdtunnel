@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MAINFORM_CLIENT_STARTED" xml:space="preserve">
+    <value>Client started</value>
+  </data>
+  <data name="MAINFORM_CLIENT_STARTING" xml:space="preserve">
+    <value>Client starting...</value>
+  </data>
+  <data name="MAINFORM_CLIENT_STOPPED" xml:space="preserve">
+    <value>Client stopped</value>
+  </data>
+  <data name="MAINFORM_CLIENT_STOPPING" xml:space="preserve">
+    <value>Client stopping...</value>
+  </data>
+  <data name="MAINFORM_CLIENT_TITLE" xml:space="preserve">
+    <value>BoutDuTunnel Client v{0}</value>
+    <comment>Version</comment>
+  </data>
+  <data name="MAINFORM_CONFIGURE_CLIENT" xml:space="preserve">
+    <value>Configure client...</value>
+  </data>
+  <data name="MAINFORM_EXIT" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="MAINFORM_PLEASE_WAIT" xml:space="preserve">
+    <value>Please wait until processing is complete...</value>
+  </data>
+  <data name="MAINFORM_START_CLIENT" xml:space="preserve">
+    <value>Start client</value>
+  </data>
+  <data name="MAINFORM_STOP_CLIENT" xml:space="preserve">
+    <value>Stop client</value>
+  </data>
+  <data name="MAINFORM_VIEW_LOGS" xml:space="preserve">
+    <value>View logs</value>
+  </data>
+  <data name="PROXYFORM_APPLY" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="PROXYFORM_AUTH_REQUESTED" xml:space="preserve">
+    <value>Proxy authentication required:</value>
+  </data>
+  <data name="PROXYFORM_CANCEL" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="PROXYFORM_DOMAIN" xml:space="preserve">
+    <value>Domain</value>
+  </data>
+  <data name="PROXYFORM_PASSWORD" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PROXYFORM_TITLE" xml:space="preserve">
+    <value>BoutDuTunnel (Client) - Authentication</value>
+  </data>
+  <data name="PROXYFORM_USER" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="SETUPFORM_ADD_NEW" xml:space="preserve">
+    <value>Add new</value>
+  </data>
+  <data name="SETUPFORM_ADDRESS" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="SETUPFORM_APPEND_FILE" xml:space="preserve">
+    <value>Append to file</value>
+  </data>
+  <data name="SETUPFORM_APPLY" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="SETUPFORM_AUTHENTIFICATION" xml:space="preserve">
+    <value>Authentication</value>
+  </data>
+  <data name="SETUPFORM_AUTO" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="SETUPFORM_CANCEL" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="SETUPFORM_CONFIGURATION" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+  <data name="SETUPFORM_CONNECT_THROUGH_PROXY" xml:space="preserve">
+    <value>Connect through HTTP proxy</value>
+  </data>
+  <data name="SETUPFORM_CONSOLE" xml:space="preserve">
+    <value>Console (unused by GUI client)</value>
+  </data>
+  <data name="SETUPFORM_CURRENT_POSITION" xml:space="preserve">
+    <value>Current position</value>
+  </data>
+  <data name="SETUPFORM_DATE_FORMAT" xml:space="preserve">
+    <value>Date format</value>
+  </data>
+  <data name="SETUPFORM_DELETE" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="SETUPFORM_DOMAIN" xml:space="preserve">
+    <value>Domain</value>
+  </data>
+  <data name="SETUPFORM_ENABLED" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="SETUPFORM_FILE" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="SETUPFORM_FILE_FILTER" xml:space="preserve">
+    <value>Logfiles|*.log|All files|*.*</value>
+  </data>
+  <data name="SETUPFORM_FILTER" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="SETUPFORM_FORMAT" xml:space="preserve">
+    <value>Format</value>
+  </data>
+  <data name="SETUPFORM_FORWARDS" xml:space="preserve">
+    <value>Forwards</value>
+  </data>
+  <data name="SETUPFORM_HTTP_PROXY" xml:space="preserve">
+    <value>HTTP Proxy</value>
+  </data>
+  <data name="SETUPFORM_ITEM_COUNT" xml:space="preserve">
+    <value>Item count</value>
+  </data>
+  <data name="SETUPFORM_ITEM_COUNT_OF" xml:space="preserve">
+    <value>of {0}</value>
+    <comment>Number</comment>
+  </data>
+  <data name="SETUPFORM_LOCAL_PORT" xml:space="preserve">
+    <value>Local port</value>
+  </data>
+  <data name="SETUPFORM_MOVE_DOWN" xml:space="preserve">
+    <value>Move down</value>
+  </data>
+  <data name="SETUPFORM_MOVE_FIRST" xml:space="preserve">
+    <value>Move to top</value>
+  </data>
+  <data name="SETUPFORM_MOVE_LAST" xml:space="preserve">
+    <value>Move to bottom</value>
+  </data>
+  <data name="SETUPFORM_MOVE_UP" xml:space="preserve">
+    <value>Move up</value>
+  </data>
+  <data name="SETUPFORM_NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="SETUPFORM_PASSWORD" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="SETUPFORM_PORT" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="SETUPFORM_PROTOCOL" xml:space="preserve">
+    <value>Protocol</value>
+  </data>
+  <data name="SETUPFORM_REMOTE_PORT" xml:space="preserve">
+    <value>Remote port</value>
+  </data>
+  <data name="SETUPFORM_SHARED" xml:space="preserve">
+    <value>Shared</value>
+  </data>
+  <data name="SETUPFORM_SOCKS" xml:space="preserve">
+    <value>Socks</value>
+  </data>
+  <data name="SETUPFORM_SOCKS_SERVER_ENABLED" xml:space="preserve">
+    <value>Enable Socks server</value>
+  </data>
+  <data name="SETUPFORM_SOCKS_SERVER_SHARED" xml:space="preserve">
+    <value>Share Socks server</value>
+  </data>
+  <data name="SETUPFORM_TITLE" xml:space="preserve">
+    <value>BoutDuTunnel (Client) - Configuration</value>
+  </data>
+  <data name="SETUPFORM_TUNNEL" xml:space="preserve">
+    <value>Tunnel</value>
+  </data>
+  <data name="SETUPFORM_USER" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="SETUPFORM_HTTP_BINARY_REMOTING" xml:space="preserve">
+    <value>HTTP binary stream</value>
+  </data>
+  <data name="SETUPFORM_HTTP_SOAP_REMOTING" xml:space="preserve">
+    <value>HTTP SOAP stream</value>
+  </data>
+  <data name="SETUPFORM_INVALID_INPUT" xml:space="preserve">
+    <value>Invalid input</value>
+  </data>
+  <data name="SETUPFORM_INVALID_PORT" xml:space="preserve">
+    <value>Port number must be set between {0} and {1}</value>
+    <comment>Min Port, Max Port</comment>
+  </data>
+  <data name="SETUPFORM_IPC_REMOTING" xml:space="preserve">
+    <value>Local binary stream</value>
+  </data>
+  <data name="SETUPFORM_TCP_REMOTING" xml:space="preserve">
+    <value>TCP binary stream</value>
+  </data>
+  <data name="SETUPFORM_HTTPS_BINARY_REMOTING" xml:space="preserve">
+    <value>HTTPS binary stream</value>
+  </data>
+  <data name="SETUPFORM_HTTPS_SOAP_REMOTING" xml:space="preserve">
+    <value>HTTPS SOAP stream</value>
+  </data>
+  <data name="ADMINFORM_ADDRESS" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="ADMINFORM_ADMIN" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="ADMINFORM_CID" xml:space="preserve">
+    <value>Cid</value>
+  </data>
+  <data name="ADMINFORM_CLOSE" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ADMINFORM_CONNECTIONS" xml:space="preserve">
+    <value>Connections opened with selected session</value>
+  </data>
+  <data name="ADMINFORM_HOST" xml:space="preserve">
+    <value>Host</value>
+  </data>
+  <data name="ADMINFORM_KILL_CONNECTION" xml:space="preserve">
+    <value>Kill connection</value>
+  </data>
+  <data name="ADMINFORM_KILL_OWN_SESSION" xml:space="preserve">
+    <value>You can't kill your active session</value>
+  </data>
+  <data name="ADMINFORM_KILL_SESSION" xml:space="preserve">
+    <value>Kill session</value>
+  </data>
+  <data name="ADMINFORM_LAST_ACCESS" xml:space="preserve">
+    <value>LastAccess</value>
+  </data>
+  <data name="ADMINFORM_LOGON" xml:space="preserve">
+    <value>Logon</value>
+  </data>
+  <data name="ADMINFORM_PORT" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="ADMINFORM_READ_COUNT" xml:space="preserve">
+    <value>ReadCount</value>
+  </data>
+  <data name="ADMINFORM_REFRESH" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ADMINFORM_SESSIONS" xml:space="preserve">
+    <value>Sessions</value>
+  </data>
+  <data name="ADMINFORM_SID" xml:space="preserve">
+    <value>Sid</value>
+  </data>
+  <data name="ADMINFORM_TITLE" xml:space="preserve">
+    <value>BoutDuTunnel (Client) - Administration</value>
+  </data>
+  <data name="ADMINFORM_USER" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="ADMINFORM_WRITE_COUNT" xml:space="preserve">
+    <value>WriteCount</value>
+  </data>
+  <data name="MAINFORM_ADMIN_SERVER" xml:space="preserve">
+    <value>Remote admin server...</value>
+  </data>
+  <data name="SETUPFORM_EXPECT100" xml:space="preserve">
+    <value>Use 100-Continue behavior (restart needed)</value>
+  </data>
+</root>

@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CLIENT_STARTED" xml:space="preserve">
+    <value>Client demarre, appuyez sur entree pour quitter...</value>
+  </data>
+  <data name="CLIENT_TITLE" xml:space="preserve">
+    <value>-=[ BoutDuTunnel Client v{0} - Sebastien LEBRETON ]=-</value>
+    <comment>Version</comment>
+  </data>
+  <data name="CONNECTION_FAILED" xml:space="preserve">
+    <value>Impossible de se connecter au serveur (verifiez les reglages du proxy)</value>
+  </data>
+  <data name="FORWARD_CANCELED" xml:space="preserve">
+    <value>Le port {0} est deja occupe, forward vers {1}:{2} annule</value>
+    <comment>Port, Adresse, Port distant</comment>
+  </data>
+  <data name="FORWARDING" xml:space="preserve">
+    <value>Forward de {0}:{1} vers {2}:{3}</value>
+    <comment>Ip, Port, Adresse distante, Port distant</comment>
+  </data>
+  <data name="INPUT_PROXY_DOMAIN" xml:space="preserve">
+    <value>Entrez le domaine: </value>
+  </data>
+  <data name="INPUT_PROXY_PASSWORD" xml:space="preserve">
+    <value>Entrez le mot de passe (masque): </value>
+  </data>
+  <data name="INPUT_PROXY_USERNAME" xml:space="preserve">
+    <value>Entrez l'utilisateur: </value>
+  </data>
+  <data name="INVALID_PORT" xml:space="preserve">
+    <value>Le port doit être compris entre {0} et {1}</value>
+    <comment>Port min, Port max</comment>
+  </data>
+  <data name="INVALID_SOCKS_HANDSHAKE" xml:space="preserve">
+    <value>Echange incorrect avec le gestionnaire Socks</value>
+  </data>
+  <data name="NO_VALID_SOCKS_HANDLER" xml:space="preserve">
+    <value>Aucun gestionnaire Socks adapte pour la requete</value>
+  </data>
+  <data name="NOT_USING_PROXY" xml:space="preserve">
+    <value>Connexion directe sans proxy</value>
+  </data>
+  <data name="PROXY_AUTH_REQUESTED" xml:space="preserve">
+    <value>Une authentification sur le proxy est necessaire</value>
+  </data>
+  <data name="SOCKS_BIND_UNSUPPORTED" xml:space="preserve">
+    <value>Requete Socks BIND non supportee</value>
+  </data>
+  <data name="SOCKS_SERVER_DISABLED" xml:space="preserve">
+    <value>Le port {0} est deja occupe, serveur Socks desactive</value>
+    <comment>Port</comment>
+  </data>
+  <data name="SOCKS_SERVER_STARTED" xml:space="preserve">
+    <value>Serveur Socks à l'ecoute {0}:{1}</value>
+    <comment>Ip, Port</comment>
+  </data>
+  <data name="SOCKS4_REQUEST_HANDLED" xml:space="preserve">
+    <value>Requete Socks4 supportee</value>
+  </data>
+  <data name="SOCKS4A_REQUEST_HANDLED" xml:space="preserve">
+    <value>Requete Socks4A supportee</value>
+  </data>
+  <data name="SOCKS5_ADDRESS_TYPE_UNKNOWN" xml:space="preserve">
+    <value>Requete Socks5: type d'adresse inconnu</value>
+  </data>
+  <data name="SOCKS5_BAD_VERSION" xml:space="preserve">
+    <value>Version Socks5 erronee</value>
+  </data>
+  <data name="SOCKS5_IPV6_UNSUPPORTED" xml:space="preserve">
+    <value>Adresses Socks5 IPV6 non supportees</value>
+  </data>
+  <data name="SOCKS5_MALFORMED_METHOD_ENUM" xml:space="preserve">
+    <value>Enumeration de methode Socks5 malformee</value>
+  </data>
+  <data name="SOCKS5_NO_AUTHENTICATION_SUPPORTED" xml:space="preserve">
+    <value>Aucune authentification Socks5 n'est supportee</value>
+  </data>
+  <data name="SOCKS5_REQUEST_HANDLED" xml:space="preserve">
+    <value>Requete Socks5 supportee</value>
+  </data>
+  <data name="SOCKS5_UDP_UNSUPPORTED" xml:space="preserve">
+    <value>Requete Socks5: UDP non supportee</value>
+  </data>
+  <data name="SOCKS5_UNKNOWN_COMMAND" xml:space="preserve">
+    <value>Requete Socks5: commande inconnue</value>
+  </data>
+  <data name="TCP_SERVER_DISABLED" xml:space="preserve">
+    <value>Le port {0} est deja occupe, serveur TCP desactive</value>
+    <comment>Port</comment>
+  </data>
+  <data name="USING_PROXY" xml:space="preserve">
+    <value>Connexion avec un proxy: {0}</value>
+    <comment>URL</comment>
+  </data>
+  <data name="VERSION_MISMATCH" xml:space="preserve">
+    <value>les versions du client et du serveur ne sont pas identiques</value>
+  </data>
+  <data name="CHECK_PARAMETERS" xml:space="preserve">
+    <value>Verifiez les parametres!</value>
+  </data>
+  <data name="CURRENT_SID" xml:space="preserve">
+    <value>Jeton de session courant (Sid): {0}</value>
+    <comment>Sid</comment>
+  </data>
+  <data name="HELP_HELP" xml:space="preserve">
+    <value>Affiche l'aide</value>
+  </data>
+  <data name="KILL_CONNECTION_HELP" xml:space="preserve">
+    <value>Supprime une connexion suivant son sid et cid</value>
+  </data>
+  <data name="KILL_SESSION_HELP" xml:space="preserve">
+    <value>Supprime une session suivant son sid</value>
+  </data>
+  <data name="MONITOR_HELP" xml:space="preserve">
+    <value>Affiche toutes les sessions et connexions</value>
+  </data>
+</root>
