@@ -159,7 +159,7 @@ namespace Bdt.Client.Runtime
 			}
 
 			proxyProtocol.Proxy = proxy;
-			Log(webProxy != null? string.Format(Strings.USING_PROXY, webProxy.Address) : Strings.NOT_USING_PROXY, ESeverity.INFO);
+			Log(webProxy != null ? string.Format(Strings.USING_PROXY, webProxy.Address) : Strings.NOT_USING_PROXY, ESeverity.INFO);
 		}
 
 		private static string InputString(string msg, bool hide)
