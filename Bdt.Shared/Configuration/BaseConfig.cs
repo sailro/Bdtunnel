@@ -32,7 +32,7 @@ namespace Bdt.Shared.Configuration
 
 		private readonly SortedList _values = new SortedList();
 
-		private int Priority { get; set; }
+		private int Priority { get; }
 
 		public string Value(string code, string defaultValue)
 		{
@@ -66,8 +66,7 @@ namespace Bdt.Shared.Configuration
 
 		public int CompareTo(object obj)
 		{
-			var baseConfig = obj as BaseConfig;
-			if (baseConfig != null)
+			if (obj is BaseConfig baseConfig)
 				return Priority - baseConfig.Priority;
 
 			return 0;

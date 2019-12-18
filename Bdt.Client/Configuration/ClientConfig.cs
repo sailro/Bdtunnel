@@ -19,7 +19,6 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -71,7 +70,7 @@ namespace Bdt.Client.Configuration
 		public bool SocksEnabled { get; set; }
 		public bool SocksShared { get; set; }
 		public int SocksPort { get; set; }
-		public Dictionary<int, PortForward> Forwards { get; private set; }
+		public Dictionary<int, PortForward> Forwards { get; }
 		public FileLogger FileLogger { get; set; }
 		public BaseLogger ConsoleLogger { get; set; }
 
@@ -100,7 +99,7 @@ namespace Bdt.Client.Configuration
 			for (var i = IPEndPoint.MinPort; i <= IPEndPoint.MaxPort; i++)
 			{
 				var forward = new PortForward(config, i);
-				if ((forward.RemotePort > 0) && (forward.Address != String.Empty))
+				if ((forward.RemotePort > 0) && (forward.Address != string.Empty))
 					Forwards.Add(i, forward);
 			}
 		}

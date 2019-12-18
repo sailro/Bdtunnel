@@ -25,7 +25,7 @@ namespace Bdt.Shared.Configuration
 {
 	public sealed class XmlConfig : BaseConfig
 	{
-		private string FileName { get; set; }
+		private string FileName { get; }
 
 		public XmlConfig(string filename, int priority) : base(priority)
 		{

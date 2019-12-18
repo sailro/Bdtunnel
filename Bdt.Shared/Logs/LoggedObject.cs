@@ -47,23 +47,14 @@ namespace Bdt.Shared.Logs
 
 		public virtual void Log(object sender, string message, ESeverity severity)
 		{
-			if (Logger != null)
-			{
-				Logger.Log(sender, message, severity);
-			}
+			Logger?.Log(sender, message, severity);
 
-			if (GlobalLogger != null)
-			{
-				GlobalLogger.Log(sender, message, severity);
-			}
+			GlobalLogger?.Log(sender, message, severity);
 		}
 
 		public void Close()
 		{
-			if (Logger != null)
-			{
-				Logger.Close();
-			}
+			Logger?.Close();
 		}
 	}
 }

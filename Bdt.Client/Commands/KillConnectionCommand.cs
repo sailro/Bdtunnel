@@ -45,11 +45,8 @@ namespace Bdt.Client.Commands
 
 		public override void Execute(string[] parameters, ILogger logger, ITunnel tunnel, int sid)
 		{
-			int targetsid;
-			int targetcid;
-
-			if (int.TryParse(parameters[0], System.Globalization.NumberStyles.HexNumber, null, out targetsid)
-			    && int.TryParse(parameters[1], System.Globalization.NumberStyles.HexNumber, null, out targetcid))
+			if (int.TryParse(parameters[0], System.Globalization.NumberStyles.HexNumber, null, out var targetsid)
+			    && int.TryParse(parameters[1], System.Globalization.NumberStyles.HexNumber, null, out var targetcid))
 			{
 				var response = tunnel.KillConnection(new KillConnectionRequest(targetsid, sid, targetcid));
 				logger.Log(this, response.Message, response.Success ? ESeverity.INFO : ESeverity.ERROR);

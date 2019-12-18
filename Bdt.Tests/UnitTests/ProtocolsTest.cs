@@ -57,7 +57,7 @@ namespace Bdt.Tests.UnitTests
 			server = new TestServer(TestContext, config);
 			client = new TestClient(TestContext, config);
 
-			var args = new String[] { };
+			var args = new string[] { };
 			server.LoadConfiguration(args);
 			client.LoadConfiguration(args);
 
@@ -102,13 +102,8 @@ namespace Bdt.Tests.UnitTests
 
 		private void TestProtocol<TP, TC>(int port) where TP : GenericProtocol where TC : IChannel
 		{
-			BdtServer server;
-			BdtClient client;
-			EchoServer echo;
-			GatewayServer gw;
-
-			Initialize<TP>(port, out server, out client, out echo, out gw);
-			foreach (IChannel channel in ChannelServices.RegisteredChannels)
+			Initialize<TP>(port, out var server, out var client, out var echo, out var gw);
+			foreach (var channel in ChannelServices.RegisteredChannels)
 			{
 				Assert.IsInstanceOfType(channel, typeof(TC));
 				Assert.IsTrue(channel.ChannelName == client.ClientConfig.ServiceName || channel.ChannelName == client.ClientConfig.ServiceName + ".Client");
@@ -194,18 +189,18 @@ namespace Bdt.Tests.UnitTests
 			// Test Login method with bad values - access denied
 			var bloginr = client.Tunnel.Login(new LoginRequest("foo", "foo"));
 			Assert.IsFalse(bloginr.Success);
-			Assert.IsTrue(bloginr.Message.Contains(String.Format(Server.Resources.Strings.ACCESS_DENIED, "foo")), "Deny access to non-user");
+			Assert.IsTrue(bloginr.Message.Contains(string.Format(Server.Resources.Strings.ACCESS_DENIED, "foo")), "Deny access to non-user");
 
 			// Test Login method with bad values - access denied (disabled)
 			bloginr = client.Tunnel.Login(new LoginRequest(TestConfigPackage.UserDisabledLogin, TestConfigPackage.UserDisabledPassword));
 			Assert.IsFalse(bloginr.Success);
-			Assert.IsTrue(bloginr.Message.Contains(String.Format(Server.Resources.Strings.ACCESS_DENIED, TestConfigPackage.UserDisabledLogin)),
+			Assert.IsTrue(bloginr.Message.Contains(string.Format(Server.Resources.Strings.ACCESS_DENIED, TestConfigPackage.UserDisabledLogin)),
 				"Deny access to disabled-user");
 
 			// Test Login method with bad values - access denied (bad password)
 			bloginr = client.Tunnel.Login(new LoginRequest(TestConfigPackage.UserLambdaLogin, "foo"));
 			Assert.IsFalse(bloginr.Success);
-			Assert.IsTrue(bloginr.Message.Contains(String.Format(Server.Resources.Strings.ACCESS_DENIED_BAD_PASSWORD, TestConfigPackage.UserLambdaLogin)),
+			Assert.IsTrue(bloginr.Message.Contains(string.Format(Server.Resources.Strings.ACCESS_DENIED_BAD_PASSWORD, TestConfigPackage.UserLambdaLogin)),
 				"Deny access - bad password");
 
 			// Test logout method with bad values (bad sid)
@@ -317,8 +312,7 @@ namespace Bdt.Tests.UnitTests
 			foreach (var channel in ChannelServices.RegisteredChannels)
 			{
 				ChannelServices.UnregisterChannel(channel);
-				var receiver = channel as IChannelReceiver;
-				if (receiver != null)
+				if (channel is IChannelReceiver receiver)
 					receiver.StopListening(null);
 			}
 

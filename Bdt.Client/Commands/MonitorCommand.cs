@@ -35,6 +35,9 @@ namespace Bdt.Client.Commands
 		{
 			int IComparer<PropertyInfo>.Compare(PropertyInfo a, PropertyInfo b)
 			{
+				if (a == null || b == null)
+					throw new ArgumentNullException();
+
 				return string.Compare(a.Name, b.Name, StringComparison.Ordinal);
 			}
 		}
@@ -59,8 +62,7 @@ namespace Bdt.Client.Commands
 			var indentstr = "";
 			while (indentstr.Length < indent) indentstr += " ";
 
-			var array = obj as Array;
-			if (array != null)
+			if (obj is Array array)
 			{
 				var objarray = array;
 				logger.Log(this, indentstr + "{", ESeverity.INFO);
@@ -84,12 +86,12 @@ namespace Bdt.Client.Commands
 					var value = prop.GetValue(obj, null);
 					if (value is Array)
 					{
-						logger.Log(this, indentstr + string.Format("{0}=", prop.Name), ESeverity.INFO);
+						logger.Log(this, indentstr + $"{prop.Name}=", ESeverity.INFO);
 						LogObject(logger, indent + 2, value);
 					}
 					else
 					{
-						logger.Log(this, indentstr + string.Format("{0}={1}", prop.Name, value), ESeverity.INFO);
+						logger.Log(this, indentstr + $"{prop.Name}={value}", ESeverity.INFO);
 					}
 				}
 			}

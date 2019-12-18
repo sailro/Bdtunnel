@@ -45,7 +45,7 @@ namespace Bdt.Shared.Protocol
 
 		protected override string ServerURL
 		{
-			get { return string.Format("tcp://{0}:{1}/{2}", Address, Port, Name); }
+			get { return $"tcp://{Address}:{Port}/{Name}"; }
 		}
 	}
 }

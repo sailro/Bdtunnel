@@ -74,8 +74,7 @@ namespace Bdt.Shared.Protocol
 		{
 			Log(string.Format(Strings.UNCONFIGURING_SERVER, GetType().Name, Port), ESeverity.INFO);
 			ChannelServices.UnregisterChannel(ServerChannel);
-			var channel = ServerChannel as IChannelReceiver;
-			if (channel != null)
+			if (ServerChannel is IChannelReceiver channel)
 				channel.StopListening(null);
 		}
 
@@ -86,7 +85,7 @@ namespace Bdt.Shared.Protocol
 
 		protected Hashtable CreateClientChannelProperties()
 		{
-			var properties = new Hashtable {{CfgName, string.Format("{0}.Client", Name)}};
+			var properties = new Hashtable {{CfgName, $"{Name}.Client"}};
 			properties.Add(CfgPortName, properties[CfgName]);
 			return properties;
 		}

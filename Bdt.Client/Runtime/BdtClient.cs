@@ -236,10 +236,8 @@ namespace Bdt.Client.Runtime
 				}
 				catch (WebException ex)
 				{
-					var webResponse = ex.Response as HttpWebResponse;
-					if (webResponse != null && Protocol is IProxyCompatible)
+					if (ex.Response is HttpWebResponse webResponse && Protocol is IProxyCompatible proxyProtocol)
 					{
-						var proxyProtocol = (IProxyCompatible)Protocol;
 						if (webResponse.StatusCode != HttpStatusCode.ProxyAuthenticationRequired)
 							continue;
 
@@ -270,11 +268,11 @@ namespace Bdt.Client.Runtime
 					_sid = loginResponse.Sid;
 					Log(loginResponse.Message, ESeverity.INFO);
 
-					if (Args == null || Args.Length == 0)
-					{
-						InitializeForwards(Tunnel, _sid.Value);
-						InitializeSocks(Tunnel, _sid.Value);
-					}
+					if (Args != null && Args.Length != 0)
+						return;
+
+					InitializeForwards(Tunnel, loginResponse.Sid);
+					InitializeSocks(Tunnel, loginResponse.Sid);
 				}
 				else
 				{
@@ -324,7 +322,7 @@ namespace Bdt.Client.Runtime
 			ClientConfig = null;
 		}
 
-		protected override void SetCulture(String name)
+		protected override void SetCulture(string name)
 		{
 			base.SetCulture(name);
 			if (!string.IsNullOrEmpty(name))

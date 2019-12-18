@@ -57,6 +57,8 @@ namespace Bdt.Tests.UnitTests
 		{
 			var assembly = GetType().Assembly;
 			var basePath = Path.GetDirectoryName(assembly.Location);
+			Assert.IsNotNull(basePath);
+
 			var objPath = basePath.Replace("\\bin\\", "\\obj\\");
 			var projectObjPath = objPath.Replace(assembly.GetName().Name, $"Bdt.{project}");
 			return projectObjPath;

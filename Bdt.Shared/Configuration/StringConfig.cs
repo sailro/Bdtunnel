@@ -23,7 +23,7 @@ namespace Bdt.Shared.Configuration
 {
 	public sealed class StringConfig : BaseConfig
 	{
-		private string[] Args { get; set; }
+		private string[] Args { get; }
 
 		public StringConfig(string[] args, int priority) : base(priority)
 		{

@@ -37,7 +37,7 @@ namespace Bdt.Shared.Protocol
 			get
 			{
 				var scheme = IsSecured ? Uri.UriSchemeHttps : Uri.UriSchemeHttp;
-				return string.Format("{0}://{1}:{2}/{3}", scheme, Address, Port, Name);
+				return $"{scheme}://{Address}:{Port}/{Name}";
 			}
 		}
 

@@ -43,7 +43,7 @@ namespace Bdt.Shared.Runtime
 
 		public virtual string ConfigFile
 		{
-			get { return string.Format("{0}Cfg.xml", GetType().Assembly.GetName().Name); }
+			get { return $"{GetType().Assembly.GetName().Name}Cfg.xml"; }
 		}
 
 		public void LoadConfiguration()

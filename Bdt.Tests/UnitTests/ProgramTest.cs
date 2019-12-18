@@ -46,7 +46,7 @@ namespace Bdt.Tests.UnitTests
 					Program.StaticXorEncoder(ref buffer, key);
 
 					for (var i = 0; i < datalength; i++)
-						Assert.AreEqual(buffer[i], outbuffer[i], string.Format("Offset {0}, key={1}", i, key));
+						Assert.AreEqual(buffer[i], outbuffer[i], $"Offset {i}, key={key}");
 				}
 			}
 		}

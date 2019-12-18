@@ -51,7 +51,7 @@ namespace Bdt.Shared.Configuration
 		public string ServiceName { get; set; }
 		public int ServicePort { get; set; }
 		public string ServiceAddress { get; set; }
-		public string ServiceCulture { get; private set; }
+		public string ServiceCulture { get; }
 
 		public SharedConfig(ConfigPackage config)
 		{

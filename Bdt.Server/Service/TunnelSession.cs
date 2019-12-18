@@ -34,7 +34,7 @@ namespace Bdt.Server.Service
 		private const int SocketTestPollingTime = 100; // msec
 		private readonly int _connectiontimeoutdelay;
 
-		private Dictionary<int, TunnelConnection> Connections { get; set; }
+		private Dictionary<int, TunnelConnection> Connections { get; }
 		public string Username { get; set; }
 		public bool Admin { get; set; }
 		public DateTime Logon { get; set; }
@@ -63,8 +63,7 @@ namespace Bdt.Server.Service
 			where I : IConnectionContextRequest
 			where O : IConnectionContextResponse
 		{
-			TunnelConnection connection;
-			if (!Connections.TryGetValue(request.Cid, out connection))
+			if (!Connections.TryGetValue(request.Cid, out var connection))
 			{
 				response.Success = false;
 				response.Message = Strings.SERVER_SIDE + Strings.CID_NOT_FOUND;

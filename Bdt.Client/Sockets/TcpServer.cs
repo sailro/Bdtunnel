@@ -35,8 +35,8 @@ namespace Bdt.Client.Sockets
 		private readonly TcpListener _listener;
 		private readonly ManualResetEvent _mre = new ManualResetEvent(false);
 
-		protected IPAddress Ip { get; private set; }
-		private int Port { get; set; }
+		protected IPAddress Ip { get; }
+		private int Port { get; }
 
 		protected TcpServer(int port, bool shared)
 		{

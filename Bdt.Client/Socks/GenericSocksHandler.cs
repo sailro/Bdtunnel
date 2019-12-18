@@ -38,7 +38,7 @@ namespace Bdt.Client.Socks
 		protected int Command { get; set; }
 		public int RemotePort { get; protected set; }
 		public string Address { get; protected set; }
-		protected byte[] Buffer { get; private set; }
+		protected byte[] Buffer { get; }
 
 		protected GenericSocksHandler(byte[] buffer)
 		{

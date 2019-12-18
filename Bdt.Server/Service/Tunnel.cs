@@ -51,7 +51,7 @@ namespace Bdt.Server.Service
 
 		private static readonly ManualResetEvent Mre = new ManualResetEvent(false);
 
-		private Dictionary<int, TunnelSession> Sessions { get; set; }
+		private Dictionary<int, TunnelSession> Sessions { get; }
 		public static ConfigPackage Configuration { private get; set; }
 		public static ILogger Logger { private get; set; }
 
@@ -110,8 +110,7 @@ namespace Bdt.Server.Service
 			where I : ISessionContextRequest
 			where O : IMinimalResponse
 		{
-			TunnelSession session;
-			if (!Sessions.TryGetValue(request.Sid, out session))
+			if (!Sessions.TryGetValue(request.Sid, out var session))
 			{
 				response.Success = false;
 				response.Message = Strings.SERVER_SIDE + Strings.SID_NOT_FOUND;
@@ -205,7 +204,7 @@ namespace Bdt.Server.Service
 		public MinimalResponse Version()
 		{
 			var name = GetType().Assembly.GetName();
-			return new MinimalResponse(true, Strings.SERVER_SIDE + string.Format("{0} v{1}, {2}", name.Name, name.Version.ToString(3), Program.FrameworkVersion()));
+			return new MinimalResponse(true, Strings.SERVER_SIDE + $"{name.Name} v{name.Version.ToString(3)}, {Program.FrameworkVersion()}");
 		}
 
 		public ConnectResponse Connect(ConnectRequest request)
@@ -266,26 +265,23 @@ namespace Bdt.Server.Service
 			var response = new ConnectionContextResponse();
 			var session = CheckSession(ref request, ref response);
 
-			if (session != null)
+			var connection = session?.CheckConnection(ref request, ref response);
+			if (connection != null)
 			{
-				var connection = session.CheckConnection(ref request, ref response);
-				if (connection != null)
+				try
 				{
-					try
-					{
-						response.Message = Strings.SERVER_SIDE + string.Format(Strings.DISCONNECTED, connection.TcpClient.Client.RemoteEndPoint);
+					response.Message = Strings.SERVER_SIDE + string.Format(Strings.DISCONNECTED, connection.TcpClient.Client.RemoteEndPoint);
 
-						connection.SafeDisconnect();
-						response.Connected = false;
-						response.DataAvailable = false;
-						response.Success = true;
-						session.RemoveConnection(request.Cid);
-					}
-					catch (Exception ex)
-					{
-						response.Success = false;
-						response.Message = Strings.SERVER_SIDE + ex.Message;
-					}
+					connection.SafeDisconnect();
+					response.Connected = false;
+					response.DataAvailable = false;
+					response.Success = true;
+					session.RemoveConnection(request.Cid);
+				}
+				catch (Exception ex)
+				{
+					response.Success = false;
+					response.Message = Strings.SERVER_SIDE + ex.Message;
 				}
 			}
 
@@ -298,46 +294,43 @@ namespace Bdt.Server.Service
 			var response = new ReadResponse();
 			var session = CheckSession(ref request, ref response);
 
-			if (session != null)
+			var connection = session?.CheckConnection(ref request, ref response);
+			if (connection != null)
 			{
-				var connection = session.CheckConnection(ref request, ref response);
-				if (connection != null)
+				if (response.Connected && response.DataAvailable)
 				{
-					if (response.Connected && response.DataAvailable)
+					try
 					{
-						try
+						var buffer = new byte[BufferSize];
+						var count = connection.Stream.Read(buffer, 0, BufferSize);
+						if (count > 0)
 						{
-							var buffer = new byte[BufferSize];
-							var count = connection.Stream.Read(buffer, 0, BufferSize);
-							if (count > 0)
-							{
-								Array.Resize(ref buffer, count);
-								response.Success = true;
-								response.Message = string.Empty;
-								Program.StaticXorEncoder(ref buffer, request.Cid);
-								response.Data = buffer;
-								connection.ReadCount += count;
-							}
-							else
-							{
-								response.Success = false;
-								response.Data = null;
-								response.Message = Strings.SERVER_SIDE + Strings.DISCONNECTION_DETECTED;
-							}
+							Array.Resize(ref buffer, count);
+							response.Success = true;
+							response.Message = string.Empty;
+							Program.StaticXorEncoder(ref buffer, request.Cid);
+							response.Data = buffer;
+							connection.ReadCount += count;
 						}
-						catch (Exception ex)
+						else
 						{
 							response.Success = false;
 							response.Data = null;
-							response.Message = Strings.SERVER_SIDE + ex.Message;
+							response.Message = Strings.SERVER_SIDE + Strings.DISCONNECTION_DETECTED;
 						}
 					}
-					else
+					catch (Exception ex)
 					{
-						response.Success = true;
-						response.Message = string.Empty;
-						response.Data = new byte[] { };
+						response.Success = false;
+						response.Data = null;
+						response.Message = Strings.SERVER_SIDE + ex.Message;
 					}
+				}
+				else
+				{
+					response.Success = true;
+					response.Message = string.Empty;
+					response.Data = new byte[] { };
 				}
 			}
 
@@ -443,7 +436,7 @@ namespace Bdt.Server.Service
 							Sessions.Remove(request.Sid);
 
 							response.Success = true;
-							response.Message = Strings.SERVER_SIDE + String.Format(Strings.SESSION_KILLED, targetsession.Username, adminsession.Username);
+							response.Message = Strings.SERVER_SIDE + string.Format(Strings.SESSION_KILLED, targetsession.Username, adminsession.Username);
 						}
 						catch (Exception ex)
 						{
@@ -468,40 +461,37 @@ namespace Bdt.Server.Service
 			var response = new ConnectionContextResponse();
 			var targetsession = CheckSession(ref request, ref response);
 
-			if (targetsession != null)
+			var targetconnection = targetsession?.CheckConnection(ref request, ref response);
+			if (targetconnection != null)
 			{
-				var targetconnection = targetsession.CheckConnection(ref request, ref response);
-				if (targetconnection != null)
+				var fake = new SessionContextRequest(request.AdminSid);
+				var adminsession = CheckSession(ref fake, ref response);
+				if (adminsession != null)
 				{
-					var fake = new SessionContextRequest(request.AdminSid);
-					var adminsession = CheckSession(ref fake, ref response);
-					if (adminsession != null)
+					if (adminsession.Admin)
 					{
-						if (adminsession.Admin)
+						try
 						{
-							try
-							{
-								response.Message = Strings.SERVER_SIDE +
-								                   string.Format(Strings.CONNECTION_KILLED, targetconnection.TcpClient.Client.RemoteEndPoint, targetsession.Username,
-									                   adminsession.Username);
+							response.Message = Strings.SERVER_SIDE +
+							                   string.Format(Strings.CONNECTION_KILLED, targetconnection.TcpClient.Client.RemoteEndPoint, targetsession.Username,
+								                   adminsession.Username);
 
-								targetconnection.SafeDisconnect();
-								response.Connected = false;
-								response.DataAvailable = false;
-								response.Success = true;
-								targetsession.RemoveConnection(request.Cid);
-							}
-							catch (Exception ex)
-							{
-								response.Success = false;
-								response.Message = Strings.SERVER_SIDE + ex.Message;
-							}
+							targetconnection.SafeDisconnect();
+							response.Connected = false;
+							response.DataAvailable = false;
+							response.Success = true;
+							targetsession.RemoveConnection(request.Cid);
 						}
-						else
+						catch (Exception ex)
 						{
 							response.Success = false;
-							response.Message = Strings.SERVER_SIDE + Strings.ADMIN_REQUIRED;
+							response.Message = Strings.SERVER_SIDE + ex.Message;
 						}
+					}
+					else
+					{
+						response.Success = false;
+						response.Message = Strings.SERVER_SIDE + Strings.ADMIN_REQUIRED;
 					}
 				}
 			}
@@ -512,8 +502,7 @@ namespace Bdt.Server.Service
 
 		public void Log(object sender, string message, ESeverity severity)
 		{
-			if (Logger != null)
-				Logger.Log(sender, message, severity);
+			Logger?.Log(sender, message, severity);
 		}
 
 		private void Log(string message, ESeverity severity)
@@ -523,8 +512,7 @@ namespace Bdt.Server.Service
 
 		public void Close()
 		{
-			if (Logger != null)
-				Logger.Close();
+			Logger?.Close();
 		}
 	}
 }

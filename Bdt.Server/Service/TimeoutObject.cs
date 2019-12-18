@@ -28,7 +28,7 @@ namespace Bdt.Server.Service
 {
 	public abstract class TimeoutObject
 	{
-		private int TimeoutDelay { get; set; }
+		private int TimeoutDelay { get; }
 		public DateTime LastAccess { get; set; }
 
 		protected TimeoutObject(int timeoutdelay)

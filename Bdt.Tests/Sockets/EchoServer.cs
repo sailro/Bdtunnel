@@ -29,7 +29,7 @@ namespace Bdt.Tests.Sockets
 	{
 		public EchoServer(int localport, bool shared) : base(localport, shared)
 		{
-			Log(string.Format("Echo server listenning {0}:{1}", Ip, localport), ESeverity.INFO);
+			Log($"Echo server listenning {Ip}:{localport}", ESeverity.INFO);
 		}
 
 		protected override void OnNewConnection(TcpClient client)

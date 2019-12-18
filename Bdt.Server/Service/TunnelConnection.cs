@@ -64,8 +64,7 @@ namespace Bdt.Server.Service
 
 			try
 			{
-				if (TcpClient != null)
-					TcpClient.Close();
+				TcpClient?.Close();
 			}
 // ReSharper disable EmptyGeneralCatchClause
 			catch (Exception)
