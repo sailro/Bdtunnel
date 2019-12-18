@@ -196,7 +196,7 @@ namespace Bdt.Server.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to -=[ BoutDuTunnel Server v{0} - Sebastien LEBRETON ]=-.
+        ///   Looks up a localized string similar to -=[ BoutDuTunnel Server v{0} - Sebastien Lebreton ]=-.
         /// </summary>
         public static string SERVER_TITLE {
             get {

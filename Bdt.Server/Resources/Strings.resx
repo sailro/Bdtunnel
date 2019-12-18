@@ -173,7 +173,7 @@
     <value>Server started, press enter key to exit...</value>
   </data>
   <data name="SERVER_TITLE" xml:space="preserve">
-    <value>-=[ BoutDuTunnel Server v{0} - Sebastien LEBRETON ]=-</value>
+    <value>-=[ BoutDuTunnel Server v{0} - Sebastien Lebreton ]=-</value>
     <comment>Version</comment>
   </data>
   <data name="SESSION_KILLED" xml:space="preserve">

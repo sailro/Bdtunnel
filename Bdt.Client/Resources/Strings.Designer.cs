@@ -79,7 +79,7 @@ namespace Bdt.Client.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to -=[ BoutDuTunnel Client v{0} - Sebastien LEBRETON ]=-.
+        ///   Looks up a localized string similar to -=[ BoutDuTunnel Client v{0} - Sebastien Lebreton ]=-.
         /// </summary>
         public static string CLIENT_TITLE {
             get {

@@ -121,7 +121,7 @@
     <value>Client started, press enter key to exit...</value>
   </data>
   <data name="CLIENT_TITLE" xml:space="preserve">
-    <value>-=[ BoutDuTunnel Client v{0} - Sebastien LEBRETON ]=-</value>
+    <value>-=[ BoutDuTunnel Client v{0} - Sebastien Lebreton ]=-</value>
     <comment>Version</comment>
   </data>
   <data name="CONNECTION_FAILED" xml:space="preserve">

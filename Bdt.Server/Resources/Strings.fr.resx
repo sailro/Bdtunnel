@@ -173,7 +173,7 @@
     <value>Serveur demarre, appuyez sur une entree pour quitter...</value>
   </data>
   <data name="SERVER_TITLE" xml:space="preserve">
-    <value>-=[ BoutDuTunnel Serveur v{0} - Sebastien LEBRETON ]=-</value>
+    <value>-=[ BoutDuTunnel Serveur v{0} - Sebastien Lebreton ]=-</value>
     <comment>Version</comment>
   </data>
   <data name="SESSION_KILLED" xml:space="preserve">
