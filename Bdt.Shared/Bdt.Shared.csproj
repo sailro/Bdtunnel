@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
     <Authors>Sebastien Lebreton</Authors>
-    <VersionPrefix>1.6.0</VersionPrefix>
+    <VersionPrefix>1.7.0</VersionPrefix>
     <Copyright>Sebastien Lebreton</Copyright>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Description>BoutDuTunnel core classes</Description>
