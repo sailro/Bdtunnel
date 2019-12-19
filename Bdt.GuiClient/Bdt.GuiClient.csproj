@@ -8,7 +8,7 @@
     <Copyright>Sebastien Lebreton</Copyright>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Description>BoutDuTunnel GUI client</Description>
-	<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+	  <GenerateResourceUsePreserializedResources Condition="'$(BuildingInsideVisualStudio)' != 'true'">true</GenerateResourceUsePreserializedResources>
     <ApplicationIcon>Resources\client.ico</ApplicationIcon>	
   </PropertyGroup>
 
@@ -18,7 +18,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="System.Resources.Extensions" Version="4.6.0" />
+    <PackageReference Condition="'$(BuildingInsideVisualStudio)' != 'true'" Include="System.Resources.Extensions" Version="4.6.0" />
   </ItemGroup>
   
   <ItemGroup>
