@@ -47,7 +47,7 @@ namespace Bdt.Tests.UnitTests
 		private const int EchoOffset = 10;
 		private const int GatewayOffset = EchoOffset + 10; // Must have GATEWAY_OFFSET > ECHO_OFFSET
 
-		private static readonly List<TcpServer> Servers = new List<TcpServer>();
+		private static readonly List<TcpServer> Servers = new();
 
 		private void Initialize<T>(int port, out BdtServer server, out BdtClient client, out EchoServer echo, out GatewayServer gw) where T : GenericProtocol
 		{

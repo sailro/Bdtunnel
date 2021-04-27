@@ -33,7 +33,7 @@ namespace Bdt.Client.Sockets
 		private const int AcceptPollingTime = 50;
 
 		private readonly TcpListener _listener;
-		private readonly ManualResetEvent _mre = new ManualResetEvent(false);
+		private readonly ManualResetEvent _mre = new(false);
 
 		protected IPAddress Ip { get; }
 		private int Port { get; }

@@ -25,7 +25,7 @@ namespace Bdt.Shared.Logs
 {
 	public sealed class MultiLogger : BaseLogger
 	{
-		private readonly List<ILogger> _loggers = new List<ILogger>();
+		private readonly List<ILogger> _loggers = new();
 
 		public MultiLogger() : base(null, "dd/MM/yyyy HH:mm:ss", ESeverity.DEBUG)
 		{

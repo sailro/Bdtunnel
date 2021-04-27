@@ -27,7 +27,7 @@ namespace Bdt.Shared.Configuration
 {
 	public class ConfigPackage
 	{
-		private readonly List<BaseConfig> _sources = new List<BaseConfig>();
+		private readonly List<BaseConfig> _sources = new();
 
 		public virtual string Value(string code, string defaultValue)
 		{

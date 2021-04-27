@@ -27,12 +27,12 @@ namespace Bdt.Shared.Protocol
 	{
 		protected override IpcChannel ClientChannel
 		{
-			get { return ClientChannelField ?? (ClientChannelField = new IpcChannel(CreateClientChannelProperties(), null, null)); }
+			get { return ClientChannelField ??= new IpcChannel(CreateClientChannelProperties(), null, null); }
 		}
 
 		protected override IpcChannel ServerChannel
 		{
-			get { return ServerChannelField ?? (ServerChannelField = new IpcChannel(CreateServerChannelProperties(), null, null)); }
+			get { return ServerChannelField ??= new IpcChannel(CreateServerChannelProperties(), null, null); }
 		}
 
 		protected override string ServerURL

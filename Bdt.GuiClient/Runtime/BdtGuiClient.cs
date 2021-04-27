@@ -38,7 +38,7 @@ namespace Bdt.GuiClient.Runtime
 	{
 		public override string ConfigFile
 		{
-			get { return string.Format("{0}Cfg.xml", typeof(BdtClient).Assembly.GetName().Name); }
+			get { return $"{typeof(BdtClient).Assembly.GetName().Name}Cfg.xml"; }
 		}
 
 		public MainComponent MainComponent { get; private set; }

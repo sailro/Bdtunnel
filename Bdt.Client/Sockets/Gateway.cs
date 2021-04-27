@@ -39,7 +39,7 @@ namespace Bdt.Client.Sockets
 
 		private TcpClient _client;
 		private NetworkStream _stream;
-		private readonly ManualResetEvent _mre = new ManualResetEvent(false);
+		private readonly ManualResetEvent _mre = new(false);
 		private readonly ITunnel _tunnel;
 		private readonly int _sid;
 		private readonly string _address;

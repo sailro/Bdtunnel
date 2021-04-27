@@ -38,12 +38,11 @@ namespace Bdt.GuiClient.Forms
 		private class ProtocolItem
 		{
 			private readonly string _caption;
-			private readonly Type _protocol;
 
 			public ProtocolItem(string caption, Type protocol)
 			{
 				_caption = caption;
-				_protocol = protocol;
+				Protocol = protocol;
 			}
 
 			public override string ToString()
@@ -51,10 +50,7 @@ namespace Bdt.GuiClient.Forms
 				return _caption;
 			}
 
-			public Type Protocol
-			{
-				get { return _protocol; }
-			}
+			public Type Protocol { get; }
 		}
 
 		public SetupForm(ClientConfig clientConfig)

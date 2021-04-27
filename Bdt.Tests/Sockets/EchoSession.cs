@@ -36,7 +36,7 @@ namespace Bdt.Tests.Sockets
 
 		private TcpClient _client;
 		private NetworkStream _stream;
-		private readonly ManualResetEvent _mre = new ManualResetEvent(false);
+		private readonly ManualResetEvent _mre = new(false);
 
 		public EchoSession(TcpClient client)
 		{

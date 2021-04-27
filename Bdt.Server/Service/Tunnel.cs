@@ -49,7 +49,7 @@ namespace Bdt.Server.Service
 		private const int DefaultConnectionTimeoutDelay = 1; // hours
 		private const int DefaultSessionTimeoutDelay = 12; // hours
 
-		private static readonly ManualResetEvent Mre = new ManualResetEvent(false);
+		private static readonly ManualResetEvent Mre = new(false);
 
 		private Dictionary<int, TunnelSession> Sessions { get; }
 		public static ConfigPackage Configuration { private get; set; }

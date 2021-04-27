@@ -8,6 +8,7 @@
     <Copyright>Sebastien Lebreton</Copyright>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Description>BoutDuTunnel unit tests</Description>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -103,9 +103,8 @@ namespace Bdt.GuiClient.Forms
 			foreach (DataGridViewRow row in Sessions.SelectedRows)
 			{
 				var session = (Session)row.DataBoundItem;
-				int targetsid;
 
-				if (!int.TryParse(session.Sid, System.Globalization.NumberStyles.HexNumber, null, out targetsid))
+				if (!int.TryParse(session.Sid, System.Globalization.NumberStyles.HexNumber, null, out var targetsid))
 					continue;
 
 				if (targetsid == _sid)
@@ -127,11 +126,9 @@ namespace Bdt.GuiClient.Forms
 			foreach (DataGridViewRow row in Connections.SelectedRows)
 			{
 				var connection = (Connection)row.DataBoundItem;
-				int targetsid;
-				int targetcid;
 
-				if (int.TryParse(_currentsession.Sid, System.Globalization.NumberStyles.HexNumber, null, out targetsid)
-				    && int.TryParse(connection.Cid, System.Globalization.NumberStyles.HexNumber, null, out targetcid))
+				if (int.TryParse(_currentsession.Sid, System.Globalization.NumberStyles.HexNumber, null, out var targetsid)
+				    && int.TryParse(connection.Cid, System.Globalization.NumberStyles.HexNumber, null, out var targetcid))
 				{
 					IMinimalResponse response = _tunnel.KillConnection(new KillConnectionRequest(targetsid, _sid, targetcid));
 					if (!response.Success)

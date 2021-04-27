@@ -48,29 +48,29 @@ namespace Bdt.GuiClient.Forms
 		{
 			var previous = ClientState;
 			ClientState = EClientState.Changing;
-			using (var setup = new SetupForm(_client.ClientConfig))
+			
+			using var setup = new SetupForm(_client.ClientConfig);
+			
+			if (setup.ShowDialog() == DialogResult.OK)
 			{
-				if (setup.ShowDialog() == DialogResult.OK)
+				ClientState = previous;
+				WaitThenStopClientIfNeeded();
+				try
 				{
-					ClientState = previous;
-					WaitThenStopClientIfNeeded();
-					try
-					{
-						_client.ClientConfig.SaveToFile(Path.GetDirectoryName(Application.ExecutablePath) + Path.DirectorySeparatorChar + _client.ConfigFile);
-						_client.UnLoadConfiguration();
-						_client.LoadConfiguration();
-						StartItem_Click(sender, e);
-					}
-					catch (Exception ex)
-					{
-						_client.Log(ex.Message, ESeverity.ERROR);
-						_client.Log(ex.ToString(), ESeverity.DEBUG);
-					}
+					_client.ClientConfig.SaveToFile(Path.GetDirectoryName(Application.ExecutablePath) + Path.DirectorySeparatorChar + _client.ConfigFile);
+					_client.UnLoadConfiguration();
+					_client.LoadConfiguration();
+					StartItem_Click(sender, e);
 				}
-				else
+				catch (Exception ex)
 				{
-					ClientState = previous;
+					_client.Log(ex.Message, ESeverity.ERROR);
+					_client.Log(ex.ToString(), ESeverity.DEBUG);
 				}
+			}
+			else
+			{
+				ClientState = previous;
 			}
 		}
 
@@ -89,18 +89,17 @@ namespace Bdt.GuiClient.Forms
 		public void InputProxyCredentials(IProxyCompatible proxyProtocol, ref bool retry)
 // ReSharper restore RedundantAssignment
 		{
-			using (var proxy = new ProxyForm(_client.ClientConfig))
+			using var proxy = new ProxyForm(_client.ClientConfig);
+
+			if (proxy.ShowDialog() == DialogResult.OK)
 			{
-				if (proxy.ShowDialog() == DialogResult.OK)
-				{
-					proxyProtocol.Proxy.Credentials = new NetworkCredential(_client.ClientConfig.ProxyUserName,
-						_client.ClientConfig.ProxyPassword,
-						_client.ClientConfig.ProxyDomain);
-					retry = true;
-				}
-				else
-					retry = false;
+				proxyProtocol.Proxy.Credentials = new NetworkCredential(_client.ClientConfig.ProxyUserName,
+					_client.ClientConfig.ProxyPassword,
+					_client.ClientConfig.ProxyDomain);
+				retry = true;
 			}
+			else
+				retry = false;
 		}
 
 		private void StartItem_Click(object sender, EventArgs e)

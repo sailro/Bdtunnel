@@ -71,7 +71,9 @@ namespace Bdt.Tests.UnitTests
 			dic.Clear();
 			while (enumerator.MoveNext())
 			{
-				dic.Add((K)enumerator.Key, (V)enumerator.Value);
+				var key = (K)enumerator.Key;
+				if (key != null)
+					dic.Add(key, (V)enumerator.Value);
 			}
 		}
 

@@ -101,7 +101,7 @@ namespace Bdt.Server.Service
 
 		internal TunnelConnection CreateConnection()
 		{
-			return new TunnelConnection(_connectiontimeoutdelay);
+			return new(_connectiontimeoutdelay);
 		}
 
 		public void RemoveConnection(int cid)

@@ -40,7 +40,7 @@ namespace Bdt.Client.Runtime
 {
 	public class BdtClient : Program
 	{
-		private readonly Dictionary<int, TcpServer> _servers = new Dictionary<int, TcpServer>();
+		private readonly Dictionary<int, TcpServer> _servers = new();
 		private int? _sid;
 
 		public ClientConfig ClientConfig { get; protected set; }

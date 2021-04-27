@@ -30,9 +30,7 @@ namespace Bdt.Shared.Protocol
 		{
 			get
 			{
-				return ClientChannelField ??
-				       (ClientChannelField =
-					       new HttpChannel(CreateClientChannelProperties(), new SoapClientFormatterSinkProvider(), null));
+				return ClientChannelField ??= new HttpChannel(CreateClientChannelProperties(), new SoapClientFormatterSinkProvider(), null);
 			}
 		}
 
@@ -40,10 +38,7 @@ namespace Bdt.Shared.Protocol
 		{
 			get
 			{
-				return ServerChannelField ??
-				       (ServerChannelField =
-					       new HttpChannel(CreateServerChannelProperties(), new SoapClientFormatterSinkProvider(),
-						       new SoapServerFormatterSinkProvider()));
+				return ServerChannelField ??= new HttpChannel(CreateServerChannelProperties(), new SoapClientFormatterSinkProvider(), new SoapServerFormatterSinkProvider());
 			}
 		}
 	}

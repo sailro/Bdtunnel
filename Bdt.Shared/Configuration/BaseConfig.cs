@@ -30,7 +30,7 @@ namespace Bdt.Shared.Configuration
 		public const string SourceItemAttribute = "@";
 		protected const string SourceItemEquals = "=";
 
-		private readonly SortedList _values = new SortedList();
+		private readonly SortedList _values = new();
 
 		private int Priority { get; }
 

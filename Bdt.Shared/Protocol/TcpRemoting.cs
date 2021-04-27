@@ -29,8 +29,7 @@ namespace Bdt.Shared.Protocol
 		{
 			get
 			{
-				return ClientChannelField ??
-				       (ClientChannelField = new TcpChannel(CreateClientChannelProperties(), null, null));
+				return ClientChannelField ??= new TcpChannel(CreateClientChannelProperties(), null, null);
 			}
 		}
 
@@ -38,8 +37,7 @@ namespace Bdt.Shared.Protocol
 		{
 			get
 			{
-				return ServerChannelField ??
-				       (ServerChannelField = new TcpChannel(CreateServerChannelProperties(), null, null));
+				return ServerChannelField ??= new TcpChannel(CreateServerChannelProperties(), null, null);
 			}
 		}
 
